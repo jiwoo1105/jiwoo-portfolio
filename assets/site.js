@@ -22,8 +22,8 @@
   }
   const hero = document.querySelector('.hero');
   const photo = document.querySelector('.hero-photo');
-  const motionButton = document.querySelector('.motion-toggle');
-  if (motionButton) body.classList.add('motion-enabled');
+  const motionButtons = document.querySelectorAll('[data-motion-toggle]');
+  if (motionButtons.length) body.classList.add('motion-enabled');
   let paused = false;
   let framePending = false;
   function updateParallax() {
@@ -31,17 +31,76 @@
     if (!photo || !hero) return;
     if (reducedMotion.matches || paused) { photo.style.transform = ''; return; }
     const scroll = Math.min(Math.max(0, -hero.getBoundingClientRect().top), hero.offsetHeight);
-    photo.style.transform = `translate3d(0, ${scroll * 0.12}px, 0)`;
+    photo.style.transform = `translate3d(0, ${scroll * 0.035}px, 0)`;
   }
   if (hero) window.addEventListener('scroll', () => { if (!framePending) { requestAnimationFrame(updateParallax); framePending = true; } }, { passive: true });
-  if (motionButton) motionButton.addEventListener('click', () => {
+  motionButtons.forEach(button => button.addEventListener('click', () => {
     paused = !paused;
     body.classList.toggle('motion-paused', paused);
-    motionButton.setAttribute('aria-pressed', String(paused));
-    motionButton.querySelector('.motion-label').textContent = paused ? '움직임 재생' : '움직임 멈추기';
-    motionButton.querySelector('.motion-symbol').textContent = paused ? '▷' : 'Ⅱ';
+    motionButtons.forEach(control => {
+      control.setAttribute('aria-pressed', String(paused));
+      control.querySelector('.motion-label').textContent = paused ? '애니메이션 재생' : '애니메이션 멈추기';
+      control.querySelector('.motion-symbol').textContent = paused ? '▷' : 'Ⅱ';
+    });
     updateParallax();
-  });
+    syncPreviews();
+  }));
+  const previews = [];
+  const shouldPlay = state => state.visible && !document.hidden && !paused && !state.userPaused && (!reducedMotion.matches || state.manualPlay);
+  function syncPreview(state) {
+    if (shouldPlay(state)) {
+      if (!state.video.paused || state.starting) return;
+      state.starting = true;
+      state.video.play().then(() => {
+        if (!shouldPlay(state)) state.video.pause();
+      }).catch(error => {
+        if (error.name !== 'AbortError' && shouldPlay(state)) state.userPaused = true;
+      }).finally(() => {
+        state.starting = false;
+        if (shouldPlay(state) && state.video.paused) syncPreview(state);
+      });
+    } else state.video.pause();
+  }
+  function syncPreviews() { previews.forEach(syncPreview); }
+  if ('IntersectionObserver' in window) {
+    const previewObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const state = previews.find(item => item.video === entry.target);
+        if (state) { state.visible = entry.isIntersecting && entry.intersectionRatio >= 0.4; syncPreview(state); }
+      });
+    }, { threshold: [0, 0.4] });
+    document.querySelectorAll('[data-preview]').forEach(video => {
+      const media = video.closest('.preview-media');
+      const button = media.querySelector('[data-preview-toggle]');
+      if (!button) return;
+      const state = { video, visible: false, userPaused: false, manualPlay: false, starting: false };
+      previews.push(state);
+      video.muted = true;
+      video.controls = false;
+      media.classList.add('preview-enhanced');
+      const updateLabel = () => {
+        button.querySelector('.preview-button-label').textContent = video.paused ? '재생' : '멈춤';
+        button.querySelector('[aria-hidden]').textContent = video.paused ? '▶' : 'Ⅱ';
+        button.setAttribute('aria-label', `${video.getAttribute('aria-label')} ${video.paused ? '재생' : '멈춤'}`);
+      };
+      video.addEventListener('play', updateLabel);
+      video.addEventListener('pause', updateLabel);
+      button.addEventListener('click', () => {
+        if (video.paused) {
+          state.userPaused = false;
+          state.manualPlay = true;
+          // An explicit preview play is allowed while decorative motion is paused.
+          video.play().catch(error => {
+            if (error.name === 'AbortError') return;
+            video.controls = true;
+            media.classList.remove('preview-enhanced');
+          });
+        } else { state.userPaused = true; state.manualPlay = false; video.pause(); }
+      });
+      previewObserver.observe(video);
+    });
+  }
+  document.addEventListener('visibilitychange', syncPreviews);
   const chapterButtons = document.querySelectorAll('[data-video][data-seek]');
   if (chapterButtons.length) body.classList.add('video-enhanced');
   chapterButtons.forEach(button => button.addEventListener('click', () => {
@@ -70,6 +129,8 @@
   });
   reducedMotion.addEventListener('change', () => {
     updateParallax();
+    previews.forEach(state => { state.manualPlay = false; });
+    syncPreviews();
     cursor?.classList.remove('is-active');
     if (reducedMotion.matches) {
       observer?.disconnect();

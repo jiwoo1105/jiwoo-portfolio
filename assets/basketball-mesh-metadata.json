@@ -1,0 +1,21 @@
+{
+  "source": "https://storage.googleapis.com/oe-training-public/demo_videos/arena_basketball.mp4",
+  "source_interval_seconds": [
+    0,
+    8
+  ],
+  "fps": 12.5,
+  "frames": 100,
+  "method": "CoMotion SMPLKinematics + pyrender/EGL",
+  "vertices_per_body": 6890,
+  "camera_intrinsics": {
+    "fx": 2560,
+    "fy": 2560,
+    "cx": 640,
+    "cy": 360
+  },
+  "intrinsics_type": "CoMotion default estimate, not calibrated",
+  "model_observations": 1149,
+  "distinct_predicted_ids": 39,
+  "notes": "Predicted IDs may fragment. This demo does not measure motion accuracy, track identity accuracy, or robot transfer."
+}
