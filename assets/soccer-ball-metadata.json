@@ -1,0 +1,11 @@
+{
+  "clip": "인,인 기준1",
+  "frames": 239,
+  "fps": 29.974916387959865,
+  "detector": "YOLO11s ankle ROI, saved inference",
+  "rendered_observed_frames": 229,
+  "selection": "Existing scoring.current_metrics.choose_ball",
+  "rendering": "Observed ball box and 16-frame trail; no interpolation or invented detections. Pose from existing same-frame visualization.",
+  "candidate_sha256": "ef11fdd9c14ed3463ab19f62722d02108a882aa628d8cce2069fa78f4671dc11",
+  "purpose": "Tracking illustration, not evaluation of scoring accuracy"
+}
