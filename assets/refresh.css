@@ -80,3 +80,69 @@ html[lang=en] .about-copy h2{font-size:clamp(32px,3.3vw,50px)}
 /* Shared controls must inherit the selected reading mode. */
 .menu-dialog,.preview-toggle{background:var(--paper);color:var(--ink)}
 .menu-top,.menu-email{color:var(--muted)}
+
+/* A shorter introduction, a small companion, and work that is easy to scan. */
+.home .hero-introduction{top:22%;width:calc(100% - 2 * var(--gutter))}
+.home .hero-introduction h1{font-size:clamp(38px,5vw,78px);line-height:1.18;letter-spacing:-.05em}
+html[lang=en] .home .hero-introduction h1{font-size:clamp(40px,5.8vw,90px)}
+.home .hero-identity{margin-bottom:24px}
+.hero-identity{animation:hero-arrive .7s .1s both}
+.hero-introduction h1{animation:hero-arrive .9s .22s both}
+@keyframes hero-arrive{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.home .about{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7%;align-items:center;padding-top:70px;padding-bottom:80px;min-height:590px}
+.about-copy{max-width:570px}.about-copy h2,html[lang=en] .about-copy h2{font-size:clamp(29px,2.75vw,43px);line-height:1.38;margin:20px 0 24px;font-weight:450}
+.about-copy>p{font-size:15px;line-height:1.85;margin-bottom:15px;max-width:510px}
+.about-work-link{display:inline-flex;align-items:center;gap:35px;padding:13px 0 8px;margin-top:10px;border-bottom:1px solid var(--line);font-size:14px}
+.about-work-link span{font-size:25px;color:var(--blue);transition:transform .2s}.about-work-link:hover span{transform:translate(3px,3px)}
+.companion{width:100%;min-width:0;align-self:center;position:relative;isolation:isolate}
+.companion-stage{position:relative;width:100%;height:clamp(330px,30vw,480px);touch-action:pan-y}
+.companion canvas,.companion-placeholder{width:100%;height:100%;position:absolute;inset:0;object-fit:contain}
+.companion canvas{opacity:0;transition:opacity .35s}.companion-ready canvas{opacity:1}.companion-ready .companion-placeholder{visibility:hidden}
+.companion-caption{display:flex;justify-content:center;align-items:center;gap:30px;color:var(--muted);font-size:12px;margin-top:-8px;min-height:44px}
+.companion-caption button{padding:10px 0;color:var(--ink);font-size:12px;display:inline-flex;gap:9px;align-items:center}
+.companion-caption button[hidden]{display:none}.companion-caption button span{font-size:20px;color:var(--blue);transition:transform .25s}.companion-caption button:hover span{transform:rotate(60deg)}
+.companion-bubble{position:absolute;left:12%;top:7%;background:var(--paper);box-shadow:0 4px 30px #18263812;border:1px solid var(--line);padding:12px 19px;border-radius:20px 20px 20px 3px;font-size:13px;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;pointer-events:none}
+.companion[data-greeting=true] .companion-bubble{opacity:1;transform:translateY(0)}
+.home .work-heading{padding-top:26px;padding-bottom:34px}.home .work-heading h2{font-size:clamp(28px,3.5vw,48px);letter-spacing:-.045em}
+.featured-work{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:60px 38px}
+.home .work-entry{display:flex;flex-direction:column;align-items:stretch;gap:0;border:0;padding:0;min-width:0}
+.home .work-entry-copy{padding-top:22px}.home .work-category{font-size:11px;margin-bottom:12px}
+.home .work-entry h3{font-size:clamp(25px,2.25vw,35px);font-weight:450;line-height:1.25;letter-spacing:-.045em}
+.home .work-entry h3 a{gap:16px}.home .work-entry h3 a>span{font-size:27px}
+.home .work-description{font-size:14px;line-height:1.75;max-width:100%;margin-top:14px}
+.home .preview-media{aspect-ratio:16/10;overflow:hidden;border-radius:3px}
+.home .preview-media .media-caption{font-size:9px;padding-block:8px}
+.home .work-entry-links{font-size:12px;gap:22px;margin-top:17px}.home .work-entry-links a{padding:7px 0}
+.home .work-metrics{margin-top:17px;gap:32px}.home .work-metrics dd{font-size:27px}.home .work-metrics dt{font-size:10px}
+.home .award-note{font-size:11px;padding:7px 10px;margin-top:14px;margin-bottom:0;max-width:100%;line-height:1.5}
+.home .health-preview{padding:7% 13% 8%}.home .health-sheet{padding:20px 24px;box-shadow:none}
+.home .health-sheet-heading{font-size:35px;margin-block:22px 16px}.home .health-chart{height:112px}
+.home .danzzan-still{padding:20px 16%;gap:8%;background:var(--surface)}.home .danzzan-still img{width:48%;mix-blend-mode:normal}
+.other-work{margin-top:90px}.other-project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.home .other-entry h3{font-size:24px}.home .other-entry .work-description{font-size:13px}.home .other-entry .work-entry-copy{padding-top:18px}
+.home .other-entry .preview-media{max-height:none}.home .other-entry .work-entry-links{margin-top:13px}
+.home .github-work{margin-top:42px}.home .credentials{padding-top:85px}
+@media(min-width:701px) and (max-width:1000px){.home .about{gap:4%;padding-block:60px}.about-copy>p{font-size:14px}.companion-stage{height:350px}.featured-work{gap:45px 28px}.home .health-sheet-heading{font-size:26px}.home .health-chart{height:90px}.home .health-sheet{padding:15px 18px}.home .health-sheet-heading{margin-top:15px}.other-project-grid{gap:20px}.home .other-entry h3{font-size:21px}}
+@media(max-width:700px){
+  .home .hero-introduction{top:19%;left:24px;width:calc(100% - 48px)}.home .hero-introduction h1,html[lang=en] .home .hero-introduction h1{font-size:clamp(36px,7.5vw,52px);line-height:1.25}.home .hero-identity{margin-bottom:21px}
+  .home .about{display:flex;flex-direction:column-reverse;gap:8px;padding-block:55px 40px;min-height:0;align-items:stretch}.about-copy{max-width:100%}.about-copy h2,html[lang=en] .about-copy h2{font-size:31px;line-height:1.35;margin-block:16px 20px}.about-copy>p{font-size:14px;line-height:1.85}.about-work-link{margin-top:0;font-size:12px}.companion-stage{height:330px}.companion-caption{font-size:11px;gap:24px;margin-top:-25px}.companion-bubble{top:10%;left:8%;font-size:12px}
+  .featured-work{grid-template-columns:1fr;gap:42px}.home .work-heading{padding-bottom:27px}.home .work-heading h2{font-size:31px}.home .work-heading p{font-size:12px;max-width:210px}.home .work-entry h3{font-size:28px}.home .work-entry-copy{padding-top:18px}.home .work-description{font-size:14px;margin-top:12px}.home .work-entry-links{margin-top:13px}.home .work-metrics{gap:30px}.home .work-metrics dd{font-size:25px}.home .health-preview{padding:8% 14%}.home .health-sheet-heading{font-size:28px;margin-top:18px}.home .health-chart{height:95px}.home .health-sheet{padding:18px 22px}
+  .other-work{margin-top:65px}.other-project-grid{grid-template-columns:1fr;gap:35px}.home .other-entry{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:18px;align-items:start}.home .other-entry .preview-media{aspect-ratio:1;min-height:0}.home .other-entry .work-entry-copy{padding-top:0}.home .other-entry h3{font-size:21px}.home .other-entry .work-category{font-size:10px;line-height:1.6;margin-bottom:8px}.home .other-entry .work-description{font-size:12px;margin-top:10px}.home .other-entry .work-entry-links{font-size:11px;margin-top:9px;gap:15px}.home .other-entry .preview-enhanced .preview-toggle{width:32px;height:32px;padding:0;display:grid;place-items:center;right:5px;bottom:5px}.home .other-entry .preview-button-label{display:none}.home .other-entry .preview-toggle>span:first-child{font-size:10px}.home .other-entry h3 a>span{font-size:19px}.home .other-entry .fish-preview{padding:12px 10%}.home .credentials{padding-top:60px}
+}
+@media(max-width:360px){.home .hero-introduction h1,html[lang=en] .home .hero-introduction h1{font-size:33px}.about-copy h2,html[lang=en] .about-copy h2{font-size:27px}.companion-stage{height:290px}.home .other-entry{grid-template-columns:1fr}.home .other-entry .preview-media{aspect-ratio:16/10}.home .other-entry .work-entry-copy{padding-top:0}}
+@media(prefers-reduced-motion:reduce){.hero-identity,.hero-introduction h1{animation:none}.companion canvas,.companion-bubble,.about-work-link span,.companion-caption button span{transition:none}}
+.motion-paused .hero-identity,.motion-paused .hero-introduction h1{animation:none}
+/* Keep the benchmark preview legible at every card width. */
+.home .health-sheet{height:100%;min-height:0;display:flex;flex-direction:column}
+.home .health-sheet-heading,.home .health-preview .media-caption{display:none}
+.home .health-chart{flex:1;min-height:40px;height:auto;margin-top:14px}
+.home .health-sheet-top,.home .health-sheet-bottom{flex-shrink:0}
+
+/* Research demos read best next to the implementation context. */
+.featured-work{display:flex;flex-direction:column;gap:0}
+.home .featured-entry{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:clamp(35px,5.4vw,82px);align-items:center;padding:42px 0;border-bottom:1px solid var(--line)}
+.home .featured-entry:first-child{padding-top:0}.home .featured-entry .work-entry-copy{padding-top:0}
+.home .featured-entry h3{font-size:clamp(27px,2.5vw,39px)}.home .featured-entry .work-description{font-size:15px;line-height:1.85;margin-top:18px}
+.work-focus{font-size:12px;line-height:1.8;color:var(--muted);margin-top:16px;word-break:keep-all}.work-focus>span{display:block;font-size:10px;color:var(--ink);margin-bottom:3px}
+.home .featured-entry .work-entry-links{margin-top:20px}
+@media(max-width:700px){.home .featured-entry{grid-template-columns:1fr;gap:22px;padding:30px 0}.home .featured-entry h3{font-size:28px}.home .featured-entry .work-description{font-size:14px;margin-top:13px}.work-focus{font-size:11px;margin-top:13px}.home .featured-entry .work-entry-links{margin-top:15px}}
