@@ -1,5 +1,7 @@
 (() => {
   'use strict';
+  const en = document.documentElement.lang === 'en';
+  const words = en ? { resume: 'Resume motion', pause: 'Pause motion', play: 'Play', stop: 'Pause', copied: 'Copied', copy: 'Copy email', success: 'Email address copied.', manual: 'Select the address to copy', failure: 'Could not copy. Please select the email address manually.' } : { resume: '애니메이션 재생', pause: '애니메이션 멈추기', play: '재생', stop: '멈춤', copied: '복사했어요', copy: '이메일 복사', success: '이메일 주소를 복사했습니다.', manual: '주소를 직접 선택해 주세요', failure: '복사할 수 없습니다. 옆의 이메일 주소를 직접 선택해 주세요.' };
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const body = document.body;
@@ -39,7 +41,7 @@
     body.classList.toggle('motion-paused', paused);
     motionButtons.forEach(control => {
       control.setAttribute('aria-pressed', String(paused));
-      control.querySelector('.motion-label').textContent = paused ? '애니메이션 재생' : '애니메이션 멈추기';
+      control.querySelector('.motion-label').textContent = paused ? words.resume : words.pause;
       control.querySelector('.motion-symbol').textContent = paused ? '▷' : 'Ⅱ';
     });
     updateParallax();
@@ -79,9 +81,9 @@
       video.controls = false;
       media.classList.add('preview-enhanced');
       const updateLabel = () => {
-        button.querySelector('.preview-button-label').textContent = video.paused ? '재생' : '멈춤';
+        button.querySelector('.preview-button-label').textContent = video.paused ? words.play : words.stop;
         button.querySelector('[aria-hidden]').textContent = video.paused ? '▶' : 'Ⅱ';
-        button.setAttribute('aria-label', `${video.getAttribute('aria-label')} ${video.paused ? '재생' : '멈춤'}`);
+        button.setAttribute('aria-label', `${video.getAttribute('aria-label')} ${video.paused ? words.play : words.stop}`);
       };
       video.addEventListener('play', updateLabel);
       video.addEventListener('pause', updateLabel);
@@ -144,14 +146,14 @@
       try {
         if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
         await navigator.clipboard.writeText(button.dataset.copyEmail);
-        button.textContent = '복사했어요';
-        if (status) status.textContent = '이메일 주소를 복사했습니다.';
+        button.textContent = words.copied;
+        if (status) status.textContent = words.success;
       } catch {
-        button.textContent = '주소를 직접 선택해 주세요';
-        if (status) status.textContent = '복사할 수 없습니다. 옆의 이메일 주소를 직접 선택해 주세요.';
+        button.textContent = words.manual;
+        if (status) status.textContent = words.failure;
       }
       clearTimeout(resetTimer);
-      resetTimer = setTimeout(() => { button.textContent = '이메일 복사'; }, 2500);
+      resetTimer = setTimeout(() => { button.textContent = words.copy; }, 2500);
     });
   });
 })();
