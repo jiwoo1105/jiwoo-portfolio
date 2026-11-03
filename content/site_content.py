@@ -291,145 +291,6 @@ PROJECTS = [{'slug': 'video-motion',
                         'en': 'This pipeline currently reconstructs and reviews person-specific motion from video. '
                               'Automatic action segmentation, captioning, quality approval, and robot policy learning '
                               'remain future work.'}}},
- {'slug': 'conquer-health',
-  'title': 'Conquer Health',
-  'category': {'ko': 'LLM 시스템 · 해커톤', 'en': 'LLM systems · Hackathon'},
-  'subtitle': {'ko': 'MCP로 찾은 근거가 답변까지 이어지는지 확인하고, 실험의 작은 점수 차이도 다시 검증했습니다.',
-               'en': 'I checked whether retrieved evidence reached the final answer, and re-examined small differences in '
-                     'experimental scores.'},
-  'desc': {'ko': '루닛 L2-preview의 추론 흐름을 개선한 의료 대화 프로젝트입니다. MCP 문서 조회·본문 전달, 출력 예산 실험과 답변 검수를 맡았으며, 팀은 직접 생성과 선택적 조회를 결합해 벤치마크상을 '
-                 '받았습니다.',
-           'en': 'A medical dialogue project improving inference around Lunit L2-preview. I worked on MCP document lookup, passing '
-                 'retrieved text to generation, output-budget experiments, and response review. The team combined direct generation '
-                 'with selective retrieval and won the benchmark award.'},
-  'role': {'ko': 'MCP 문서 조회·본문 전달, 초기 안전 게이트, 출력 예산 실험',
-           'en': 'MCP lookup and evidence delivery, initial safety gate, output-budget experiments'},
-  'period': '2026.08.21–08.22',
-  'context': {'ko': '루닛 의료 AI 해커톤 / AIM 팀 5인', 'en': 'Lunit medical AI hackathon / Team AIM, five members'},
-  'stack': 'Python / FastAPI / MCP / L2-preview / HealthBench / Docker',
-  'repo': 'https://github.com/Hackathon-AIM/health-conquer-submission',
-  'visual': 'health',
-  'caption': {'ko': '개인 구현·검수 흐름 도식 · 46.51점은 팀 최종 평가',
-              'en': 'Diagram of my implementation and review flow · Score shown is the team’s final evaluation'},
-  'award': {'ko': '루닛 · 벤치마크 1위 · AIM 팀 수상', 'en': 'Lunit · 1st in benchmark · Team AIM award'},
-  'sections': [{'id': 'problem',
-                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
-                'title': {'ko': '문서를 찾는 것에서, 답변의 근거로 쓰이게 하는 것까지.', 'en': 'Making retrieved documents useful to the answer.'},
-                'paragraphs': [{'ko': '제공된 L2-preview의 가중치를 바꾸지 않고 의료 질의응답을 개선하는 과제였습니다. 문서를 조회해도 필요한 본문이 생성 입력에 전달되지 않거나, 질문의 요구가 '
-                                      '답변에서 누락되면 도구 호출의 성공만으로는 충분하지 않았습니다.',
-                                'en': 'The task was to improve medical question answering without changing the provided L2-preview '
-                                      'weights. A successful lookup was insufficient if the relevant document text did not reach '
-                                      'generation or the answer missed part of the question.'},
-                               {'ko': '저는 초기 MCP 검색·생성 연결과 약물 안전 게이트를 구현하고, 검색 본문이 모델 입력에 포함되는지와 답변이 질문의 요구·근거를 반영하는지를 나누어 검수했습니다. 이후 '
-                                      '출력 예산 실험과 멀티턴 응답 지시 보강에도 참여했습니다. 팀의 최종 제출안과 개인 구현 범위는 커밋 단위로 구분했습니다.',
-                                'en': 'I implemented the initial MCP retrieval/generation connection and medication safety gate, '
-                                      'checking evidence delivery separately from whether the response addressed the question and '
-                                      'used that evidence. I also worked on output-budget experiments and multi-turn response '
-                                      'instructions. Individual contributions and the final team submission are distinguished by '
-                                      'commit.'}]},
-               {'id': 'implementation',
-                'label': {'ko': '직접 구현한 부분', 'en': 'My implementation'},
-                'title': {'ko': '검색 성공과, 근거를 사용하는 답변 사이의 빈틈을 확인했습니다.',
-                          'en': 'I checked the gap between successful retrieval and an evidence-informed answer.'},
-                'paragraphs': [{'ko': 'Python·FastAPI 기반 MCP 조회 흐름에서 문서를 찾는 단계와 본문을 생성 입력으로 넘기는 단계를 연결했습니다. 도구 반환만 확인하지 않고 검색 누락·중복, '
-                                      '실제 전달 본문, 근거 없는 인용과 질문 요구의 누락을 나누어 살폈습니다.',
-                                'en': 'I connected document lookup with delivery of the retrieved body text into generation through a '
-                                      'Python/FastAPI MCP flow. Beyond checking tool returns, I examined missing or duplicate '
-                                      'results, the text actually passed to the model, unsupported citations, and unanswered '
-                                      'requirements.'}],
-                'steps': [({'ko': '조회 연결', 'en': 'Connect retrieval'},
-                           {'ko': 'MCP 문서 조회·초기 안전 게이트 구현', 'en': 'Implement MCP lookup and an initial safety gate'}),
-                          ({'ko': '입력 확인', 'en': 'Inspect model input'},
-                           {'ko': '검색 본문이 생성 입력에 포함되는지 검수', 'en': 'Check that retrieved text reaches generation'}),
-                          ({'ko': '답변 확인', 'en': 'Review the response'},
-                           {'ko': '질문의 요구·근거·응답 완결성 확인', 'en': 'Check requirements, evidence use, and completeness'})]},
-               {'id': 'inference',
-                'label': {'ko': '개인 실험', 'en': 'My experiment'},
-                'title': {'ko': '출력 예산을 늘렸지만, 점수 개선이라고 단정하지 않았습니다.',
-                          'en': 'A larger output budget did not establish a score improvement.'},
-                'paragraphs': [{'ko': '출력 상한을 다시 확인하고, 제 후보 e6de327에서 서버 상한 설정을 2,048에서 32,768로 정정하면서 요청 출력 예산은 2,048에서 4,096토큰으로 '
-                                      '늘렸습니다. 추론 중 잘림으로 재생성 경로에 들어가는 일을 줄이려는 실험이었습니다. 서버 상한과 실제 요청 예산은 서로 다른 설정입니다.',
-                                'en': 'After rechecking the output limit, my candidate e6de327 corrected the configured server cap '
-                                      'from 2,048 to 32,768 and raised the requested output budget from 2,048 to 4,096 tokens. The '
-                                      'goal was to reduce truncation that triggered regeneration. The server cap and requested output '
-                                      'budget are distinct settings.'},
-                               {'ko': '장부상 이 후보는 49.59점으로, 기준선 반복 3회의 평균 49.18점과 0.41점 차이였습니다. 관측된 반복 변동 안에 있어 토큰 상향만의 개선 근거로 삼지 '
-                                      '않았습니다. 점수와 함께 잘림, 폴백 발생, 지연을 확인할 필요가 있었습니다.',
-                                'en': 'The ledger records 49.59 for this candidate, 0.41 points above the baseline’s three-run mean '
-                                      'of 49.18. The difference lies within the observed run-to-run variation, so it does not '
-                                      'establish a benefit from increasing the token budget alone. Truncation, fallback frequency, '
-                                      'and latency also needed inspection.'}]},
-               {'id': 'strategy',
-                'label': {'ko': '팀의 선택과 범위', 'en': 'Team decisions & scope'},
-                'title': {'ko': '도구를 항상 쓰기보다, 필요한 질문에 제한했습니다.', 'en': 'We reserved tools for questions that needed them.'},
-                'paragraphs': [{'ko': '팀은 직접 생성의 기준선을 먼저 확인한 뒤, 한국어 약가·허가·성분·질병 코드처럼 정확한 조회가 필요한 질문에 MCP를 제한하는 방향을 검토했습니다. 조회 실패나 모호한 '
-                                      '대상에는 직접 생성 경로를 유지하고, 긴 답변이 후처리에서 잘리지 않도록 개선했습니다.',
-                                'en': 'After establishing a direct-generation baseline, the team explored selective MCP use for '
-                                      'precise lookups such as Korean drug prices, approvals, ingredients, and disease codes. Direct '
-                                      'generation remained the fallback for failed lookups or ambiguous targets, and post-processing '
-                                      'was adjusted to preserve long answers.'},
-                               {'ko': '이는 팀의 최종 제출 계열에 대한 설명입니다. 제 기여인 초기 연결·본문 전달·안전 게이트와 출력 예산 실험은 커밋으로 구분했습니다. 선택적 MCP의 실행 빈도나 최종 '
-                                      '점수 기여도는 별도의 호출 로그 없이는 단정하지 않습니다.',
-                                'en': 'This describes the team’s final submission family. My initial integration, evidence delivery, '
-                                      'safety gate, and output-budget experiment are identified by their commits. Without separate '
-                                      'call logs, I do not attribute a specific share of the final score to selective MCP.'}]},
-               {'id': 'award',
-                'label': {'ko': '결과와 수상', 'en': 'Results & award'},
-                'title': {'ko': '벤치마크 1위. 팀 성과와 실험 점수는 구분합니다.',
-                          'en': 'First in the benchmark—with experimental and final scores kept separate.'},
-                'paragraphs': [{'ko': 'AIM 팀은 루닛 Conquer Health의 HealthBench 기반 최종 평가에서 14개 팀 중 1위로 벤치마크상을 받았습니다. 최종 3라운드 평균은 '
-                                      '46.51점입니다. 이는 팀 공동 성과이며 MCP나 출력 예산 하나의 효과로 해석하지 않습니다.',
-                                'en': 'Team AIM won the benchmark award, ranking first among 14 teams in the final HealthBench-based '
-                                      'evaluation at Lunit Conquer Health. The three-round mean was 46.51. This is a shared team '
-                                      'outcome, not an effect attributable solely to MCP or output budget.'}],
-                'table': {'caption': {'ko': '팀 공개 최종 평가 기록', 'en': 'Team-reported final evaluation'},
-                          'headers': [{'ko': '평가', 'en': 'Evaluation'}, {'ko': '점수', 'en': 'Score'}],
-                          'rows': [['Round 1', '46.17'],
-                                   ['Round 2', '45.55'],
-                                   ['Round 3', '47.82'],
-                                   [{'ko': '평균', 'en': 'Mean'}, '46.51']]},
-                'image': 'conquer-award.png',
-                'image_alt': {'ko': 'AIM 팀 Conquer Health 벤치마크 상장 · 2026.08.22',
-                              'en': 'Team AIM’s Conquer Health benchmark award · 22 August 2026'},
-                'image_class': 'award-figure',
-                'details': {'label': {'ko': '개발 대시보드 점수와 다른 이유', 'en': 'Why the development dashboard shows other scores'},
-                            'paragraphs': [{'ko': '개발 장부의 54.37점과 마감 대시보드의 53.53점은 최종 3라운드 평가와 별도 기록입니다. 모델 서버 상태와 누적 변경이 함께 달라진 실험도 '
-                                                  '있어, 서로 다른 기록을 단일 개선율로 계산하지 않았습니다. 상장은 수상 증빙이며 숫자 점수를 기재하지 않습니다.',
-                                            'en': 'The development ledger’s 54.37 and the closing dashboard’s 53.53 are separate from '
-                                                  'the three final rounds. Some development runs also differed in server state and '
-                                                  'accumulated changes, so these records are not combined into one improvement rate. '
-                                                  'The certificate documents the award, not numerical scores.'}]}},
-               {'id': 'learning',
-                'label': {'ko': '배운 점', 'en': 'What I learned'},
-                'title': {'ko': '좋아 보이는 점수보다, 다시 확인할 수 있는 변화.', 'en': 'A change I can verify matters more than a promising score.'},
-                'paragraphs': [{'ko': '같은 동작을 반복 평가해도 47.79–50.03으로 2.24점 차이가 났습니다. 제 출력 예산 후보의 기준선 평균 대비 +0.41점은 이 변동 안에 있어 개선이라고 '
-                                      '단정하지 않았습니다. 잘림·재생성·지연과 답변 완결성을 함께 확인해야 한다는 기준을 세웠습니다.',
-                                'en': 'Repeated evaluations of the same behavior ranged from 47.79 to 50.03—a 2.24-point spread. My '
-                                      'output-budget candidate’s 0.41-point difference from the baseline mean fell within that '
-                                      'variation, so I did not claim an improvement. I learned to examine truncation, retries, '
-                                      'latency, and completeness alongside the score.'},
-                               {'ko': '도구를 붙이는 것보다 중요한 것은 필요한 정보가 실제 답변까지 이어지는지, 그리고 변화가 반복해서 관측되는지였습니다. 이후 실험에서도 설정·관측·해석을 따로 남기고 '
-                                      '있습니다.',
-                                'en': 'What mattered was whether the information reached the answer and whether a change held up '
-                                      'across evaluations. I now keep configuration, observations, and interpretation separate in '
-                                      'experiment records.'}]}],
-  'links': [({'ko': '팀 저장소와 실행 구조', 'en': 'Team repository and architecture'},
-             'https://github.com/Hackathon-AIM/health-conquer-submission'),
-            ({'ko': '개인 구현: MCP 연결·안전 게이트', 'en': 'My implementation: MCP integration and safety gate'},
-             'https://github.com/Hackathon-AIM/health-conquer-submission/commit/75a96193672ebe55bfbbaa42a382c9681794bb41'),
-            ({'ko': '개인 실험: 출력 예산 조정', 'en': 'My experiment: output budget'},
-             'https://github.com/Hackathon-AIM/health-conquer-submission/commit/e6de32700de51aeb320172b1dd87ad52721305f5'),
-            ({'ko': '실험 장부 대조와 점수 해석', 'en': 'Ledger review and score interpretation'},
-             'https://github.com/Hackathon-AIM/health-conquer-submission/blob/main/docs/experiment-retrospective.md'),
-            ({'ko': '팀의 최종 평가 기록', 'en': 'Team-reported final evaluation'},
-             'https://juhee0223.github.io/juhee-portfolio/projects/conquer-health.html')],
-  'team': {'ko': '5인 팀 · 루닛 의료 AI 해커톤', 'en': '5-person team · Lunit medical AI hackathon'},
-  'display_stack': 'Python / FastAPI / MCP / L2-preview / HealthBench',
-  'facts': [({'ko': '최종 평가', 'en': 'Final evaluation'}, {'ko': '14개 팀 중 1위 · 벤치마크상', 'en': '1st of 14 teams · Benchmark award'}, True),
-            ({'ko': '팀 평균', 'en': 'Team average'}, {'ko': '46.51점 · 최종 3라운드', 'en': '46.51 · Three final rounds'}, True),
-            ({'ko': '개선 범위', 'en': 'Scope'},
-             {'ko': '제공 모델의 응답 흐름 · 가중치 변경 없음', 'en': 'Response pipeline around the provided model · No weight changes'},
-             False)]},
  {'slug': 'danzzan',
   'title': {'ko': '단짠', 'en': 'Danzzan'},
   'category': {'ko': 'Backend · 실제 서비스 운영', 'en': 'Backend · Live service'},
@@ -656,6 +517,145 @@ PROJECTS = [{'slug': 'video-motion',
   'facts': [({'ko': '재실행 검증', 'en': 'Repeated runs'}, {'ko': '3개 영상 × 5회 · 총 15회', 'en': '3 videos × 5 runs · 15 runs total'}, True),
             ({'ko': '확인 범위', 'en': 'Verified scope'},
              {'ko': '같은 CPU 조건에서 좌표·지표·점수 일치', 'en': 'Matching coordinates, metrics, and scores under the same CPU settings'},
+             False)]},
+ {'slug': 'conquer-health',
+  'title': 'Conquer Health',
+  'category': {'ko': 'LLM 시스템 · 해커톤', 'en': 'LLM systems · Hackathon'},
+  'subtitle': {'ko': 'MCP로 찾은 근거가 답변까지 이어지는지 확인하고, 실험의 작은 점수 차이도 다시 검증했습니다.',
+               'en': 'I checked whether retrieved evidence reached the final answer, and re-examined small differences in '
+                     'experimental scores.'},
+  'desc': {'ko': '루닛 L2-preview의 추론 흐름을 개선한 의료 대화 프로젝트입니다. MCP 문서 조회·본문 전달, 출력 예산 실험과 답변 검수를 맡았으며, 팀은 직접 생성과 선택적 조회를 결합해 벤치마크상을 '
+                 '받았습니다.',
+           'en': 'A medical dialogue project improving inference around Lunit L2-preview. I worked on MCP document lookup, passing '
+                 'retrieved text to generation, output-budget experiments, and response review. The team combined direct generation '
+                 'with selective retrieval and won the benchmark award.'},
+  'role': {'ko': 'MCP 문서 조회·본문 전달, 초기 안전 게이트, 출력 예산 실험',
+           'en': 'MCP lookup and evidence delivery, initial safety gate, output-budget experiments'},
+  'period': '2026.08.21–08.22',
+  'context': {'ko': '루닛 의료 AI 해커톤 / AIM 팀 5인', 'en': 'Lunit medical AI hackathon / Team AIM, five members'},
+  'stack': 'Python / FastAPI / MCP / L2-preview / HealthBench / Docker',
+  'repo': 'https://github.com/Hackathon-AIM/health-conquer-submission',
+  'visual': 'health',
+  'caption': {'ko': '개인 구현·검수 흐름 도식 · 46.51점은 팀 최종 평가',
+              'en': 'Diagram of my implementation and review flow · Score shown is the team’s final evaluation'},
+  'award': {'ko': '루닛 · 벤치마크 1위 · AIM 팀 수상', 'en': 'Lunit · 1st in benchmark · Team AIM award'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
+                'title': {'ko': '문서를 찾는 것에서, 답변의 근거로 쓰이게 하는 것까지.', 'en': 'Making retrieved documents useful to the answer.'},
+                'paragraphs': [{'ko': '제공된 L2-preview의 가중치를 바꾸지 않고 의료 질의응답을 개선하는 과제였습니다. 문서를 조회해도 필요한 본문이 생성 입력에 전달되지 않거나, 질문의 요구가 '
+                                      '답변에서 누락되면 도구 호출의 성공만으로는 충분하지 않았습니다.',
+                                'en': 'The task was to improve medical question answering without changing the provided L2-preview '
+                                      'weights. A successful lookup was insufficient if the relevant document text did not reach '
+                                      'generation or the answer missed part of the question.'},
+                               {'ko': '저는 초기 MCP 검색·생성 연결과 약물 안전 게이트를 구현하고, 검색 본문이 모델 입력에 포함되는지와 답변이 질문의 요구·근거를 반영하는지를 나누어 검수했습니다. 이후 '
+                                      '출력 예산 실험과 멀티턴 응답 지시 보강에도 참여했습니다. 팀의 최종 제출안과 개인 구현 범위는 커밋 단위로 구분했습니다.',
+                                'en': 'I implemented the initial MCP retrieval/generation connection and medication safety gate, '
+                                      'checking evidence delivery separately from whether the response addressed the question and '
+                                      'used that evidence. I also worked on output-budget experiments and multi-turn response '
+                                      'instructions. Individual contributions and the final team submission are distinguished by '
+                                      'commit.'}]},
+               {'id': 'implementation',
+                'label': {'ko': '직접 구현한 부분', 'en': 'My implementation'},
+                'title': {'ko': '검색 성공과, 근거를 사용하는 답변 사이의 빈틈을 확인했습니다.',
+                          'en': 'I checked the gap between successful retrieval and an evidence-informed answer.'},
+                'paragraphs': [{'ko': 'Python·FastAPI 기반 MCP 조회 흐름에서 문서를 찾는 단계와 본문을 생성 입력으로 넘기는 단계를 연결했습니다. 도구 반환만 확인하지 않고 검색 누락·중복, '
+                                      '실제 전달 본문, 근거 없는 인용과 질문 요구의 누락을 나누어 살폈습니다.',
+                                'en': 'I connected document lookup with delivery of the retrieved body text into generation through a '
+                                      'Python/FastAPI MCP flow. Beyond checking tool returns, I examined missing or duplicate '
+                                      'results, the text actually passed to the model, unsupported citations, and unanswered '
+                                      'requirements.'}],
+                'steps': [({'ko': '조회 연결', 'en': 'Connect retrieval'},
+                           {'ko': 'MCP 문서 조회·초기 안전 게이트 구현', 'en': 'Implement MCP lookup and an initial safety gate'}),
+                          ({'ko': '입력 확인', 'en': 'Inspect model input'},
+                           {'ko': '검색 본문이 생성 입력에 포함되는지 검수', 'en': 'Check that retrieved text reaches generation'}),
+                          ({'ko': '답변 확인', 'en': 'Review the response'},
+                           {'ko': '질문의 요구·근거·응답 완결성 확인', 'en': 'Check requirements, evidence use, and completeness'})]},
+               {'id': 'inference',
+                'label': {'ko': '개인 실험', 'en': 'My experiment'},
+                'title': {'ko': '출력 예산을 늘렸지만, 점수 개선이라고 단정하지 않았습니다.',
+                          'en': 'A larger output budget did not establish a score improvement.'},
+                'paragraphs': [{'ko': '출력 상한을 다시 확인하고, 제 후보 e6de327에서 서버 상한 설정을 2,048에서 32,768로 정정하면서 요청 출력 예산은 2,048에서 4,096토큰으로 '
+                                      '늘렸습니다. 추론 중 잘림으로 재생성 경로에 들어가는 일을 줄이려는 실험이었습니다. 서버 상한과 실제 요청 예산은 서로 다른 설정입니다.',
+                                'en': 'After rechecking the output limit, my candidate e6de327 corrected the configured server cap '
+                                      'from 2,048 to 32,768 and raised the requested output budget from 2,048 to 4,096 tokens. The '
+                                      'goal was to reduce truncation that triggered regeneration. The server cap and requested output '
+                                      'budget are distinct settings.'},
+                               {'ko': '장부상 이 후보는 49.59점으로, 기준선 반복 3회의 평균 49.18점과 0.41점 차이였습니다. 관측된 반복 변동 안에 있어 토큰 상향만의 개선 근거로 삼지 '
+                                      '않았습니다. 점수와 함께 잘림, 폴백 발생, 지연을 확인할 필요가 있었습니다.',
+                                'en': 'The ledger records 49.59 for this candidate, 0.41 points above the baseline’s three-run mean '
+                                      'of 49.18. The difference lies within the observed run-to-run variation, so it does not '
+                                      'establish a benefit from increasing the token budget alone. Truncation, fallback frequency, '
+                                      'and latency also needed inspection.'}]},
+               {'id': 'strategy',
+                'label': {'ko': '팀의 선택과 범위', 'en': 'Team decisions & scope'},
+                'title': {'ko': '도구를 항상 쓰기보다, 필요한 질문에 제한했습니다.', 'en': 'We reserved tools for questions that needed them.'},
+                'paragraphs': [{'ko': '팀은 직접 생성의 기준선을 먼저 확인한 뒤, 한국어 약가·허가·성분·질병 코드처럼 정확한 조회가 필요한 질문에 MCP를 제한하는 방향을 검토했습니다. 조회 실패나 모호한 '
+                                      '대상에는 직접 생성 경로를 유지하고, 긴 답변이 후처리에서 잘리지 않도록 개선했습니다.',
+                                'en': 'After establishing a direct-generation baseline, the team explored selective MCP use for '
+                                      'precise lookups such as Korean drug prices, approvals, ingredients, and disease codes. Direct '
+                                      'generation remained the fallback for failed lookups or ambiguous targets, and post-processing '
+                                      'was adjusted to preserve long answers.'},
+                               {'ko': '이는 팀의 최종 제출 계열에 대한 설명입니다. 제 기여인 초기 연결·본문 전달·안전 게이트와 출력 예산 실험은 커밋으로 구분했습니다. 선택적 MCP의 실행 빈도나 최종 '
+                                      '점수 기여도는 별도의 호출 로그 없이는 단정하지 않습니다.',
+                                'en': 'This describes the team’s final submission family. My initial integration, evidence delivery, '
+                                      'safety gate, and output-budget experiment are identified by their commits. Without separate '
+                                      'call logs, I do not attribute a specific share of the final score to selective MCP.'}]},
+               {'id': 'award',
+                'label': {'ko': '결과와 수상', 'en': 'Results & award'},
+                'title': {'ko': '벤치마크 1위. 팀 성과와 실험 점수는 구분합니다.',
+                          'en': 'First in the benchmark—with experimental and final scores kept separate.'},
+                'paragraphs': [{'ko': 'AIM 팀은 루닛 Conquer Health의 HealthBench 기반 최종 평가에서 14개 팀 중 1위로 벤치마크상을 받았습니다. 최종 3라운드 평균은 '
+                                      '46.51점입니다. 이는 팀 공동 성과이며 MCP나 출력 예산 하나의 효과로 해석하지 않습니다.',
+                                'en': 'Team AIM won the benchmark award, ranking first among 14 teams in the final HealthBench-based '
+                                      'evaluation at Lunit Conquer Health. The three-round mean was 46.51. This is a shared team '
+                                      'outcome, not an effect attributable solely to MCP or output budget.'}],
+                'table': {'caption': {'ko': '팀 공개 최종 평가 기록', 'en': 'Team-reported final evaluation'},
+                          'headers': [{'ko': '평가', 'en': 'Evaluation'}, {'ko': '점수', 'en': 'Score'}],
+                          'rows': [['Round 1', '46.17'],
+                                   ['Round 2', '45.55'],
+                                   ['Round 3', '47.82'],
+                                   [{'ko': '평균', 'en': 'Mean'}, '46.51']]},
+                'image': 'conquer-award.png',
+                'image_alt': {'ko': 'AIM 팀 Conquer Health 벤치마크 상장 · 2026.08.22',
+                              'en': 'Team AIM’s Conquer Health benchmark award · 22 August 2026'},
+                'image_class': 'award-figure',
+                'details': {'label': {'ko': '개발 대시보드 점수와 다른 이유', 'en': 'Why the development dashboard shows other scores'},
+                            'paragraphs': [{'ko': '개발 장부의 54.37점과 마감 대시보드의 53.53점은 최종 3라운드 평가와 별도 기록입니다. 모델 서버 상태와 누적 변경이 함께 달라진 실험도 '
+                                                  '있어, 서로 다른 기록을 단일 개선율로 계산하지 않았습니다. 상장은 수상 증빙이며 숫자 점수를 기재하지 않습니다.',
+                                            'en': 'The development ledger’s 54.37 and the closing dashboard’s 53.53 are separate from '
+                                                  'the three final rounds. Some development runs also differed in server state and '
+                                                  'accumulated changes, so these records are not combined into one improvement rate. '
+                                                  'The certificate documents the award, not numerical scores.'}]}},
+               {'id': 'learning',
+                'label': {'ko': '배운 점', 'en': 'What I learned'},
+                'title': {'ko': '좋아 보이는 점수보다, 다시 확인할 수 있는 변화.', 'en': 'A change I can verify matters more than a promising score.'},
+                'paragraphs': [{'ko': '같은 동작을 반복 평가해도 47.79–50.03으로 2.24점 차이가 났습니다. 제 출력 예산 후보의 기준선 평균 대비 +0.41점은 이 변동 안에 있어 개선이라고 '
+                                      '단정하지 않았습니다. 잘림·재생성·지연과 답변 완결성을 함께 확인해야 한다는 기준을 세웠습니다.',
+                                'en': 'Repeated evaluations of the same behavior ranged from 47.79 to 50.03—a 2.24-point spread. My '
+                                      'output-budget candidate’s 0.41-point difference from the baseline mean fell within that '
+                                      'variation, so I did not claim an improvement. I learned to examine truncation, retries, '
+                                      'latency, and completeness alongside the score.'},
+                               {'ko': '도구를 붙이는 것보다 중요한 것은 필요한 정보가 실제 답변까지 이어지는지, 그리고 변화가 반복해서 관측되는지였습니다. 이후 실험에서도 설정·관측·해석을 따로 남기고 '
+                                      '있습니다.',
+                                'en': 'What mattered was whether the information reached the answer and whether a change held up '
+                                      'across evaluations. I now keep configuration, observations, and interpretation separate in '
+                                      'experiment records.'}]}],
+  'links': [({'ko': '팀 저장소와 실행 구조', 'en': 'Team repository and architecture'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission'),
+            ({'ko': '개인 구현: MCP 연결·안전 게이트', 'en': 'My implementation: MCP integration and safety gate'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission/commit/75a96193672ebe55bfbbaa42a382c9681794bb41'),
+            ({'ko': '개인 실험: 출력 예산 조정', 'en': 'My experiment: output budget'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission/commit/e6de32700de51aeb320172b1dd87ad52721305f5'),
+            ({'ko': '실험 장부 대조와 점수 해석', 'en': 'Ledger review and score interpretation'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission/blob/main/docs/experiment-retrospective.md'),
+            ({'ko': '팀의 최종 평가 기록', 'en': 'Team-reported final evaluation'},
+             'https://juhee0223.github.io/juhee-portfolio/projects/conquer-health.html')],
+  'team': {'ko': '5인 팀 · 루닛 의료 AI 해커톤', 'en': '5-person team · Lunit medical AI hackathon'},
+  'display_stack': 'Python / FastAPI / MCP / L2-preview / HealthBench',
+  'facts': [({'ko': '최종 평가', 'en': 'Final evaluation'}, {'ko': '14개 팀 중 1위 · 벤치마크상', 'en': '1st of 14 teams · Benchmark award'}, True),
+            ({'ko': '팀 평균', 'en': 'Team average'}, {'ko': '46.51점 · 최종 3라운드', 'en': '46.51 · Three final rounds'}, True),
+            ({'ko': '개선 범위', 'en': 'Scope'},
+             {'ko': '제공 모델의 응답 흐름 · 가중치 변경 없음', 'en': 'Response pipeline around the provided model · No weight changes'},
              False)]},
  {'slug': 'fish-detection',
   'title': {'ko': '넙치 증상 탐지 / Flatfish doctor', 'en': 'Flatfish doctor'},
