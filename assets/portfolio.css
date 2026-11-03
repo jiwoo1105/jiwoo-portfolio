@@ -346,24 +346,57 @@ body{padding-top:var(--header-height)}
 @media(prefers-reduced-motion:reduce){.contact-letter:before,.letter-stamp,.contact-email svg,.github-cta>span{transition:none;transform:none!important}}
 
 /* A short introduction on the photograph, followed by concrete applications. */
-.hero-technologies{display:inline-flex;align-items:center;gap:18px;max-width:100%;margin-top:26px;padding:11px 14px;border:1px solid #ffffff60;border-radius:4px;background:#152c405c;color:#fff;backdrop-filter:blur(10px);font-size:12px;line-height:1.8;letter-spacing:.015em;text-shadow:0 1px 5px #0003;transition:background .2s}
-.hero-technologies>span:last-child{font-size:19px;flex-shrink:0}.hero-technologies:hover{background:#152c408a}
 .technologies{padding-top:62px;padding-bottom:52px;border-bottom:1px solid var(--line)}
 .technology-heading{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding-bottom:27px;border-bottom:1px solid var(--line)}
-.technology-heading h2{font-size:27px;font-weight:600;letter-spacing:-.035em}.technology-heading>p{font-size:12px;color:var(--muted)}
+.technology-heading h3{font-size:27px;font-weight:600;letter-spacing:-.035em}.technology-heading>p{font-size:12px;color:var(--muted)}
 .technology-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4%;padding-top:28px}
-.technology-group{display:flex;flex-direction:column;min-width:0}.technology-group h3{font-size:17px;font-weight:600;margin-bottom:18px}
+.technology-group{display:flex;flex-direction:column;min-width:0}.technology-group h4{font-size:17px;font-weight:600;margin:0 0 18px}
 .technology-tags{display:flex;flex-wrap:wrap;gap:7px;list-style:none;margin:0;padding:0;align-content:flex-start}.technology-tags li{padding:6px 10px;border-radius:4px;background:var(--surface);color:var(--body-copy);font-size:12px;line-height:1.5}
 .technology-group>.technology-tags{min-height:90px}.technology-group>p{font-size:13px;line-height:1.85;color:var(--body-copy);margin:18px 0 14px;word-break:keep-all}
 .technology-projects{display:flex;flex-wrap:wrap;gap:5px 20px;margin-top:auto;font-size:12px;color:var(--blue)}.technology-projects a{min-height:40px;display:inline-flex;align-items:center;gap:7px}.technology-projects a:hover{text-decoration:underline;text-underline-offset:5px}
 .technology-workflow{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:27px;padding-top:24px;border-top:1px solid var(--line)}
-.technology-workflow h3{font-size:13px;font-weight:550}.technology-workflow p{font-size:11px;color:var(--muted);line-height:1.7;margin-top:8px}.technology-workflow>.technology-tags{justify-content:flex-end}.technology-workflow .technology-tags li{font-size:11px;padding:5px 8px}
+.technology-workflow h4{font-size:13px;font-weight:550;margin:0}.technology-workflow p{font-size:11px;color:var(--muted);line-height:1.7;margin-top:8px}.technology-workflow>.technology-tags{justify-content:flex-end}.technology-workflow .technology-tags li{font-size:11px;padding:5px 8px}
 .contact-refresh .copy-email{min-height:44px}
 @media(max-width:1100px){.technology-grid{gap:3%}.technology-tags li{font-size:11px;padding:5px 8px}.technology-group>.technology-tags{min-height:108px}.technology-workflow{align-items:flex-start}.technology-workflow>.technology-tags{max-width:48%}}
 @media(max-width:700px){
- .hero-technologies{font-size:10px;gap:12px;padding:9px 11px;margin-top:20px;letter-spacing:0}.hero-technologies>span:last-child{font-size:16px}
- .technologies{padding-top:38px;padding-bottom:34px}.technology-heading{display:block;padding-bottom:21px}.technology-heading h2{font-size:25px}.technology-heading>p{font-size:11px;margin-top:9px}
- .technology-grid{grid-template-columns:1fr;gap:25px;padding-top:25px}.technology-group+.technology-group{border-top:1px solid var(--line);padding-top:24px}.technology-group h3{font-size:16px;margin-bottom:14px}.technology-group>.technology-tags{min-height:0}.technology-tags li{font-size:12px;padding:6px 9px}.technology-group>p{font-size:12px;line-height:1.8;margin-top:15px;margin-bottom:9px}.technology-projects{font-size:12px}
+ .technologies{padding-top:38px;padding-bottom:34px}.technology-heading{display:block;padding-bottom:21px}.technology-heading h3{font-size:25px}.technology-heading>p{font-size:11px;margin-top:9px}
+ .technology-grid{grid-template-columns:1fr;gap:25px;padding-top:25px}.technology-group+.technology-group{border-top:1px solid var(--line);padding-top:24px}.technology-group h4{font-size:16px;margin-bottom:14px}.technology-group>.technology-tags{min-height:0}.technology-tags li{font-size:12px;padding:6px 9px}.technology-group>p{font-size:12px;line-height:1.8;margin-top:15px;margin-bottom:9px}.technology-projects{font-size:12px}
  .technology-workflow{display:block;margin-top:24px;padding-top:24px}.technology-workflow>.technology-tags{max-width:none;justify-content:flex-start;margin-top:15px}
 }
-@media(max-width:360px){.hero-technologies{font-size:9px;gap:8px;padding:8px 9px}.hero-technologies>span:last-child{font-size:14px}}
+
+.affiliation-collab .affiliation-logo{padding:8px 10px;flex-shrink:1;max-width:100%}
+.affiliation-collab img{width:250px;height:auto;max-width:100%;display:block}
+.technology-collaboration .technology-tags li{background:var(--soft-blue);color:var(--blue)}
+@media(max-width:700px){.affiliation-collab img{width:225px}}
+
+/* Technologies continue the introduction within the same section. */
+.home .about{row-gap:44px;padding-bottom:65px}
+.about-technologies{grid-column:1/-1;padding:28px 0 0;border-top:1px solid var(--line);border-bottom:0}
+.technology-heading{padding-bottom:0;border-bottom:0}
+.technology-heading h3{font-size:23px}
+.technology-workflow{margin-top:22px;padding-top:20px}
+.about-technologies>.about-work-link{margin-top:24px}
+@media(max-width:700px){
+ .home .about{display:grid;grid-template-columns:minmax(0,1fr);row-gap:26px;padding-bottom:40px}
+ .home .about>.companion{grid-row:1}.home .about>.about-copy{grid-row:2}.about-technologies{grid-row:3;padding-top:24px}
+ .technology-heading h3{font-size:21px}
+}
+
+/* On-demand footage keeps the project card quiet until the visitor opens it. */
+.field-video-link{display:inline-flex;align-items:center;flex-wrap:wrap;gap:10px;max-width:100%;margin:0 0 23px;padding:10px 0;color:var(--blue);font-size:13px;font-weight:550}
+.field-video-link:hover>span:nth-child(2){text-decoration:underline;text-underline-offset:5px}
+.field-video-play{display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--line);border-radius:50%;font-size:9px}
+.field-video-link small{color:var(--muted);font-size:11px;font-weight:400}
+.field-video-dialog{width:min(960px,calc(100vw - 40px));max-width:none;max-height:calc(100dvh - 40px);margin:auto;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);box-shadow:0 24px 100px #0004;overflow:auto}
+.field-video-dialog::backdrop{background:rgb(5 12 19 / .75);backdrop-filter:blur(5px)}
+.field-video-header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 28px}
+.field-video-header .eyebrow{font-size:10px;letter-spacing:.08em}
+.field-video-header h2{font-size:22px;font-weight:550;letter-spacing:-.025em;margin:7px 0 0}
+.field-video-header button{flex:none;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);font-size:25px;cursor:pointer}
+.field-video-dialog video{display:block;width:100%;max-height:65dvh;background:#000;aspect-ratio:16/9;object-fit:contain}
+.field-video-caption{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:19px 28px;font-size:12px;line-height:1.7}
+.field-video-caption p{margin:0;color:var(--body-copy)}.field-video-caption>span{flex-shrink:0;color:var(--muted);font-size:10px}
+.field-video-error{margin:0;padding:0 28px 20px;font-size:12px}.field-video-error a{color:var(--blue);text-decoration:underline}
+body:has(.field-video-dialog[open]){overflow:hidden}
+@media(max-width:700px){.field-video-dialog{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}.field-video-header{padding:16px;gap:12px}.field-video-header h2{font-size:18px}.field-video-caption{display:block;padding:14px 16px}.field-video-caption>span{display:block;margin-top:6px}.field-video-link{font-size:12px;gap:8px}.field-video-header button{width:40px;height:40px}}
+@media(max-width:360px){html[lang=en] .project-facts>div{grid-template-columns:minmax(0,1fr);gap:6px}}

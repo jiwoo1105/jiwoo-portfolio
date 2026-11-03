@@ -1,7 +1,6 @@
 """Reviewed bilingual content. Regenerate the static site with scripts/build.py."""
 
 # Verified against project chats, implementation and commits on 2026-11-03.
-CORE_TECH = ['Python', 'PyTorch', 'FastAPI', 'Spring Boot', 'Redis']
 TECHNOLOGIES = [
  {'title': {'ko': '비전·3D 모션', 'en': 'Vision & 3D motion'},
   'tags': ['Python', 'PyTorch', 'OpenCV', 'PHALP', 'HMR 2.0 · SMPL', 'MediaPipe', 'YOLOv8 · SAM2', 'NumPy · SciPy'],
@@ -9,17 +8,20 @@ TECHNOLOGIES = [
                   'en': 'I integrate pretrained models to track people and balls, reconstruct 3D motion, and compute touch-window metrics.'},
   'links': [('video-motion', {'ko': '로봇 데이터 파이프라인', 'en': 'Motion data pipeline'}), ('soccer-analysis', {'ko': '축구 드리블 분석', 'en': 'Dribbling analysis'})]},
  {'title': {'ko': 'LLM 응용·실험', 'en': 'LLM applications'},
-  'tags': ['Python', 'FastAPI', 'MCP', 'Transformers', 'L2-preview', 'HealthBench'],
+  'tags': ['Python', 'FastAPI', 'MCP', 'Transformers'],
   'description': {'ko': 'MCP로 조회한 문서를 모델 입력에 전달하고, 출력 예산·응답 흐름을 실험합니다. 영상 모델의 입력과 결과도 같은 조건으로 비교합니다.',
                   'en': 'I pass documents retrieved through MCP into model inputs and test output budgets and response flows. I also compare video models under consistent conditions.'},
   'links': [('conquer-health', 'Conquer Health'), ('video-motion', {'ko': '영상 그라운딩 실험', 'en': 'Video grounding experiments'})]},
  {'title': {'ko': '서비스 개발', 'en': 'Service development'},
-  'tags': ['Java · Spring Boot', 'Redis · Lua', 'Spring Security · JWT', 'MySQL · JPA', 'React · TypeScript', 'DeepL API'],
+  'tags': ['Java · Spring Boot', 'Redis · Lua', 'Spring Security · JWT', 'MySQL · JPA', 'React · TypeScript'],
   'description': {'ko': '동시 예매와 인증 예외 처리를 구현하고, 관리자 설정·가입 화면을 연결합니다. 번역 실패 시 원문 제공과 후속 보정도 처리합니다.',
                   'en': 'I build concurrent ticketing and authentication error handling, connect admin settings and sign-up screens, and handle translation failures with source-text fallback and follow-up translation.'},
   'links': [('danzzan', {'ko': '단짠', 'en': 'Danzzan'})]}
 ]
-WORKFLOW_TECH = ['Docker', 'Linux', 'Git', 'pytest', 'JUnit 5 · Mockito', 'GitHub Actions']
+COLLABORATION_TECH = ['Slack', 'Jira', 'Git · GitHub PR']
+
+ENVIRONMENT_TECH = ['Docker', 'Linux']
+TESTING_TECH = ['pytest', 'JUnit 5', 'GitHub Actions']
 
 HOME = {'headline': {'ko': 'AI를 실제로 쓰이는<br>기능으로 만듭니다.', 'en': 'I build AI<br>people can use.'},
  'description': {'ko': '박지우의 AI / ML 포트폴리오. 컴퓨터 비전·3D 동작 분석, 의료 AI, 실제 서비스 개발 경험을 소개합니다.',
@@ -332,8 +334,11 @@ PROJECTS = [{'slug': 'video-motion',
                   {'ko': 'JWT 재발급·예외 처리, 가입 입력·검증·저장', 'en': 'JWT refresh and error handling; sign-up validation and persistence'}),
                  ({'ko': '다국어 지원', 'en': 'Multilingual support'},
                   {'ko': '번역 처리·실패 대응', 'en': 'Translation and failure handling'})],
-  'affiliation': {'logo': 'brands/npay.svg', 'alt': 'Npay',
-                  'label': {'ko': 'Face Sign 연계 입장', 'en': 'Face Sign entry integration'}, 'kind': 'npay'},
+  'affiliation': {'logo': 'brands/danzzan-npay.jpg', 'alt': 'DANZZAN × Npay',
+                  'label': {'ko': 'Face Sign 연계 입장', 'en': 'Face Sign entry integration'}, 'kind': 'collab'},
+  'field_video': {'video': 'danzzan/face-sign-entry.mp4', 'poster': 'danzzan/face-sign-entry.jpg',
+                  'title': {'ko': 'Face Sign으로 입장하는 순간', 'en': 'Face Sign entry in action'},
+                  'description': {'ko': '현장 인증부터 축제 입장까지 담은 약 10초의 영상입니다.', 'en': 'A 10-second excerpt showing Face Sign verification and festival entry.'}},
   'period': '2025.12–2026.09',
   'context': {'ko': '대학 축제 웹 서비스 / 팀 프로젝트', 'en': 'University festival web service / Team project'},
   'stack': 'Spring Boot / Redis / Lua / MySQL / React / Docker',
@@ -450,7 +455,7 @@ PROJECTS = [{'slug': 'video-motion',
                  'around touches and torso angle across all valid frames, and generate research reports that can be checked against '
                  'the source footage.'},
   'role': {'ko': '지표 설계, 터치 구간 실험, 분석 파이프라인 구현·검수', 'en': 'Metric design, touch-window experiments, pipeline development and review'},
-  'period': {'ko': '2025.11– · 연구 진행 중', 'en': 'Since Nov 2025 · Ongoing research'},
+  'period': {'ko': '2025.11–2026.06 · 완료', 'en': 'Nov 2025–Jun 2026 · Completed'},
   'context': 'AIV Lab',
   'stack': 'Python / MediaPipe / YOLO / SAM2 / NumPy / SciPy',
   'repo': 'https://github.com/jiwoo1105/soccer_motion_analysis',
@@ -522,13 +527,13 @@ PROJECTS = [{'slug': 'video-motion',
                                       'metrics, and scores matched exactly between repeats under the same default CLI CPU settings. '
                                       'Previous manually excluded intervals were not applied.'},
                                {'ko': '이 검증은 구현한 계산의 일관성을 확인한 것입니다. 전문가 등급은 항목별 정답 점수가 아니며, 독립적인 숙련도 평가 검증은 남아 있습니다. 가려짐, 단안 깊이 오차, '
-                                      '터치 오검출이 측정에 미치는 영향을 계속 검토하고 있습니다.',
+                                      '터치 오검출이 측정에 미치는 영향은 추가 검증이 필요한 한계로 남았습니다.',
                                 'en': 'This verifies computational consistency. The available expert grades are not ground-truth '
                                       'scores for each metric, and independent validation of skill assessment remains open. '
                                       'Occlusion, monocular depth errors, and false touch detections can still affect the '
                                       'measurements.'}],
-                'note': {'ko': '2026.11.03 검토 · 반복 일치는 측정 정확도나 자동 숙련도 평가의 타당성을 입증하지 않습니다.',
-                         'en': 'Reviewed 3 November 2026 · Repeatability does not establish measurement accuracy or the validity of '
+                'note': {'ko': '프로젝트는 2026.06 완료했으며, 위 결과는 종료 후 2026.11.03까지의 코드 검토·재실행 기록을 포함합니다. 반복 일치는 측정 정확도나 자동 숙련도 평가의 타당성을 입증하지 않습니다.',
+                         'en': 'The project concluded in June 2026; the results above include subsequent code reviews and reruns through 3 November 2026. Repeatability does not establish measurement accuracy or the validity of '
                                'automated skill assessment.'}},
                {'id': 'learning',
                 'label': {'ko': '배운 점', 'en': 'What I learned'},
@@ -564,7 +569,7 @@ PROJECTS = [{'slug': 'video-motion',
            'en': 'MCP lookup and evidence delivery, initial safety gate, output-budget experiments'},
   'period': '2026.08.21–08.22',
   'context': {'ko': '루닛 의료 AI 해커톤 / AIM 팀 5인', 'en': 'Lunit medical AI hackathon / Team AIM, five members'},
-  'stack': 'Python / FastAPI / MCP / L2-preview / HealthBench / Docker',
+  'stack': 'Python / FastAPI / MCP / L2-preview / Docker',
   'repo': 'https://github.com/Hackathon-AIM/health-conquer-submission',
   'visual': 'health',
   'caption': {'ko': '개인 구현·검수 흐름 도식 · 46.51점은 팀 최종 평가',
@@ -682,7 +687,7 @@ PROJECTS = [{'slug': 'video-motion',
             ({'ko': '팀의 최종 평가 기록', 'en': 'Team-reported final evaluation'},
              'https://juhee0223.github.io/juhee-portfolio/projects/conquer-health.html')],
   'team': {'ko': '5인 팀 · 루닛 의료 AI 해커톤', 'en': '5-person team · Lunit medical AI hackathon'},
-  'display_stack': 'Python / FastAPI / MCP / L2-preview / HealthBench',
+  'display_stack': 'Python / FastAPI / MCP / L2-preview',
   'facts': [({'ko': '최종 평가', 'en': 'Final evaluation'}, {'ko': '14개 팀 중 1위 · 벤치마크상', 'en': '1st of 14 teams · Benchmark award'}, True),
             ({'ko': '팀 평균', 'en': 'Team average'}, {'ko': '46.51점 · 최종 3라운드', 'en': '46.51 · Three final rounds'}, True),
             ({'ko': '개선 범위', 'en': 'Scope'},

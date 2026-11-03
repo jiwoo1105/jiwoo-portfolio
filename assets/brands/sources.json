@@ -13,6 +13,12 @@
       "sha256": "23cc5e3d585b289d238febf9401e08d5d6e33c4fcc75d87db7984fae2786b472",
       "bytes": 1866,
       "modification": "None. Official original SVG; displayed at a proportional size."
+    },
+    "danzzan-npay.jpg": {
+      "source": "https://raw.githubusercontent.com/DKU-Dan-Zzan/.github/main/profile/collab-logo.jpg",
+      "sha256": "4ba843700c35c4f432c4220541cec69e84e81fdc35d252a7e2a1413528303b3b",
+      "bytes": 65473,
+      "modification": "None. Existing high-resolution team collaboration artwork, displayed proportionally."
     }
   }
 }

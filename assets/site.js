@@ -48,7 +48,8 @@
     syncPreviews();
   }));
   const previews = [];
-  const shouldPlay = state => state.visible && !document.hidden && !paused && !state.userPaused && (!reducedMotion.matches || state.manualPlay);
+  let fieldVideoOpen = false;
+  const shouldPlay = state => state.visible && !document.hidden && !fieldVideoOpen && !paused && !state.userPaused && (!reducedMotion.matches || state.manualPlay);
   function syncPreview(state) {
     if (shouldPlay(state)) {
       if (!state.video.paused || state.starting) return;
@@ -103,6 +104,35 @@
     });
   }
   document.addEventListener('visibilitychange', syncPreviews);
+  document.querySelectorAll('[data-video-dialog]').forEach(link => {
+    const playerDialog = document.getElementById(link.dataset.videoDialog);
+    if (!playerDialog || typeof playerDialog.showModal !== 'function') return;
+    const video = playerDialog.querySelector('video');
+    const error = playerDialog.querySelector('.field-video-error');
+    link.setAttribute('aria-haspopup', 'dialog');
+    link.setAttribute('aria-controls', playerDialog.id);
+    link.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      fieldVideoOpen = true;
+      syncPreviews();
+      playerDialog.showModal();
+      if (!video.getAttribute('src')) video.src = video.dataset.src;
+      video.play().catch(() => {}); // Native controls remain available if playback is blocked.
+    });
+    playerDialog.querySelector('[data-close-video]').addEventListener('click', () => playerDialog.close());
+    playerDialog.addEventListener('click', event => {
+      const bounds = playerDialog.getBoundingClientRect();
+      if (event.target === playerDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) playerDialog.close();
+    });
+    playerDialog.addEventListener('close', () => {
+      video.pause();
+      video.currentTime = 0;
+      fieldVideoOpen = false;
+      syncPreviews();
+    });
+    video.addEventListener('error', () => { error.hidden = false; });
+  });
   const chapterButtons = document.querySelectorAll('[data-video][data-seek]');
   if (chapterButtons.length) body.classList.add('video-enhanced');
   chapterButtons.forEach(button => button.addEventListener('click', () => {

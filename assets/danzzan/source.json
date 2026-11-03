@@ -1,0 +1,18 @@
+{
+  "source": "User-provided Face Sign festival entry footage; pre-edited excerpt supplied in Downloads.",
+  "duration_seconds": 9.791,
+  "resolution": "1280 \u00d7 720",
+  "fps": 24,
+  "processing": "Video stream copied without re-encoding; audio and container metadata removed; MP4 optimized for streaming. Poster at 0.6 seconds.",
+  "source_sha256": "ace12a9259986fe939d6e65f3601dc10c914d38db1da29c397ee57b4079f758d",
+  "files": {
+    "face-sign-entry.jpg": {
+      "sha256": "5225cabf742e16f565a1c7118936cb976c27480f958f30af5912880d76fabfda",
+      "bytes": 84778
+    },
+    "face-sign-entry.mp4": {
+      "sha256": "f28d6ce761b92dd536f1811b8d050c897bdd602d6d6151aa123cd2559364dc80",
+      "bytes": 2210887
+    }
+  }
+}
