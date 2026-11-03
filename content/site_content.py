@@ -20,9 +20,6 @@ TECHNOLOGIES = [
 ]
 COLLABORATION_TECH = ['Slack', 'Jira', 'Git · GitHub PR']
 
-ENVIRONMENT_TECH = ['Docker', 'Linux']
-TESTING_TECH = ['pytest', 'JUnit 5', 'GitHub Actions']
-
 HOME = {'headline': {'ko': 'AI를 실제로 쓰이는<br>기능으로 만듭니다.', 'en': 'I build AI<br>people can use.'},
  'description': {'ko': '박지우의 AI / ML 포트폴리오. 컴퓨터 비전·3D 동작 분석, 의료 AI, 실제 서비스 개발 경험을 소개합니다.',
                  'en': 'Jiwoo Park’s AI/ML portfolio: computer vision, 3D motion analysis, medical AI, and real-world service '

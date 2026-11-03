@@ -142,8 +142,6 @@ def render(lang, slug=None):
             result+=f'<p>{t(group["description"])}</p><div class="technology-projects">'+''.join(f'<a href="projects/{slug}.html">{t(label)} <span aria-hidden="true">↗</span></a>' for slug,label in group['links'])+'</div></article>'
         result+='</div>'
         rows=[
-            (L('개발·실험 환경', 'Development environments'), L('연구용 GPU 환경 구성 · 로컬 통합 실행', 'Research GPU environments · Local integration runs'), content.ENVIRONMENT_TECH, ''),
-            (L('테스트·자동화', 'Testing & CI'), L('축구 분석의 계산 테스트 · 단짠의 API 테스트', 'Calculation tests for dribbling analysis · API tests for Danzzan'), content.TESTING_TECH, ''),
             (L('협업 도구·방식', 'Collaboration'), L('팀 소통 · 이슈별 작업 관리 · PR 기반 변경 공유', 'Team communication · Issue tracking · Changes shared through PRs'), content.COLLABORATION_TECH+[L('스프린트·데일리 스크럼', 'Sprints & daily scrums')], ' technology-collaboration')
         ]
         for title,description,tags,extra in rows:
