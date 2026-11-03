@@ -1,0 +1,108 @@
+[
+  {
+    "file": "motion-aligned.mp4",
+    "source": "Video_grounding/outputs/presentation_sets_20261103/ID009_dribble/00_동기화비교_RGB_HMR_MuJoCo.mp4",
+    "kind": "existing asset",
+    "sha256": "31bc3547f9e08eb90e23e07a5e8dc48543804a4a2245263580c782f6a7352765"
+  },
+  {
+    "file": "motion-release.jpg",
+    "source": "Video_grounding/outputs/basketball_caption_20261103/review/clip_03_release.jpg",
+    "kind": "existing asset",
+    "sha256": "ddea173fd5e3a9c9c7a4e7789c27271ad38d9296dd627987d67081250347c0ca"
+  },
+  {
+    "file": "g1-fullbody.mp4",
+    "source": "Video_grounding/outputs/presentation_sets_20261103/ID009_dribble/G1_fullbody_v2/comparison_rgb_reference_physics.mp4",
+    "kind": "existing asset",
+    "sha256": "fb30178ff5a1dd69aa3e9fe6a4a71b9e3a821b8ec8b83963373f5148a228ddd5"
+  },
+  {
+    "file": "g1-fullbody.jpg",
+    "source": "Video_grounding/outputs/basketball_g1_fullbody_v2_20261103/comparison_preview.png",
+    "kind": "JPEG conversion of existing preview",
+    "sha256": "42c57ec9a2d58d557ab09afb20ab0d17188602a75e3fa0248eecd86bf84390c6"
+  },
+  {
+    "file": "soccer-windows.png",
+    "source": "soccer_motion_analysis/output/reports/2026-10-08_touch_shoulder/wider_windows/wider_windows.png",
+    "kind": "existing asset",
+    "sha256": "6bd3c58d05ecb3ab188ec1ef7d457e34f4e87bd335070f9aae5add32117b40b5"
+  },
+  {
+    "file": "soccer-selection.png",
+    "source": "soccer_motion_analysis/output/reports/2026-10-11_touch_mean_speed/selection_example.png",
+    "kind": "existing asset",
+    "sha256": "8d6fc429444ede0805afd4cada11e9a0c8942f204b2188a2cf6e9a701dff20cb"
+  },
+  {
+    "file": "soccer-initial-ball.jpg",
+    "source": "soccer_motion_analysis/output/reviewer-validation-20261103/accuracy/reference1_initial_prompt.jpg",
+    "kind": "existing asset",
+    "sha256": "2c8f62b5bd90de78a13dc07e0043d426758b5c8cea5fc2b9103784d75fbf2905"
+  },
+  {
+    "file": "danzzan-admin-english.png",
+    "source": "capstone_23/.local-db/main-20260930/FE/docs/pr/admin-notice-english-field.png",
+    "kind": "existing asset",
+    "sha256": "270047eab9fcb620ae02f1206e321cb72a75c8dbb85ce289c5320537e2b77bd0"
+  },
+  {
+    "file": "fish-monitoring.png",
+    "source": "https://github.com/jiwoo1105/fish-disease-detection",
+    "kind": "existing asset",
+    "sha256": "c8bdd12b3b10ed97b342180d52f0dce42f7f3cbeb68196adeabc948e8808721a",
+    "original_file": "01_monitoring.png"
+  },
+  {
+    "file": "fish-history.png",
+    "source": "https://github.com/jiwoo1105/fish-disease-detection",
+    "kind": "existing asset",
+    "sha256": "ae380c91f174e9cf738f1e59a31cf66d87268f89ec5c24428a9d87c9312eca92",
+    "original_file": "04_results_list.png"
+  },
+  {
+    "file": "medguard-attacks.jpg",
+    "source": "../medguard-demo.mp4",
+    "kind": "frame from existing original demo",
+    "sha256": "156c2650d6060d3ebe26339c785345891dd2a495663fdb578aa3b61dab91373a",
+    "time_seconds": 12
+  },
+  {
+    "file": "medguard-defense.jpg",
+    "source": "../medguard-demo.mp4",
+    "kind": "frame from existing original demo",
+    "sha256": "20901f79cfdbf06a5b5a8a76ae62e70ae2d39e526c14873a3683702a26068a38",
+    "time_seconds": 18
+  },
+  {
+    "file": "medai-input.jpg",
+    "source": "https://github.com/jiwoo1105/MedAI_Agent/blob/main/demo/시현영상.mov",
+    "time_seconds": 30,
+    "kind": "frame from original demo",
+    "sha256": "0aefa36b70df13885ca24d1c47b038ac22600cef4d2ed54023d631181d61a0a7"
+  },
+  {
+    "file": "medai-result.jpg",
+    "source": "https://github.com/jiwoo1105/MedAI_Agent/blob/main/demo/시현영상.mov",
+    "time_seconds": 70,
+    "kind": "frame from original demo",
+    "sha256": "90c1a4cb0599d55ab7e57932f8358abec6570fddacae24355148db7ca2fb59c6"
+  },
+  {
+    "file": "medai-result.mp4",
+    "source": "https://github.com/jiwoo1105/MedAI_Agent/blob/main/demo/시현영상.mov",
+    "segment_seconds": [
+      30,
+      80
+    ],
+    "changes": "Excerpt, H.2641280px24fps, audio removed; screen content unchanged",
+    "sha256": "09d364caec84f30218d9174e6515936698cf9f46c5a8a60718aa91ca01e2d416"
+  },
+  {
+    "file": "health-experiment.svg",
+    "source": "https://github.com/Hackathon-AIM/health-conquer-submission/blob/main/docs/experiment-retrospective.md",
+    "kind": "Plot reconstructed from development ledger; observed range, not a confidence interval",
+    "sha256": "180704284d7a03747da3741272c5779bf4031e44b08fd145c1901d13542bc594"
+  }
+]

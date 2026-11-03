@@ -399,3 +399,41 @@ body{padding-top:var(--header-height)}
 body:has(.field-video-dialog[open]){overflow:hidden}
 @media(max-width:700px){.field-video-dialog{width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}.field-video-header{padding:16px;gap:12px}.field-video-header h2{font-size:18px}.field-video-caption{display:block;padding:14px 16px}.field-video-caption>span{display:block;margin-top:6px}.field-video-link{font-size:12px;gap:8px}.field-video-header button{width:40px;height:40px}}
 @media(max-width:360px){html[lang=en] .project-facts>div{grid-template-columns:minmax(0,1fr);gap:6px}}
+
+/* Evidence-led case studies: actual screens alongside the decisions they explain. */
+.case-layout{grid-template-columns:155px minmax(0,1fr);gap:44px}
+.case-block{padding-bottom:64px;margin-bottom:64px}
+.case-story{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:start;margin:28px 0}
+.case-story-wide{grid-template-columns:1fr;gap:22px}
+.story-visual,.story-copy{min-width:0}
+.story-visual figure{margin:0}
+.story-visual img,.story-visual video{display:block;width:100%;height:auto;max-height:520px;object-fit:contain;border-radius:6px;background:var(--surface)}
+.story-visual video{background:#101519}
+.story-images{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:12px}
+.story-phones img{max-height:430px;background:var(--surface)}
+.story-visual figcaption{font-size:12px;line-height:1.7;color:var(--muted);margin-top:12px;word-break:keep-all}
+.evidence-open{display:block;position:relative;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.evidence-expand{position:absolute;right:8px;bottom:8px;display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line);border-radius:50%;background:var(--paper);color:var(--ink);font-size:17px}
+.evidence-open:hover{border-color:var(--blue)}
+.case-text .story-copy>p:first-child{margin-top:0}
+.case-text .story-copy p{font-size:15px;line-height:1.9}
+.story-outcome{border-top:1px solid var(--line);padding-top:17px;margin-top:22px}
+.story-outcome>strong{font-size:12px;font-weight:600;color:var(--ink)}
+.case-text .story-outcome p{font-size:14px;margin:8px 0 0}
+.story-insight{display:grid;grid-template-columns:150px 1fr;gap:24px;border-left:3px solid var(--blue);padding:18px 24px;background:var(--surface);margin:24px 0}
+.story-insight>span{font-size:12px;line-height:1.8;font-weight:600;color:var(--ink)}
+.case-text .story-insight p{font-size:14px;line-height:1.85;margin:0;max-width:none}
+.story-evidence{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:18px;font-size:12px;line-height:1.6;color:var(--blue)}
+.story-evidence a:hover{text-decoration:underline;text-underline-offset:4px}
+.story-diagram{padding:24px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.diagram-heading{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:22px}
+.story-diagram ol{list-style:none;padding:0;margin:0;counter-reset:stage}
+.story-diagram li{position:relative;padding:0 0 23px 39px;counter-increment:stage}
+.story-diagram li:before{content:counter(stage,decimal-leading-zero);position:absolute;left:0;top:2px;font-size:11px;color:var(--blue);font-variant-numeric:tabular-nums}
+.story-diagram li:not(:last-child):after{content:'';position:absolute;left:7px;top:22px;bottom:6px;width:1px;background:var(--line)}
+.story-diagram li:last-child{padding-bottom:0}
+.story-diagram strong{display:block;font-size:15px;line-height:1.5;font-weight:600;color:var(--ink)}
+.story-diagram li>span{display:block;margin-top:6px;font-size:12px;line-height:1.65;color:var(--muted)}
+.story-diagram figcaption{border-top:1px solid var(--line);padding-top:14px;margin-top:20px;font-size:10px}
+@media(max-width:1100px){.case-layout{grid-template-columns:130px minmax(0,1fr);gap:28px}.case-story{grid-template-columns:1fr;gap:24px}.story-visual img,.story-visual video{max-height:480px}}
+@media(max-width:700px){.case-layout{display:block}.case-block{padding-bottom:38px;margin-bottom:38px}.case-story{margin:22px 0;gap:24px}.story-insight{display:block;padding:17px 18px}.story-insight>span{display:block;margin-bottom:8px}.case-text .story-copy p{font-size:14px}.story-visual figcaption{font-size:11px}.story-images{gap:10px}.story-diagram{padding:20px}.story-phones img{max-height:340px}}

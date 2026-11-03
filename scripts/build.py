@@ -187,7 +187,30 @@ def render(lang, slug=None):
         body+=f'<div class="case-layout section-wrap"><nav class="case-nav" aria-label="{L("프로젝트 목차","Case study sections")}"><span>{L("이 프로젝트의 이야기","In this case study")}</span>'+''.join(f'<a href="#{s["id"]}">{t(s["label"])}</a>' for s in p['sections'])+f'<a href="#sources">{L("코드와 근거","Code & evidence")}</a></nav><div class="case-content">'
         for s in p['sections']:
             body+=f'<section class="case-block" id="{s["id"]}"><h2>{t(s["label"])}</h2><div class="case-text"><h3>{t(s["title"])}</h3>'
+            if s.get('visual'):
+                v=s['visual']
+                body+='<div class="case-story'+(' case-story-wide' if v.get('wide') else '')+'"><div class="story-visual">'
+                if v.get('video'):
+                    body+=f'<figure><video controls playsinline preload="none" poster="{asset}{v["poster"]}" aria-label="{esc(t(v["caption"]))}"><source src="{asset}{v["video"]}" type="video/mp4"><a href="{asset}{v["video"]}">{L("영상 파일 열기","Open video file")}</a></video><figcaption>{t(v["caption"])}</figcaption></figure>'
+                elif v.get('images'):
+                    body+='<div class="story-images'+(' story-phones' if v.get('phones') else '')+'">'
+                    for src,caption in v['images']:
+                        body+=f'<figure><a class="evidence-open" href="{asset}{src}" target="_blank" rel="noopener" aria-label="{esc(t(caption))} — {L("원본 크게 보기 (새 탭)","View full size (new tab)")}"><img src="{asset}{src}" alt="{esc(t(caption))}" loading="lazy"><span class="evidence-expand" aria-hidden="true">↗</span></a><figcaption>{t(caption)}</figcaption></figure>'
+                    body+='</div>'
+                elif v.get('flow'):
+                    body+=f'<figure class="story-diagram"><div class="diagram-heading">{t(v["caption"])}</div><ol>'
+                    for name,desc in v['flow']:
+                        body+=f'<li><strong>{t(name)}</strong><span>{t(desc)}</span></li>'
+                    body+=f'</ol><figcaption>{L("구현·실험 기록을 정리한 설명도", "Diagram reconstructed from implementation and experiment records")}</figcaption></figure>'
+                body+='</div><div class="story-copy">'
             body+=''.join(f'<p>{t(text)}</p>' for text in s['paragraphs'])
+            if s.get('outcome'):
+                body+=f'<div class="story-outcome"><strong>{L("확인한 결과","What I verified")}</strong><p>{t(s["outcome"])}</p></div>'
+            if s.get('visual'):body+='</div></div>'
+            if s.get('insight'):
+                body+=f'<div class="story-insight"><span>{L("이 경험에서 얻은 기준","What changed in my approach")}</span><p>{t(s["insight"])}</p></div>'
+            if s.get('evidence'):
+                body+='<div class="story-evidence">'+''.join(external(label,url) for label,url in s['evidence'])+'</div>'
             if s.get('steps'):
                 body+='<ol class="process-flow">'+''.join(f'<li><strong>{t(title)}</strong><p>{t(description)}</p></li>' for title,description in s['steps'])+'</ol>'
             if s.get('items'):
