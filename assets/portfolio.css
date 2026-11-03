@@ -437,3 +437,15 @@ body:has(.field-video-dialog[open]){overflow:hidden}
 .story-diagram figcaption{border-top:1px solid var(--line);padding-top:14px;margin-top:20px;font-size:10px}
 @media(max-width:1100px){.case-layout{grid-template-columns:130px minmax(0,1fr);gap:28px}.case-story{grid-template-columns:1fr;gap:24px}.story-visual img,.story-visual video{max-height:480px}}
 @media(max-width:700px){.case-layout{display:block}.case-block{padding-bottom:38px;margin-bottom:38px}.case-story{margin:22px 0;gap:24px}.story-insight{display:block;padding:17px 18px}.story-insight>span{display:block;margin-bottom:8px}.case-text .story-copy p{font-size:14px}.story-visual figcaption{font-size:11px}.story-images{gap:10px}.story-diagram{padding:20px}.story-phones img{max-height:340px}}
+
+/* Keep each major challenge, implementation and lesson together. */
+.case-framing{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:25px 0 32px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.case-framing dt{font-size:14px;font-weight:650;color:var(--ink);margin-bottom:10px}
+.case-framing dd{margin:0;font-size:15px;line-height:1.85;color:var(--body-copy);word-break:keep-all}
+.case-action-title{font-size:14px;font-weight:650;margin:0;color:var(--ink)}
+.story-support{margin-top:32px;padding-top:28px;border-top:1px solid var(--line)}
+.story-support>h4{font-size:22px;line-height:1.5;letter-spacing:-.025em;font-weight:600;margin:0 0 20px;color:var(--ink);word-break:keep-all}
+.case-anchor{display:block;scroll-margin-top:120px}
+.case-nav a{word-break:keep-all;overflow-wrap:break-word}
+@media(max-width:900px){.case-framing{grid-template-columns:1fr;gap:22px}}
+@media(max-width:700px){.case-framing{margin:22px 0;padding:20px 0}.case-framing dd{font-size:14px}.story-support>h4{font-size:20px}}

@@ -52,6 +52,36 @@ def render(lang, slug=None):
     def external(label, url):
         return f'<a href="{esc(url)}" target="_blank" rel="noopener noreferrer">{t(label)} <span aria-hidden="true">↗</span></a>'
 
+    def story(s):
+        result=''
+        if s.get('visual'):
+            v=s['visual']
+            result+='<div class="case-story'+(' case-story-wide' if v.get('wide') else '')+'"><div class="story-visual">'
+            if v.get('video'):
+                result+=f'<figure><video controls playsinline preload="none" poster="{asset}{v["poster"]}" aria-label="{esc(t(v["caption"]))}"><source src="{asset}{v["video"]}" type="video/mp4"><a href="{asset}{v["video"]}">{L("영상 파일 열기","Open video file")}</a></video><figcaption>{t(v["caption"])}</figcaption></figure>'
+            elif v.get('images'):
+                result+='<div class="story-images'+(' story-phones' if v.get('phones') else '')+'">'
+                for src,caption in v['images']:
+                    result+=f'<figure><a class="evidence-open" href="{asset}{src}" target="_blank" rel="noopener" aria-label="{esc(t(caption))} — {L("원본 크게 보기 (새 탭)","View full size (new tab)")}"><img src="{asset}{src}" alt="{esc(t(caption))}" loading="lazy"><span class="evidence-expand" aria-hidden="true">↗</span></a><figcaption>{t(caption)}</figcaption></figure>'
+                result+='</div>'
+            elif v.get('flow'):
+                result+=f'<figure class="story-diagram"><div class="diagram-heading">{t(v["caption"])}</div><ol>'
+                for name,desc in v['flow']:
+                    result+=f'<li><strong>{t(name)}</strong><span>{t(desc)}</span></li>'
+                result+=f'</ol><figcaption>{L("구현·실험 기록을 정리한 설명도", "Diagram reconstructed from implementation and experiment records")}</figcaption></figure>'
+            result+='</div><div class="story-copy">'
+        result+=''.join(f'<p>{t(text)}</p>' for text in s['paragraphs'])
+        if s.get('outcome'):
+            result+=f'<div class="story-outcome"><strong>{L("확인한 결과","What I verified")}</strong><p>{t(s["outcome"])}</p></div>'
+        if s.get('visual'):result+='</div></div>'
+        for step in s.get('supporting', []):
+            result+=f'<div class="story-support" id="{step["id"]}"><h4>{t(step["title"])}</h4>'+story(step)+'</div>'
+        if s.get('insight'):
+            result+=f'<div class="story-insight"><span>{L("이 난제에서 배운 점" if s.get("challenge") else "이 프로젝트에서 배운 점","What I learned")}</span><p>{t(s["insight"])}</p></div>'
+        if s.get('evidence'):
+            result+='<div class="story-evidence">'+''.join(external(label,url) for label,url in s['evidence'])+'</div>'
+        return result
+
     def stats(items, cls='case-results'):
         return f'<dl class="{cls}">' + ''.join(f'<div><dt>{t(label)}</dt><dd>{t(value)}</dd></div>' for value,label in items) + '</dl>'
 
@@ -186,31 +216,11 @@ def render(lang, slug=None):
             body+='<div class="case-at-a-glance section-wrap"><div>'+media(p,True)+f'</div><div class="case-summary-panel"><h2>{L("프로젝트 한눈에 보기","At a glance")}</h2><p>{t(p["context"])}</p>'+facts(p)+'</div></div>'
         body+=f'<div class="case-layout section-wrap"><nav class="case-nav" aria-label="{L("프로젝트 목차","Case study sections")}"><span>{L("이 프로젝트의 이야기","In this case study")}</span>'+''.join(f'<a href="#{s["id"]}">{t(s["label"])}</a>' for s in p['sections'])+f'<a href="#sources">{L("코드와 근거","Code & evidence")}</a></nav><div class="case-content">'
         for s in p['sections']:
+            body+=''.join(f'<span class="case-anchor" id="{alias}"></span>' for alias in s.get('aliases', []))
             body+=f'<section class="case-block" id="{s["id"]}"><h2>{t(s["label"])}</h2><div class="case-text"><h3>{t(s["title"])}</h3>'
-            if s.get('visual'):
-                v=s['visual']
-                body+='<div class="case-story'+(' case-story-wide' if v.get('wide') else '')+'"><div class="story-visual">'
-                if v.get('video'):
-                    body+=f'<figure><video controls playsinline preload="none" poster="{asset}{v["poster"]}" aria-label="{esc(t(v["caption"]))}"><source src="{asset}{v["video"]}" type="video/mp4"><a href="{asset}{v["video"]}">{L("영상 파일 열기","Open video file")}</a></video><figcaption>{t(v["caption"])}</figcaption></figure>'
-                elif v.get('images'):
-                    body+='<div class="story-images'+(' story-phones' if v.get('phones') else '')+'">'
-                    for src,caption in v['images']:
-                        body+=f'<figure><a class="evidence-open" href="{asset}{src}" target="_blank" rel="noopener" aria-label="{esc(t(caption))} — {L("원본 크게 보기 (새 탭)","View full size (new tab)")}"><img src="{asset}{src}" alt="{esc(t(caption))}" loading="lazy"><span class="evidence-expand" aria-hidden="true">↗</span></a><figcaption>{t(caption)}</figcaption></figure>'
-                    body+='</div>'
-                elif v.get('flow'):
-                    body+=f'<figure class="story-diagram"><div class="diagram-heading">{t(v["caption"])}</div><ol>'
-                    for name,desc in v['flow']:
-                        body+=f'<li><strong>{t(name)}</strong><span>{t(desc)}</span></li>'
-                    body+=f'</ol><figcaption>{L("구현·실험 기록을 정리한 설명도", "Diagram reconstructed from implementation and experiment records")}</figcaption></figure>'
-                body+='</div><div class="story-copy">'
-            body+=''.join(f'<p>{t(text)}</p>' for text in s['paragraphs'])
-            if s.get('outcome'):
-                body+=f'<div class="story-outcome"><strong>{L("확인한 결과","What I verified")}</strong><p>{t(s["outcome"])}</p></div>'
-            if s.get('visual'):body+='</div></div>'
-            if s.get('insight'):
-                body+=f'<div class="story-insight"><span>{L("이 경험에서 얻은 기준","What changed in my approach")}</span><p>{t(s["insight"])}</p></div>'
-            if s.get('evidence'):
-                body+='<div class="story-evidence">'+''.join(external(label,url) for label,url in s['evidence'])+'</div>'
+            if s.get('challenge'):
+                body+=f'<dl class="case-framing"><div><dt>{L("무엇이 어려웠나","The challenge")}</dt><dd>{t(s["challenge"])}</dd></div><div><dt>{L("왜 이 방법을 선택했나","Why this approach")}</dt><dd>{t(s["decision"])}</dd></div></dl><h4 class="case-action-title">{L("해결 과정","What I did")}</h4>'
+            body+=story(s)
             if s.get('steps'):
                 body+='<ol class="process-flow">'+''.join(f'<li><strong>{t(title)}</strong><p>{t(description)}</p></li>' for title,description in s['steps'])+'</ol>'
             if s.get('items'):
@@ -227,7 +237,7 @@ def render(lang, slug=None):
             if s.get('video'):
                 body+=f'<figure class="evidence-figure"><video controls playsinline preload="none" poster="{asset}{s["poster"]}" aria-label="{esc(t(s["caption"]))}"><source src="{asset}{s["video"]}" type="video/mp4"></video><figcaption>{t(s["caption"])}</figcaption></figure>'
             if s.get('details'):
-                body+=f'<details class="case-disclosure"><summary>{t(s["details"]["label"])}</summary>'+''.join(f'<p>{t(v)}</p>' for v in s['details']['paragraphs'])+'</details>'
+                body+=f'<details class="case-disclosure" id="{s['details'].get('id',s['id']+'-details')}"><summary>{t(s["details"]["label"])}</summary>'+''.join(f'<p>{t(v)}</p>' for v in s['details']['paragraphs'])+'</details>'
             if s.get('stats'):body+=stats(s['stats'])
             if s.get('image'):body+=f'<figure class="evidence-figure {s.get("image_class", "")}"><img src="{asset}{s["image"]}" alt="{esc(t(s["image_alt"]))}" loading="lazy"><figcaption>{t(s["image_alt"])}</figcaption></figure>'
             if s.get('note'):body+=f'<p class="case-note">{t(s["note"])}</p>'

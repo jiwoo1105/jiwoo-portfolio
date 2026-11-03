@@ -40,14 +40,16 @@ HOME = {'headline': {'ko': 'AI를 실제로 쓰이는<br>기능으로 만듭니�
                   'explain technical choices and work with a team to find better solutions.'}]}
 
 SUMMARIES = {'soccer-analysis': {'ko': '선수와 공을 추적하고, 드리블 동작을 검수 가능한 지표로.',
-                     'en': 'Tracking the player and ball to produce dribbling metrics that can be checked against the footage.'},
+                     'en': 'Tracking the player and ball to produce dribbling metrics that can be checked against '
+                           'the footage.'},
  'video-motion': {'ko': '영상의 움직임을 3D로 복원하고,<br>인물과 시간의 연결을 검수합니다.',
                   'en': 'Reconstructing 3D motion,<br>with checks on identity and timing.'},
- 'danzzan': {'ko': '총학생회와 함께 운영한 대학 축제 서비스. 예매·인증·번역 백엔드를 담당했습니다.',
-             'en': 'A university festival service operated with the student council. I built ticketing, authentication, and '
-                   'translation features.'},
+ 'danzzan': {'ko': '총학생회와 함께 운영한 대학 축제 서비스. 예매·인증·번역 기능 개발을 담당했습니다.',
+             'en': 'A university festival service operated with the student council. I developed ticketing, '
+                   'authentication and translation features.'},
  'conquer-health': {'ko': '루닛 L2-preview의 의료 답변을 개선하며, MCP 근거 전달과 출력 예산을 실험했습니다.',
-                    'en': 'I explored MCP evidence delivery and output budgets to improve medical responses from Lunit’s L2-preview.'},
+                    'en': 'I explored MCP evidence delivery and output budgets to improve medical responses from '
+                          'Lunit’s L2-preview.'},
  'fish-detection': {'ko': '넙치를 찾고, 개체별 외형 증상을 분류하는 앱.',
                     'en': 'An app that detects olive flounder and classifies each fish’s visible symptoms.'},
  'medguard': {'ko': '흉부 X-ray 모델의 적대적 공격과 방어를 비교한 실험.',
@@ -56,7 +58,8 @@ SUMMARIES = {'soccer-analysis': {'ko': '선수와 공을 추적하고, 드리블
                  'en': 'A prototype linking drug-information lookup with an eight-stage LLM workflow.'}}
 
 FOCUS = {'soccer-analysis': {'ko': '평가 지표 설계 · 공 추적 검수', 'en': 'Metric design · Ball-tracking review'},
- 'video-motion': {'ko': '파이프라인 전반 설계·구현 · 모델 연동·검수', 'en': 'Pipeline design and implementation · Model integration and review'},
+ 'video-motion': {'ko': '파이프라인 전반 설계·구현 · 모델 연동·검수',
+                  'en': 'Pipeline design and implementation · Model integration and review'},
  'danzzan': {'ko': 'Redis·Lua 예매 처리 · 인증·번역', 'en': 'Redis/Lua ticketing · Authentication and translation'},
  'conquer-health': {'ko': 'MCP 조회·본문 전달 · 출력 예산 실험', 'en': 'MCP evidence delivery · Output-budget experiments'}}
 
@@ -83,23 +86,21 @@ PROJECTS = [{'slug': 'video-motion',
               'en': 'The same six seconds: person crop ↔ actual HMR 2.0 output. Explore every stage in the case '
                     'study.'},
   'sections': [{'id': 'problem',
-                'label': {'ko': '01 · 문제 정의', 'en': '01 · The problem'},
-                'title': {'ko': '모델의 출력을 모으는 것만으로는 학습 데이터가 되지 않았습니다.',
-                          'en': 'Model outputs alone were not a usable dataset.'},
-                'paragraphs': [{'ko': '영상에서 행동 구간을 찾고 3D 모션과 설명을 묶으려면, 모든 결과가 같은 사람의 같은 순간을 가리켜야 합니다. 구간을 잘못 찾거나 '
-                                      'ID가 바뀌면 그럴듯한 메쉬와 설명도 서로 다른 장면을 나타낼 수 있었습니다.',
-                                'en': 'To pair action intervals with 3D motion and descriptions, every output '
-                                      'must refer to the same person at the same moment. An incorrect interval or '
-                                      'identity switch can pair plausible meshes and captions with the wrong '
-                                      'scene.'},
-                               {'ko': '저는 ETRI 연구과제에서 파이프라인 전반의 설계·구현을 주도했습니다. 먼저 7개 모델·5개 FPS·2개 영상·3개 쿼리의 210개 '
-                                      '응답을 비교했습니다. FPS를 높여도 행동 누락과 넓은 구간 예측이 남아, 그라운딩 출력을 곧바로 정답으로 삼지 않는 방향으로 설계를 '
-                                      '바꿨습니다.',
-                                'en': 'I led the pipeline design and implementation within an ETRI research '
-                                      'project. I first compared 210 responses across seven models, five FPS '
-                                      'settings, two videos and three queries. Missed actions and overly broad '
-                                      'intervals persisted at higher sampling rates, so I changed the design to '
-                                      'avoid treating grounding outputs as labels.'}],
+                'label': {'ko': '프로젝트 소개', 'en': 'Project overview'},
+                'title': {'ko': '영상 속 움직임을 로봇 학습에 연결하기 위한 데이터 파이프라인입니다.',
+                          'en': 'A pipeline for connecting motion in video to robot learning.'},
+                'paragraphs': [{'ko': 'ETRI 연구과제에서 영상의 인물 추적, 선수별 크롭, 3D 모션 복원과 결과 검수를 연결하는 파이프라인 전반의 설계·구현을 '
+                                      '주도했습니다. 사전학습 모델을 연동하고, 출력이 원본 영상의 어느 사람·어느 순간에서 나왔는지 확인할 수 있게 만들었습니다.',
+                                'en': 'For an ETRI research project, I led the design and implementation of a '
+                                      'pipeline connecting person tracking, person crops, 3D motion '
+                                      'reconstruction and review. I integrated pretrained models and made outputs '
+                                      'traceable to a person and moment in the source video.'},
+                               {'ko': '현재 범위는 선택 구간의 데이터 구축, 행동 설명 비교와 G1 물리 추종 파일럿입니다. 핵심 과제는 데이터 사이의 대응을 유지하는 '
+                                      '것과 복원한 움직임의 물리적 실행 가능성을 확인하는 것이었습니다.',
+                                'en': 'The current scope covers data construction for selected segments, '
+                                      'action-caption comparisons and G1 physics pilots. The two central '
+                                      'challenges were preserving correspondence across outputs and evaluating '
+                                      'whether reconstructed motion could be physically executed.'}],
                 'visual': {'caption': {'ko': '설계의 중심: 같은 사람 · 같은 시간',
                                        'en': 'Design principle: one person, one timeline'},
                            'flow': [({'ko': '원본 영상·시각', 'en': 'Source video & time'},
@@ -107,20 +108,18 @@ PROJECTS = [{'slug': 'video-motion',
                                     ({'ko': '인물 ID·선택 구간', 'en': 'Person ID & selected interval'},
                                      {'ko': '누락·ID 변경을 검수', 'en': 'Review gaps and identity changes'}),
                                     ({'ko': '크롭·3D 모션·설명', 'en': 'Crop, 3D motion & caption'},
-                                     {'ko': '같은 구간의 결과를 대조', 'en': 'Compare outputs from the same interval'})]},
-                'outcome': {'ko': '인물 ID와 원본 시간축을 먼저 보존하고, 각 단계의 결과를 대조할 수 있는 연결 구조를 만들었습니다.',
-                            'en': 'The pipeline preserves person IDs and source times before linking outputs, '
-                                  'making each stage traceable to the input.'},
-                'insight': {'ko': '파이프라인의 핵심을 모델 수가 아니라 데이터 간 대응 관계로 정의했습니다. 이후 단계가 앞 단계의 오류를 숨기지 않도록 원본과 중간 결과를 '
-                                  '함께 남겼습니다.',
-                            'en': 'I began defining the pipeline by the alignment between its data, rather than '
-                                  'the number of models. Keeping source footage and intermediate outputs made '
-                                  'upstream errors visible.'}},
+                                     {'ko': '같은 구간의 결과를 대조', 'en': 'Compare outputs from the same interval'})]}},
                {'id': 'pipeline',
-                'label': {'ko': '02 · 데이터 연결', 'en': '02 · Connecting the data'},
-                'title': {'ko': '크롭과 메쉬를 원본의 인물·프레임에 묶었습니다.',
-                          'en': 'Linking each crop and mesh to its source person and frame.'},
-                'paragraphs': [{'ko': '전체 화면의 ViTDet-H 검출과 HMR 2.0 추정을 PHALP가 연결해 인물 ID를 만듭니다. 저는 검수한 선수와 연속 구간을 '
+                'label': {'ko': '난제 1 · 학습 데이터의 일관성', 'en': 'Challenge 1 · Data consistency'},
+                'title': {'ko': '여러 모델의 결과가 같은 사람의 같은 순간을 가리키게 하려면?',
+                          'en': 'How can outputs from different models refer to the same person and moment?'},
+                'paragraphs': [{'ko': '먼저 7개 모델·5개 FPS·2개 영상·3개 쿼리의 210개 응답을 비교했습니다. FPS를 높여도 행동 누락과 넓은 구간 예측이 '
+                                      '남아, 그라운딩 결과를 검수 없이 후속 단계에 넘기지 않도록 했습니다.',
+                                'en': 'I first compared 210 responses across seven models, five frame rates, two '
+                                      'videos and three queries. Higher FPS still left missed actions and overly '
+                                      'broad intervals, so grounding output required review before downstream '
+                                      'use.'},
+                               {'ko': '전체 화면의 ViTDet-H 검출과 HMR 2.0 추정을 PHALP가 연결해 인물 ID를 만듭니다. 저는 검수한 선수와 연속 구간을 '
                                       '선택하고, 박스 각 변에 10% 여백을 둔 크롭에 HMR 2.0을 다시 실행했습니다.',
                                 'en': 'PHALP associates full-frame ViTDet-H detections and HMR 2.0 estimates into '
                                       'person tracks. I selected reviewed players and continuous intervals, added '
@@ -143,39 +142,52 @@ PROJECTS = [{'slug': 'video-motion',
                                   '시연과 구분합니다.',
                             'en': 'Crops, SMPL parameters and meshes are linked across six selected intervals '
                                   'from five players. This video replays saved meshes with a fixed root; it does '
-                                  'not demonstrate robot balance control.'}},
-               {'id': 'captioning',
-                'label': {'ko': '03 · 행동 설명 검수', 'en': '03 · Reviewing descriptions'},
-                'title': {'ko': '문장이 자연스러워도, 공을 가진 선수는 틀릴 수 있었습니다.',
-                          'en': 'A fluent caption could still give the ball to the wrong player.'},
-                'paragraphs': [{'ko': '검수한 모션에 행동 설명을 붙이기 위해 같은 6개 RGB 크롭을 4 FPS로 입력하고 Qwen·InternVL의 프롬프트 세 조건을 '
-                                      '비교했습니다. 입력 프레임과 모델 버전을 고정하고 실제 요청·응답 36개를 보존했습니다.',
-                                'en': 'To attach action descriptions to reviewed motion, I compared three prompt '
-                                      'conditions for Qwen and InternVL using the same six RGB crops at 4 FPS. I '
-                                      'kept input frames and model versions fixed and retained all 36 requests '
-                                      'and responses.'},
-                               {'ko': '행동을 명시적으로 질문해도 공이 없는 선수의 드리블을 설명하거나, 드리블 후반의 공 릴리스를 놓쳤습니다. 프롬프트를 바꾼 뒤 문장이 '
-                                      '풍부해진 것과 행동을 더 정확하게 설명한 것을 따로 판단했습니다.',
-                                'en': 'Even explicit action prompts could describe an off-ball player as '
-                                      'dribbling or omit the late ball release. I evaluated richer wording '
-                                      'separately from more accurate action descriptions.'}],
-                'visual': {'images': [('evidence/motion-release.jpg',
-                                       {'ko': '후반 릴리스 구간의 실제 검수 이미지. 응답 문장을 원본 장면과 대조했습니다.',
-                                        'en': 'Actual review frames around the late release, used to check '
-                                              'descriptions against the footage.'})]},
-                'outcome': {'ko': '캡셔닝 비교는 완료했지만 자동 행동 정답의 품질은 확보하지 못했습니다. 최종 프롬프트 선택을 최고 정확도 달성으로 해석하지 않았습니다.',
-                            'en': 'The comparison is complete, but reliable automatic action labels remain '
-                                  'unresolved. Selecting a final prompt did not establish that it was the most '
-                                  'accurate.'},
-                'insight': {'ko': '생성 성공을 데이터 품질 승인과 분리했습니다. 학습 데이터에는 “설명 있음”보다 “누구의 어떤 행동을 실제로 설명하는가”를 확인하는 절차가 '
-                                  '필요했습니다.',
-                            'en': 'I separated successful generation from quality approval. For learning data, '
-                                  'the relevant check is whose action a caption actually describes, not simply '
-                                  'whether a caption exists.'}},
+                                  'not demonstrate robot balance control.'},
+                'challenge': {'ko': '행동 구간이 넓게 잡히거나 추적 ID가 바뀌면, 크롭·메쉬·행동 설명은 각각 그럴듯해도 서로 다른 장면을 나타낼 수 있습니다. 뒤 단계의 '
+                                    '정상 출력만으로 앞 단계의 오류를 알아내기 어려웠습니다.',
+                              'en': 'A broad action interval or a changed track ID can produce plausible crops, '
+                                    'meshes and captions that refer to different moments or people. A successful '
+                                    'downstream output can hide an upstream mismatch.'},
+                'decision': {'ko': '모델 결과를 원본 시간축과 인물 ID에 묶고, 중간 결과를 함께 남겨 대조하는 구조를 선택했습니다. 생성 여부와 데이터로 사용할 수 '
+                                   '있는지는 별도로 검수했습니다.',
+                             'en': 'I chose to anchor outputs to source time and person ID and retain '
+                                   'intermediate results for comparison. Producing an output and approving it as '
+                                   'usable data became separate checks.'},
+                'supporting': [{'id': 'captioning',
+                                'title': {'ko': '문장이 자연스러워도, 공을 가진 선수는 틀릴 수 있었습니다.',
+                                          'en': 'A fluent caption could still give the ball to the wrong player.'},
+                                'paragraphs': [{'ko': '검수한 모션에 행동 설명을 붙이기 위해 같은 6개 RGB 크롭을 4 FPS로 입력하고 '
+                                                      'Qwen·InternVL의 프롬프트 세 조건을 비교했습니다. 입력 프레임과 모델 버전을 고정하고 실제 '
+                                                      '요청·응답 36개를 보존했습니다.',
+                                                'en': 'To attach action descriptions to reviewed motion, I '
+                                                      'compared three prompt conditions for Qwen and InternVL '
+                                                      'using the same six RGB crops at 4 FPS. I kept input frames '
+                                                      'and model versions fixed and retained all 36 requests and '
+                                                      'responses.'},
+                                               {'ko': '행동을 명시적으로 질문해도 공이 없는 선수의 드리블을 설명하거나, 드리블 후반의 공 릴리스를 놓쳤습니다. '
+                                                      '프롬프트를 바꾼 뒤 문장이 풍부해진 것과 행동을 더 정확하게 설명한 것을 따로 판단했습니다.',
+                                                'en': 'Even explicit action prompts could describe an off-ball '
+                                                      'player as dribbling or omit the late ball release. I '
+                                                      'evaluated richer wording separately from more accurate '
+                                                      'action descriptions.'}],
+                                'visual': {'images': [('evidence/motion-release.jpg',
+                                                       {'ko': '후반 릴리스 구간의 실제 검수 이미지. 응답 문장을 원본 장면과 대조했습니다.',
+                                                        'en': 'Actual review frames around the late release, used '
+                                                              'to check descriptions against the footage.'})]},
+                                'outcome': {'ko': '캡셔닝 비교는 완료했지만 자동 행동 정답의 품질은 확보하지 못했습니다. 최종 프롬프트 선택을 최고 정확도 '
+                                                  '달성으로 해석하지 않았습니다.',
+                                            'en': 'The comparison is complete, but reliable automatic action '
+                                                  'labels remain unresolved. Selecting a final prompt did not '
+                                                  'establish that it was the most accurate.'}}],
+                'insight': {'ko': '모델을 연결할 때는 각 모델의 실행 성공뿐 아니라 출력 사이의 대응 관계를 검증해야 한다는 기준을 얻었습니다. 원본·인물 ID·시간을 '
+                                  '보존해야 오류가 난 단계로 돌아가 수정하거나 해당 구간을 제외할 수 있었습니다.',
+                            'en': 'I learned to validate correspondence between outputs as well as successful '
+                                  'model execution. Preserving the source, person ID and time made it possible to '
+                                  'trace an error back to its stage and correct or exclude the segment.'}},
                {'id': 'simulation',
-                'label': {'ko': '04 · 로봇 적용의 경계', 'en': '04 · Testing physical feasibility'},
-                'title': {'ko': '메쉬는 재생됐지만, 전신을 따라가던 로봇은 넘어졌습니다.',
-                          'en': 'The mesh replayed; the robot fell while tracking the full-body motion.'},
+                'label': {'ko': '난제 2 · 로봇에서의 실행 가능성', 'en': 'Challenge 2 · Physical feasibility'},
+                'title': {'ko': '복원된 동작을 로봇이 물리 시뮬레이션에서도 따라갈 수 있는가?',
+                          'en': 'Can a robot follow the reconstructed motion in physics simulation?'},
                 'paragraphs': [{'ko': '저장된 SMPL을 GMR로 G1의 29관절에 매핑한 뒤 물리 시뮬레이션에서 추종을 시험했습니다. 초기 자세·속도·발 접촉을 확인하고, '
                                       '시작 시각 변경·초기 속도 제거·접촉 보정과 PPO 추가 학습을 비교했습니다.',
                                 'en': 'I mapped the saved SMPL motion to G1’s 29 joints with GMR and tested '
@@ -204,9 +216,19 @@ PROJECTS = [{'slug': 'video-motion',
                                   '좁혀 원인을 분리하는 기준을 얻었습니다.',
                             'en': 'Reconstructed motion was not automatically executable motion. I learned to '
                                   'validate data format, kinematic replay and physical tracking separately, and '
-                                  'to isolate failures with a narrower task.'}},
+                                  'to isolate failures with a narrower task.'},
+                'challenge': {'ko': '메쉬 재생은 가능했지만 G1 전신 추종은 넘어짐으로 실패했습니다. 관절 형식의 변환만으로 접촉·균형·동역학 조건까지 충족되지는 '
+                                    '않았습니다.',
+                              'en': 'The mesh could be replayed, but full-body tracking on G1 failed through '
+                                    'falls. Converting joint representations did not by itself satisfy contact, '
+                                    'balance and dynamics constraints.'},
+                'decision': {'ko': '초기 조건과 접촉을 점검한 뒤 전신 과제와 팔 중심 과제를 나눠 평가했습니다. 과제를 제한해 어떤 조건에서 추종이 가능한지부터 '
+                                   '확인했습니다.',
+                             'en': 'After inspecting initial conditions and contacts, I evaluated full-body and '
+                                   'arm-focused tasks separately. Restricting the task helped identify conditions '
+                                   'under which tracking was feasible.'}},
                {'id': 'learning',
-                'label': {'ko': '05 · 남은 과제', 'en': '05 · What remains'},
+                'label': {'ko': '결과와 배운 점', 'en': 'Results & learning'},
                 'title': {'ko': '각 단계의 성공 기준을 나눈 파이프라인으로.',
                           'en': 'A pipeline with explicit checks at each stage.'},
                 'paragraphs': [{'ko': '이 연구에서 만든 것은 모델 실행을 연결한 코드뿐 아니라, 원본으로 돌아가 오류를 확인하고 사용할 구간을 판단하는 구조입니다. '
@@ -340,20 +362,19 @@ PROJECTS = [{'slug': 'video-motion',
                                'tracking and end-to-end automation remain unresolved.'}}},
  {'slug': 'danzzan',
   'title': {'ko': '단짠', 'en': 'Danzzan'},
-  'category': {'ko': 'Backend · 실제 서비스 운영', 'en': 'Backend · Live service'},
+  'category': {'ko': '서비스 개발 · 실제 운영', 'en': 'Service development · Live service'},
   'subtitle': {'ko': '학생의 예매부터 현장 입장까지, 상태와 실패 경로를 설계했습니다.',
                'en': 'Designing states and recovery paths from ticket requests to on-site entry.'},
   'desc': {'ko': '총학생회·NAVER Face Sign 연계 축제 서비스입니다. Redis·Lua 예매, JWT 인증 복구와 다국어 처리의 문제 정의·구현·검증을 소개합니다.',
            'en': 'A festival service connected to the student council and NAVER Face Sign. Case studies cover '
                  'Redis/Lua ticketing, JWT recovery and multilingual content handling.'},
-  'role': {'ko': '대규모 티켓팅 백엔드, 로그인·회원가입, 다국어 지원',
-           'en': 'High-traffic ticketing backend, sign-in and registration, multilingual support'},
-  'role_items': [({'ko': '대규모 티켓팅', 'en': 'High-traffic ticketing'},
+  'role': {'ko': '예매·인증·번역 기능 개발', 'en': 'Ticketing, authentication and translation development'},
+  'role_items': [({'ko': '예매', 'en': 'Ticketing'},
                   {'ko': 'Redis·Lua 기반 동시 예매 처리', 'en': 'Concurrent reservation handling with Redis and Lua'}),
-                 ({'ko': '로그인·회원가입', 'en': 'Sign-in & registration'},
+                 ({'ko': '인증', 'en': 'Authentication'},
                   {'ko': 'JWT 재발급·예외 처리, 가입 입력·검증·저장',
                    'en': 'JWT refresh and error handling; sign-up validation and persistence'}),
-                 ({'ko': '다국어 지원', 'en': 'Multilingual support'},
+                 ({'ko': '번역', 'en': 'Translation'},
                   {'ko': '번역 처리·실패 대응', 'en': 'Translation and failure handling'})],
   'affiliation': {'logo': 'brands/danzzan-npay.jpg',
                   'alt': 'DANZZAN × Npay',
@@ -372,16 +393,16 @@ PROJECTS = [{'slug': 'video-motion',
   'caption': {'ko': '팀 서비스 실제 화면 · 축제 홈, 부스 지도, 티켓 예매',
               'en': 'Actual team-service screens · Festival home, booth map, and ticketing'},
   'sections': [{'id': 'problem',
-                'label': {'ko': '01 · 문제 정의', 'en': '01 · The problem'},
-                'title': {'ko': '축제의 정해진 시간에, 제한된 티켓과 바뀌는 정보를 전달해야 했습니다.',
-                          'en': 'A fixed opening time, limited tickets and information that kept changing.'},
+                'label': {'ko': '프로젝트 소개', 'en': 'Project overview'},
+                'title': {'ko': '학생의 축제 예매와 운영진의 정보 전달을 연결한 서비스입니다.',
+                          'en': 'A service connecting student reservations with festival operations.'},
                 'paragraphs': [{'ko': '단짠은 총학생회와 함께 운영한 대학 축제 서비스입니다. 학생은 부스·공연·공지를 확인하고 예매하며, 운영진은 계속 바뀌는 정보를 '
-                                      '전달해야 했습니다. 저는 예매·인증·번역 백엔드를 중심으로 사용자 상태와 실패 이후의 동작을 설계했습니다.',
+                                      '전달합니다. 저는 예매·인증·번역 기능을 담당하며 사용자 화면과 서버 처리 흐름을 연결했습니다.',
                                 'en': 'Danzzan is a university festival service operated with the student '
                                       'council. Students browse booths, performances and notices and reserve '
-                                      'tickets, while organizers publish changing information. My focus was '
-                                      'ticketing, authentication and translation backend logic, including user '
-                                      'states and failure handling.'},
+                                      'tickets, while organizers publish updates. I developed ticketing, '
+                                      'authentication and translation features across the interface and server '
+                                      'workflows.'},
                                {'ko': '활동 기간은 2025.12–2026.09이며 6,000명 이상이 사용한 운영 성과는 4인 팀의 결과입니다. 아래에서는 봄 예매 준비, '
                                       '가을 다국어 기능, 축제 종료 후 개선을 구분합니다.',
                                 'en': 'The project ran from December 2025 to September 2026. Serving over 6,000 '
@@ -392,15 +413,11 @@ PROJECTS = [{'slug': 'video-motion',
                                       ('danzzan-map.webp', {'ko': '부스 위치 안내', 'en': 'Booth map'})],
                            'phones': True}},
                {'id': 'ticketing',
-                'label': {'ko': '02 · 동시 예매 설계', 'en': '02 · Concurrent ticketing'},
-                'title': {'ko': '재고를 차감하기 전에, “지금 예매할 수 있는 사람”을 정의했습니다.',
-                          'en': 'Before decrementing inventory, I defined who was allowed to book.'},
-                'paragraphs': [{'ko': '대기열에 들어온 사람과 예매할 차례가 된 사람은 다릅니다. 중복 확인과 재고 차감을 각각 실행하면 요청 사이에 다른 요청이 끼어들 수 '
-                                      '있어, 예매 자격과 재고 처리를 함께 설계해야 했습니다.',
-                                'en': 'Joining the queue is different from being eligible to book. Separate '
-                                      'duplicate checks and inventory updates can be interleaved with other '
-                                      'requests, so eligibility and inventory needed to be handled together.'},
-                               {'ko': '기존 슬롯 방식을 WAITING → READY → ACTIVE → DONE / EXPIRED 상태로 바꿨습니다. Lua에서 '
+                'label': {'ko': '난제 1 · 동시 예매의 정합성', 'en': 'Challenge 1 · Concurrent reservations'},
+                'title': {'ko': '요청이 몰려도, 예매 자격과 한정된 재고를 일관되게 처리하려면?',
+                          'en': 'How do eligibility and limited inventory stay consistent under concurrent '
+                                'requests?'},
+                'paragraphs': [{'ko': '기존 슬롯 방식을 WAITING → READY → ACTIVE → DONE / EXPIRED 상태로 바꿨습니다. Lua에서 '
                                       'ACTIVE 상태·유효 시간·중복 신청·잔여 재고를 확인하고 차감과 신청 표시를 묶었습니다. 실패 시 보상 스크립트도 구성했습니다.',
                                 'en': 'I replaced the slot-based approach with WAITING → READY → ACTIVE → DONE / '
                                       'EXPIRED states. Lua checks ACTIVE status, validity time, duplicate '
@@ -427,18 +444,22 @@ PROJECTS = [{'slug': 'video-motion',
                 'evidence': [({'ko': '개인 구현 커밋', 'en': 'My implementation'},
                               'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/f68eeb5'),
                              ({'ko': '팀 부하실험 조건·결과', 'en': 'Team load-test conditions and results'},
-                              'https://github.com/DKU-Dan-Zzan/Danzzan-BE/blob/main/docs/load-test-report.md')]},
+                              'https://github.com/DKU-Dan-Zzan/Danzzan-BE/blob/main/docs/load-test-report.md')],
+                'challenge': {'ko': '예매 오픈 시점에는 한정된 티켓에 요청이 집중됩니다. 대기 중·입장 가능·만료 상태를 구분해야 하고, 중복 확인과 재고 차감 사이에 다른 '
+                                    '요청이 끼어들지 않도록 해야 했습니다.',
+                              'en': 'Requests concentrate when a limited ticket allocation opens. The system had '
+                                    'to distinguish waiting, eligible and expired users and prevent other '
+                                    'requests from interleaving between duplicate checks and inventory updates.'},
+                'decision': {'ko': '사용자 상태를 명시하고, 예매 자격 확인과 재고 변경을 하나의 Lua 실행으로 묶었습니다. Redis 안에서 원자적으로 처리할 범위와 실패 '
+                                   '시 되돌릴 상태를 함께 정했습니다.',
+                             'en': 'I made user states explicit and combined eligibility checks and inventory '
+                                   'changes in one Lua execution, defining both the atomic boundary inside Redis '
+                                   'and the state to restore on failure.'}},
                {'id': 'translation',
-                'label': {'ko': '03 · 외부 API와 운영', 'en': '03 · External APIs & operations'},
-                'title': {'ko': '번역이 실패해도 공지는 올라가고, 운영진의 수정은 남아야 했습니다.',
-                          'en': 'Translation failures should not block notices or overwrite human edits.'},
-                'paragraphs': [{'ko': '가을 축제의 영어 지원은 버튼 번역만으로 끝나지 않았습니다. 운영진이 추가하는 공지·부스·공연 정보도 다뤄야 했기에, 조회할 때마다 '
-                                      '번역하는 대신 등록·수정 시 번역을 DB에 저장하고 관리자에게 수정 경로를 제공했습니다.',
-                                'en': 'Autumn localization had to cover new notices, booths and performances, not '
-                                      'just interface labels. I translated content on creation or update and '
-                                      'stored it in the database, allowing organizers to review and edit the '
-                                      'English text.'},
-                               {'ko': '번역 API 예외가 핵심 업무인 공지 저장을 막지 않도록 분리했습니다. 영문이 없으면 한국어를 제공하고 누락된 값만 후속 '
+                'label': {'ko': '난제 2 · 실패를 고려한 정보 제공', 'en': 'Challenge 2 · Resilient information delivery'},
+                'title': {'ko': '외부 API와 사람의 수정이 섞여도, 축제 정보는 계속 전달되어야 했습니다.',
+                          'en': 'Keeping festival information available across API failures and human edits.'},
+                'paragraphs': [{'ko': '번역 API 예외가 핵심 업무인 공지 저장을 막지 않도록 분리했습니다. 영문이 없으면 한국어를 제공하고 누락된 값만 후속 '
                                       '보정했습니다. 콘텐츠 수정에서는 원문 변경 여부와 이번 요청의 수동 영문을 필드별로 판단하도록 규칙을 순수 함수로 분리했습니다.',
                                 'en': 'I isolated translation exceptions so that notices could still be saved. '
                                       'Missing English falls back to Korean and can be filled later. For content '
@@ -463,65 +484,51 @@ PROJECTS = [{'slug': 'video-motion',
                 'evidence': [({'ko': '번역 실패 대응', 'en': 'Translation failure handling'},
                               'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/49e969e'),
                              ({'ko': '필드별 결정 규칙·테스트', 'en': 'Field rules and tests'},
-                              'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/dd19772')]},
-               {'id': 'recovery',
-                'label': {'ko': '04 · 인증 복구', 'en': '04 · Authentication recovery'},
-                'title': {'ko': '다시 로그인하려는 요청이 인증 필터에서 막혔습니다.',
-                          'en': 'The authentication filter blocked the request intended to restore access.'},
-                'paragraphs': [{'ko': '프론트가 만료된 Access Token을 로그인 요청에도 붙이면 컨트롤러에 도달하기 전에 401이 발생했습니다. 요청을 필터부터 '
-                                      '추적해, 로그인·재발급 등 공개 경로에서도 기존 토큰을 검사하는 것이 원인임을 확인했습니다.',
-                                'en': 'When the client attached an expired access token to a login request, the '
-                                      'request received a 401 before reaching the controller. Tracing it through '
-                                      'the filter showed that public login and refresh routes were validating the '
-                                      'old token.'},
-                               {'ko': '로그인·재발급·가입 인증 등 공개 경로를 필터 검사에서 제외하고, 보호된 리소스의 인증과 접근을 복구하는 요청의 경계를 분리했습니다. '
-                                      '기존 인증이 만료돼도 사용자가 다시 인증할 수 있는 경로를 확보하는 것이 핵심이었습니다.',
-                                'en': 'I excluded public login, refresh and registration-verification routes from '
-                                      'the token filter, separating access to protected resources from requests '
-                                      'that restore access. The key was keeping reauthentication reachable after '
-                                      'an existing token expired.'}],
-                'visual': {'caption': {'ko': '만료 토큰의 요청 경로', 'en': 'Request path with an expired token'},
-                           'flow': [({'ko': '증상: 로그인도 401', 'en': 'Symptom: login returns 401'},
-                                     {'ko': '컨트롤러에 도달하기 전 차단', 'en': 'Blocked before the controller'}),
-                                    ({'ko': '원인: 공개 경로의 토큰 검사', 'en': 'Cause: token checks on public routes'},
-                                     {'ko': '인증 복구 요청과 보호 요청의 경계 확인',
-                                      'en': 'Identify recovery routes versus protected routes'}),
-                                    ({'ko': '수정: 공개 경로 건너뛰기', 'en': 'Fix: bypass the filter on public routes'},
-                                     {'ko': '로그인·재발급 흐름을 분리',
-                                      'en': 'Separate login and refresh from protected requests'})]},
-                'outcome': {'ko': '만료 토큰이 공개 로그인·재발급 경로를 선차단하던 원인을 제거했습니다. 공개 경로의 토큰 필터 제외를 2026.04.06 수정에 '
-                                  '반영했습니다.',
-                            'en': 'The April 6 fix removed the filter behavior that rejected public login and '
-                                  'refresh requests because of an expired token.'},
-                'evidence': [({'ko': 'JWT 필터 수정', 'en': 'JWT filter fix'},
-                              'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/b4916f7')]},
-               {'id': 'collaboration',
-                'label': {'ko': '05 · 현장으로 연결', 'en': '05 · Connecting to on-site entry'},
-                'title': {'ko': '예매 이후의 입장 절차까지 연결한 팀 서비스.',
-                          'en': 'A team service that connected reservations to entry.'},
-                'paragraphs': [{'ko': '총학생회 운영과 NAVER Face Sign 입장에 맞춰 예매·제3자 제공 동의·사전 등록 안내를 연결했습니다. 단짠의 티켓 상태와 '
-                                      '네이버의 얼굴 등록 상태는 별도 절차이며, 얼굴 정보 등록·인증은 네이버가 처리합니다.',
-                                'en': 'The service connected reservations, third-party data-sharing consent and '
-                                      'preregistration guidance to student-council operations and NAVER Face Sign '
-                                      'entry. Ticket status and face enrollment are separate procedures; NAVER '
-                                      'handles facial data and authentication.'},
-                               {'ko': '제 기여는 예매·인증·번역 처리와 관련 화면 연동입니다. 대외 협의, 현장 운영, 프론트엔드와 비동기 저장에는 팀원들의 기여가 '
-                                      '있습니다. 영상은 팀 서비스가 현장에서 쓰인 맥락을 보여줍니다.',
-                                'en': 'My contributions cover ticketing, authentication, translation and related '
-                                      'interface integration. Other members contributed external coordination, '
-                                      'operations, frontend work and asynchronous persistence. The footage shows '
-                                      'the team service in its operating context.'}],
-                'visual': {'video': 'danzzan/face-sign-entry.mp4',
-                           'poster': 'danzzan/face-sign-entry.jpg',
-                           'caption': {'ko': '사용자 제공 현장 영상 · 약 10초 · 무음. NAVER Face Sign 연계 입장.',
-                                       'en': 'User-provided on-site footage · Approximately 10 seconds · No '
-                                             'audio. Entry linked to NAVER Face Sign.'},
-                           'wide': True}},
+                              'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/dd19772'),
+                             ({'ko': 'JWT 필터 수정', 'en': 'JWT filter fix'},
+                              'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/b4916f7')],
+                'challenge': {'ko': '가을 축제의 영어 지원에는 운영진이 계속 수정하는 공지·부스·공연 정보가 포함됐습니다. 번역 실패로 공지 저장이 막히거나, 자동 번역이 '
+                                    '운영진의 영문 수정을 덮는 상황을 처리해야 했습니다.',
+                              'en': 'Autumn localization included notices, booths and performances that '
+                                    'organizers kept editing. Translation failures could block publication, while '
+                                    'automatic translation could conflict with human edits.'},
+                'decision': {'ko': '번역을 조회 경로에서 분리해 등록·수정 시 저장하고, 실패 시 한국어를 제공하도록 했습니다. 자동 보정과 수동 입력의 우선순위는 필드별 '
+                                   '규칙으로 명시했습니다.',
+                             'en': 'I moved translation out of the read path and stored it on creation or update, '
+                                   'with Korean fallback on failure. Field-level rules made the precedence of '
+                                   'automatic updates and manual input explicit.'},
+                'details': {'id': 'recovery',
+                            'label': {'ko': '같은 관점의 보조 사례 · 만료 토큰의 로그인 차단 수정',
+                                      'en': 'Related supporting case · Restoring login after token expiry'},
+                            'paragraphs': [{'ko': '프론트가 만료된 Access Token을 로그인 요청에도 붙이면 컨트롤러에 도달하기 전에 401이 발생했습니다. '
+                                                  '요청을 필터부터 추적해, 로그인·재발급 등 공개 경로에서도 기존 토큰을 검사하는 것이 원인임을 확인했습니다.',
+                                            'en': 'When the client attached an expired access token to a login '
+                                                  'request, the request received a 401 before reaching the '
+                                                  'controller. Tracing it through the filter showed that public '
+                                                  'login and refresh routes were validating the old token.'},
+                                           {'ko': '로그인·재발급·가입 인증 등 공개 경로를 필터 검사에서 제외하고, 보호된 리소스의 인증과 접근을 복구하는 요청의 '
+                                                  '경계를 분리했습니다. 기존 인증이 만료돼도 사용자가 다시 인증할 수 있는 경로를 확보하는 것이 핵심이었습니다.',
+                                            'en': 'I excluded public login, refresh and registration-verification '
+                                                  'routes from the token filter, separating access to protected '
+                                                  'resources from requests that restore access. The key was '
+                                                  'keeping reauthentication reachable after an existing token '
+                                                  'expired.'},
+                                           {'ko': '만료 토큰이 공개 로그인·재발급 경로를 선차단하던 원인을 제거했습니다. 공개 경로의 토큰 필터 제외를 '
+                                                  '2026.04.06 수정에 반영했습니다.',
+                                            'en': 'The April 6 fix removed the filter behavior that rejected '
+                                                  'public login and refresh requests because of an expired '
+                                                  'token.'}]}},
                {'id': 'learning',
-                'label': {'ko': '06 · 배운 점', 'en': '06 · What I learned'},
+                'label': {'ko': '결과와 배운 점', 'en': 'Results & learning'},
                 'title': {'ko': '정상 경로뿐 아니라, 실패해도 이어지는 흐름을 설계합니다.',
                           'en': 'Designing the path forward when a step fails.'},
-                'paragraphs': [{'ko': '예매에서는 자격·재고·상태를 함께 다뤘고, 번역에서는 공지 저장과 외부 API 실패를 분리했으며, 인증에서는 복구 경로가 차단되지 '
+                'paragraphs': [{'ko': '4인 팀이 봄·가을 축제에 서비스를 운영했고, 실제 사용자 6,000명 이상이 이용했습니다. 총학생회·NAVER Face Sign과 '
+                                      '예매·동의·사전 등록 안내를 연결했으며, 얼굴 정보 등록과 인증은 네이버가 처리합니다.',
+                                'en': 'The four-person team operated the service for the spring and autumn '
+                                      'festivals, serving over 6,000 users. Reservations, consent and '
+                                      'preregistration guidance were connected with student-council operations '
+                                      'and NAVER Face Sign; NAVER handles facial enrollment and authentication.'},
+                               {'ko': '예매에서는 자격·재고·상태를 함께 다뤘고, 번역에서는 공지 저장과 외부 API 실패를 분리했으며, 인증에서는 복구 경로가 차단되지 '
                                       '않게 했습니다. 기능을 추가할 때 “중간에서 멈추면 사용자와 데이터가 어떤 상태로 남는가”를 먼저 살피는 기준을 얻었습니다.',
                                 'en': 'Ticketing required eligibility, inventory and states to be designed '
                                       'together; translation required notice persistence to survive API failure; '
@@ -531,7 +538,14 @@ PROJECTS = [{'slug': 'video-motion',
                                       '다음 운영을 준비하는 후속 개발로 이어갔습니다.',
                                 'en': 'After the festivals, I improved session settings, edit locks, ticketing '
                                       'ON/OFF controls and error responses, using what I had learned from the '
-                                      'service to prepare for future operations.'}]}],
+                                      'service to prepare for future operations.'}],
+                'aliases': ['collaboration'],
+                'visual': {'video': 'danzzan/face-sign-entry.mp4',
+                           'poster': 'danzzan/face-sign-entry.jpg',
+                           'caption': {'ko': '사용자 제공 현장 영상 · 약 10초 · 무음. NAVER Face Sign 연계 입장.',
+                                       'en': 'User-provided on-site footage · Approximately 10 seconds · No '
+                                             'audio. Entry linked to NAVER Face Sign.'},
+                           'wide': True}}],
   'links': [({'ko': '백엔드 저장소', 'en': 'Backend repository'}, 'https://github.com/DKU-Dan-Zzan/Danzzan-BE'),
             ({'ko': '프론트엔드 저장소', 'en': 'Frontend repository'}, 'https://github.com/DKU-Dan-Zzan/Danzzan-FE'),
             ({'ko': '축제 후 예매 상태 개선', 'en': 'Post-festival reservation state fix'},
@@ -569,32 +583,30 @@ PROJECTS = [{'slug': 'video-motion',
   'caption': {'ko': '별도 YOLO11 ROI 실험 · 선수 관절·공 검출 좌표',
               'en': 'Separate YOLO11 ROI experiment · Body landmarks and detected ball positions'},
   'sections': [{'id': 'problem',
-                'label': {'ko': '01 · 문제 정의', 'en': '01 · The problem'},
-                'title': {'ko': '“많이 움직였다”는 수치가 “잘했다”는 평가는 아니었습니다.',
-                          'en': 'More movement did not necessarily mean better dribbling.'},
-                'paragraphs': [{'ko': '단안 영상에서 자세를 추정하는 것보다 어려운 문제는 무엇을 측정해야 평가 의도를 설명할 수 있는지 정하는 일이었습니다. 어깨의 최대 '
-                                      '방향 차이는 낮은 등급 영상에서도 크게 나왔고, 점수 가중치나 상한을 바꿔도 원시값의 순서가 바뀌지는 않았습니다.',
-                                'en': 'Beyond estimating pose from a monocular video, the harder question was '
-                                      'what measurement could represent the evaluation intent. Maximum '
-                                      'shoulder-direction differences were also large in lower-rated videos. '
-                                      'Changing score weights or caps did not change the ordering of the raw '
-                                      'measurements.'},
-                               {'ko': '저는 교수님 피드백을 계산 정의로 구체화하고 원본·관절·공 궤적·지표를 함께 볼 수 있는 분석 흐름을 구현했습니다. 프로젝트는 '
-                                      '2026.06 완료했고, 이 페이지의 9~11월 비교·재실행 자료는 종료 후 연구 검토입니다.',
-                                'en': 'I translated faculty feedback into calculation definitions and built an '
-                                      'analysis flow that exposes source footage, joints, ball trajectories and '
-                                      'metrics together. The project concluded in June 2026; the '
-                                      'September–November comparisons and reruns shown here are subsequent '
-                                      'research reviews.'}],
+                'label': {'ko': '프로젝트 소개', 'en': 'Project overview'},
+                'title': {'ko': '드리블 영상을 자세·공 궤적·평가 지표로 연결한 연구입니다.',
+                          'en': 'Connecting dribbling video to pose, ball trajectories and evaluation metrics.'},
+                'paragraphs': [{'ko': '한 대의 카메라로 촬영한 드리블 영상에서 선수의 관절과 공을 추적하고, 터치 주변 헤드업·어깨 움직임과 상체 각도를 분석했습니다. '
+                                      '저는 교수님 피드백을 계산 정의로 구체화하고, 지표를 원본 장면과 대조할 수 있는 파이프라인과 보고서를 구현했습니다.',
+                                'en': 'I tracked body landmarks and the ball in single-camera dribbling video and '
+                                      'analyzed head-up movement, shoulder motion around touches and torso angle. '
+                                      'I translated supervisor feedback into computation rules and built a '
+                                      'pipeline and reports for checking measurements against source scenes.'},
+                               {'ko': '프로젝트는 2026.06 완료했습니다. 아래의 지표 비교와 반복 실행 자료는 9~11월 후속 연구 검토이며, 핵심은 평가 의도의 '
+                                      '구체화와 입력 오류를 찾아낼 수 있는 검증 구조입니다.',
+                                'en': 'The project ended in June 2026. The metric comparisons and repeated runs '
+                                      'below are follow-up reviews from September to November, focused on '
+                                      'explicit measurement definitions and verification that exposes input '
+                                      'errors.'}],
                 'visual': {'images': [('evidence/soccer-windows.png',
                                        {'ko': '2026.10 후속 검토: 터치 윈도우를 넓혀도 최대각과 등급의 관계가 일관되지 않았습니다.',
                                         'en': 'October 2026 follow-up: wider touch windows did not produce a '
                                               'consistent relationship between maximum angle and rating.'})],
                            'wide': True}},
                {'id': 'metrics',
-                'label': {'ko': '02 · 측정 기준 재정의', 'en': '02 · Redefining the measurement'},
-                'title': {'ko': '움직임의 크기와 속도를 나누고, 평가할 시간 구간을 맞췄습니다.',
-                          'en': 'Separating movement magnitude from speed, then defining when to measure.'},
+                'label': {'ko': '난제 1 · 평가 의도를 측정으로', 'en': 'Challenge 1 · Defining the measurement'},
+                'title': {'ko': '“좋은 드리블”이라는 평가 의도를 어떤 수치로 표현할 것인가?',
+                          'en': 'Which measurements represent the intended meaning of good dribbling?'},
                 'paragraphs': [{'ko': '최대각 후보와 인접 프레임의 평균 방향 변화 속도를 분리해 비교했습니다. 터치 앞뒤 ±6·10·16·20·24·30프레임을 검토한 '
                                       '뒤, 교수님의 평가 의도에 맞춰 기존 프레임별 속도를 유지하면서 터치 주변 값만 평균하도록 정리했습니다.',
                                 'en': 'I compared maximum-angle candidates separately from average directional '
@@ -620,11 +632,23 @@ PROJECTS = [{'slug': 'video-motion',
                                   '설명해야 했습니다.',
                             'en': 'I stopped treating an overall expert rating as ground truth for one joint '
                                   'metric. Before fitting a score, I needed to explain the movement the '
-                                  'underlying number actually measured.'}},
+                                  'underlying number actually measured.'},
+                'challenge': {'ko': '단안 영상에서 자세를 추정하는 것보다 어려운 문제는 무엇을 측정해야 평가 의도를 설명할 수 있는지 정하는 일이었습니다. 어깨의 최대 방향 '
+                                    '차이는 낮은 등급 영상에서도 크게 나왔고, 점수 가중치나 상한을 바꿔도 원시값의 순서가 바뀌지는 않았습니다.',
+                              'en': 'Beyond estimating pose from a monocular video, the harder question was what '
+                                    'measurement could represent the evaluation intent. Maximum '
+                                    'shoulder-direction differences were also large in lower-rated videos. '
+                                    'Changing score weights or caps did not change the ordering of the raw '
+                                    'measurements.'},
+                'decision': {'ko': '가중치부터 조정하기보다 측정 대상과 시간 구간을 다시 확인했습니다. 움직임의 크기와 속도를 구분하고 교수님의 평가 의도에 맞는 터치 주변 '
+                                   '집계 규칙으로 구체화했습니다.',
+                             'en': 'Before adjusting weights, I revisited what was measured and over which '
+                                   'interval. I distinguished motion magnitude from speed and translated the '
+                                   'intended evaluation into aggregation rules around touches.'}},
                {'id': 'pipeline',
-                'label': {'ko': '03 · 입력 오류 추적', 'en': '03 · Tracing input errors'},
-                'title': {'ko': '공 하나를 잘못 고르면, 평가할 순간도 달라집니다.',
-                          'en': 'Choosing the wrong ball also changes the moments being evaluated.'},
+                'label': {'ko': '난제 2 · 입력부터 지표까지 검증', 'en': 'Challenge 2 · Verifying the full measurement path'},
+                'title': {'ko': '추적 오류가 그럴듯한 평가 점수로 이어지는 것을 어떻게 발견할까?',
+                          'en': 'How can tracking errors be detected before they become plausible scores?'},
                 'paragraphs': [{'ko': '기본 경로는 MediaPipe의 관절 추정과 YOLOv8n 초기 검출·SAM2.1 추적을 연결합니다. 배경 공이 초기 대상으로 '
                                       '선택되면 터치 후보와 자세를 집계하는 시간까지 영향을 받아, 공 좌표를 원본 위에 겹쳐 확인했습니다.',
                                 'en': 'The default path combines MediaPipe pose estimates with YOLOv8n '
@@ -647,30 +671,41 @@ PROJECTS = [{'slug': 'video-motion',
                                   '나누게 됐습니다.',
                             'en': 'A detection existing, the correct object being selected, and the resulting '
                                   'metric being valid are three different questions. I learned to review them '
-                                  'separately.'}},
-               {'id': 'validation',
-                'label': {'ko': '04 · 후속 검증', 'en': '04 · Follow-up validation'},
-                'title': {'ko': '같은 결과가 반복돼도, 같은 오류가 반복될 수 있습니다.',
-                          'en': 'A repeatable result can also be a repeatable error.'},
-                'paragraphs': [{'ko': '종료 후 논문 리뷰에 대응해 3개 영상을 각각 5회, 같은 CLI·CPU 조건에서 원본부터 다시 분석했습니다. 관절 배열·공 '
-                                      '궤적·터치 프레임·원시 지표·점수는 반복 간 일치했습니다. 저장 결과 771프레임의 재집계도 별도 계산과 1e−10 이내로 '
-                                      '맞았습니다.',
-                                'en': 'For a later paper review, I reprocessed three source videos five times '
-                                      'each with the same CLI and CPU settings. Joint arrays, ball trajectories, '
-                                      'touch frames, raw metrics and scores matched across repeats. Separately, '
-                                      'recomputing 771 saved frames agreed with an independent calculation within '
-                                      '1e−10.'},
-                               {'ko': '그러나 11월 검토에서는 잘못된 초기 공 선택도 확인됐습니다. 반복 일치와 측정 정확성을 분리하고, 원본 장면에서 대상이 맞는지 '
-                                      '확인해야 한다는 한계를 함께 기록했습니다.',
-                                'en': 'The November review also identified incorrect initial ball selection. I '
-                                      'therefore recorded repeatability separately from measurement accuracy and '
-                                      'kept source-level object checks as a necessary validation step.'}],
-                'visual': {'images': [('evidence/soccer-initial-ball.jpg',
-                                       {'ko': '2026.11 후속 검토: 초기 프롬프트가 실제 드리블 공과 다른 곳을 가리킨 사례.',
-                                        'en': 'November 2026 follow-up: the initial prompt points away from the '
-                                              'ball actually being dribbled.'})]}},
+                                  'separately.'},
+                'challenge': {'ko': '배경 공이 대상으로 선택되면 터치 시점과 자세 집계 구간까지 달라집니다. 계산이 반복해서 같은 값을 내더라도 잘못된 입력에 대한 결과일 '
+                                    '수 있어, 최종 점수만으로 분석의 타당성을 확인하기 어려웠습니다.',
+                              'en': 'Selecting a background ball changes touch timing and the pose windows being '
+                                    'measured. Repeatable calculations can still operate on the wrong input, '
+                                    'making final scores insufficient for validating the analysis.'},
+                'decision': {'ko': '원본 위에 관절·공 궤적을 겹쳐 입력을 확인하고, 중간 배열과 집계 결과를 분리해 재검증했습니다. 대상 선택의 정확성과 계산의 반복성을 '
+                                   '서로 다른 검증 항목으로 다뤘습니다.',
+                             'en': 'I inspected pose and ball overlays on the source and separately rechecked '
+                                   'intermediate arrays and aggregation results. Correct object selection and '
+                                   'computational repeatability were treated as distinct checks.'},
+                'supporting': [{'id': 'validation',
+                                'title': {'ko': '같은 결과가 반복돼도, 같은 오류가 반복될 수 있습니다.',
+                                          'en': 'A repeatable result can also be a repeatable error.'},
+                                'paragraphs': [{'ko': '종료 후 논문 리뷰에 대응해 3개 영상을 각각 5회, 같은 CLI·CPU 조건에서 원본부터 다시 '
+                                                      '분석했습니다. 관절 배열·공 궤적·터치 프레임·원시 지표·점수는 반복 간 일치했습니다. 저장 결과 '
+                                                      '771프레임의 재집계도 별도 계산과 1e−10 이내로 맞았습니다.',
+                                                'en': 'For a later paper review, I reprocessed three source '
+                                                      'videos five times each with the same CLI and CPU settings. '
+                                                      'Joint arrays, ball trajectories, touch frames, raw metrics '
+                                                      'and scores matched across repeats. Separately, recomputing '
+                                                      '771 saved frames agreed with an independent calculation '
+                                                      'within 1e−10.'},
+                                               {'ko': '그러나 11월 검토에서는 잘못된 초기 공 선택도 확인됐습니다. 반복 일치와 측정 정확성을 분리하고, 원본 '
+                                                      '장면에서 대상이 맞는지 확인해야 한다는 한계를 함께 기록했습니다.',
+                                                'en': 'The November review also identified incorrect initial ball '
+                                                      'selection. I therefore recorded repeatability separately '
+                                                      'from measurement accuracy and kept source-level object '
+                                                      'checks as a necessary validation step.'}],
+                                'visual': {'images': [('evidence/soccer-initial-ball.jpg',
+                                                       {'ko': '2026.11 후속 검토: 초기 프롬프트가 실제 드리블 공과 다른 곳을 가리킨 사례.',
+                                                        'en': 'November 2026 follow-up: the initial prompt points '
+                                                              'away from the ball actually being dribbled.'})]}}]},
                {'id': 'learning',
-                'label': {'ko': '05 · 배운 점', 'en': '05 · What I learned'},
+                'label': {'ko': '결과와 배운 점', 'en': 'Results & learning'},
                 'title': {'ko': '숫자를 조정하기 전에, 문제의 정의를 다시 봅니다.',
                           'en': 'Revisiting the definition before adjusting the number.'},
                 'paragraphs': [{'ko': '가중치 조정에 앞서 측정 대상·시간 범위·입력 품질을 분리했습니다. 이 과정을 통해 결과가 기대와 다를 때 마지막 점수만 만지는 '
@@ -715,9 +750,10 @@ PROJECTS = [{'slug': 'video-motion',
               'en': 'Diagram of my implementation and review flow · Score shown is the team’s final evaluation'},
   'award': {'ko': '루닛 · 벤치마크 1위 · AIM 팀 수상', 'en': 'Lunit · 1st in benchmark · Team AIM award'},
   'sections': [{'id': 'problem',
-                'label': {'ko': '01 · 문제 정의', 'en': '01 · The problem'},
-                'title': {'ko': '의료 답변의 품질을, 모델 바깥의 처리 과정에서 개선해야 했습니다.',
-                          'en': 'Improving medical answers through the system around a fixed model.'},
+                'label': {'ko': '프로젝트 소개', 'en': 'Project overview'},
+                'title': {'ko': '제공 모델의 응답 흐름을 개선한 의료 AI 해커톤입니다.',
+                          'en': 'A medical AI hackathon focused on the response workflow around a provided '
+                                'model.'},
                 'paragraphs': [{'ko': '루닛이 제공한 L2-preview의 가중치를 바꾸지 않고 의료 질의응답을 개선하는 해커톤이었습니다. 검색 도구를 더 붙이거나 출력량을 '
                                       '늘리는 것만으로는 질문의 요구를 빠짐없이 다루고 근거를 사용하는 답변을 보장할 수 없었습니다.',
                                 'en': 'The hackathon asked us to improve medical question answering without '
@@ -740,9 +776,9 @@ PROJECTS = [{'slug': 'video-motion',
                                      {'ko': '요구사항·근거·응답 끝부분이 남는가',
                                       'en': 'Are requirements, evidence and the answer ending preserved?'})]}},
                {'id': 'implementation',
-                'label': {'ko': '02 · 근거 전달 설계', 'en': '02 · Evidence delivery'},
-                'title': {'ko': '도구 호출의 성공과, 근거를 쓴 답변의 성공을 나눴습니다.',
-                          'en': 'A successful tool call was not the same as an evidence-based answer.'},
+                'label': {'ko': '난제 1 · 근거를 답변까지 연결', 'en': 'Challenge 1 · Delivering evidence to generation'},
+                'title': {'ko': '검색에 성공한 근거를 최종 답변까지 전달하려면?',
+                          'en': 'How does retrieved evidence reach the final answer?'},
                 'paragraphs': [{'ko': 'MCP 모델이 문서 목록만 본 뒤 검색을 끝내거나, 근거를 수집하고도 빈 선택 결과를 반환하는 경로를 확인했습니다. 목록 탐색만으로 '
                                       '종료하면 본문 조회를 한 번 더 유도하고, 수집된 근거가 있는데 최종 선택이 비면 수집분으로 복구하도록 검색·생성 연결을 '
                                       '보완했습니다.',
@@ -770,11 +806,22 @@ PROJECTS = [{'slug': 'video-motion',
                                   '됐습니다.',
                             'en': 'What mattered was whether needed information survived into the final answer, '
                                   'not how many tools were used. I learned to inspect the boundaries where '
-                                  'information could disappear.'}},
+                                  'information could disappear.'},
+                'challenge': {'ko': '모델 가중치를 바꿀 수 없는 조건에서 검색·입력 구성·응답 흐름을 개선해야 했습니다. 문서 목록 탐색에서 멈추거나 수집 뒤 빈 선택을 '
+                                    '반환하면, 도구를 호출하고도 본문 근거가 생성 단계에 도달하지 못했습니다.',
+                              'en': 'With model weights fixed, improvements had to come from retrieval, input '
+                                    'construction and the response flow. Stopping at a document list or returning '
+                                    'an empty selection after collection could leave generation without the '
+                                    'retrieved evidence.'},
+                'decision': {'ko': '검색·생성 사이에서 실제로 전달되는 본문을 확인하고, 목록 탐색 종료와 빈 선택을 복구하는 경로를 구성했습니다. 초기 MCP 연결과 본문 '
+                                   '전달을 제 구현 범위로 삼았습니다.',
+                             'en': 'I inspected the actual text crossing from retrieval to generation and added '
+                                   'recovery for list-only termination and empty selections. My implementation '
+                                   'scope was the initial MCP integration and evidence delivery.'}},
                {'id': 'inference',
-                'label': {'ko': '03 · 실험 판단', 'en': '03 · Judging an experiment'},
-                'title': {'ko': '점수는 올랐지만, 개선이라고 결론 내리지 않았습니다.',
-                          'en': 'The score was higher; the evidence was not enough to call it an improvement.'},
+                'label': {'ko': '난제 2 · 개선 여부의 판단', 'en': 'Challenge 2 · Judging improvement'},
+                'title': {'ko': '평가 점수가 흔들릴 때, 무엇을 개선이라고 판단할 것인가?',
+                          'en': 'What counts as improvement when evaluation scores vary?'},
                 'paragraphs': [{'ko': '답변 잘림과 재생성 경로를 줄이려는 후보 e6de327에서 서버 상한을 2,048→32,768로 정정하고, 실제 요청 출력 예산은 '
                                       '2,048→4,096토큰으로 늘렸습니다. 서버가 허용하는 상한과 요청이 사용하는 예산을 구분해 설정을 확인했습니다.',
                                 'en': 'To investigate truncated answers and regeneration, candidate e6de327 '
@@ -801,11 +848,19 @@ PROJECTS = [{'slug': 'video-motion',
                                   '내릴 수 있는 결론을 따로 기록하는 습관을 얻었습니다.',
                             'en': 'Instead of selecting the highest single score, I first considered whether the '
                                   'change could be distinguished from baseline variation. I learned to record the '
-                                  'change, observation and supported conclusion separately.'}},
+                                  'change, observation and supported conclusion separately.'},
+                'challenge': {'ko': '같은 서빙 동작의 반복 평가에서도 기준선 점수가 47.79–50.03으로 달랐습니다. 답변 잘림을 줄이려는 설정 변경의 점수가 높아져도, '
+                                    '변경 효과인지 반복 변동인지 구분해야 했습니다.',
+                              'en': 'Repeated evaluations of the same serving behavior ranged from 47.79 to '
+                                    '50.03. A higher score after changing settings to reduce truncation had to be '
+                                    'assessed against that variability.'},
+                'decision': {'ko': '서버의 허용 상한과 요청 출력 예산을 구분해 조정하고, 후보 점수를 한 번의 기준 점수가 아닌 반복 기록과 대조했습니다.',
+                             'en': 'I adjusted the server limit and request output budget as separate settings '
+                                   'and compared the candidate with repeated baseline records.'}},
                {'id': 'award',
-                'label': {'ko': '04 · 팀의 최종 결과', 'en': '04 · The final team result'},
-                'title': {'ko': '벤치마크 1위. 팀 성과와 실험 점수는 구분합니다.',
-                          'en': 'First in the benchmark—with experimental and final scores kept separate.'},
+                'label': {'ko': '결과와 배운 점', 'en': 'Results & learning'},
+                'title': {'ko': '팀 벤치마크 1위, 그리고 개선을 판단하는 기준.',
+                          'en': 'A team benchmark win and a clearer standard for evaluating change.'},
                 'paragraphs': [{'ko': 'AIM 팀은 루닛 Conquer Health의 HealthBench 기반 최종 평가에서 14개 팀 중 1위로 벤치마크상을 받았습니다. '
                                       '최종 3라운드 평균은 46.51점입니다. 이는 팀 공동 성과이며 MCP나 출력 예산 하나의 효과로 해석하지 않습니다.',
                                 'en': 'Team AIM won the benchmark award, ranking first among 14 teams in the '
@@ -832,17 +887,14 @@ PROJECTS = [{'slug': 'video-motion',
                                                   'development runs also differed in server state and accumulated '
                                                   'changes, so these records are not combined into one '
                                                   'improvement rate. The certificate documents the award, not '
-                                                  'numerical scores.'}]}},
-               {'id': 'learning',
-                'label': {'ko': '05 · 배운 점', 'en': '05 · What I learned'},
-                'title': {'ko': 'AI 시스템의 개선도, 원인과 결과를 설명할 수 있어야 합니다.',
-                          'en': 'An AI system improvement needs an explainable link between cause and result.'},
-                'paragraphs': [{'ko': 'MCP를 연결했다는 사실이나 더 긴 답변을 생성했다는 사실만으로 품질 개선을 설명할 수 없었습니다. 제어할 수 있는 설정을 나누고, '
-                                      '실제 입력과 응답을 확인하며, 반복 변동과 팀 변경을 구분하는 실험 태도를 배웠습니다.',
-                                'en': 'Connecting MCP or generating longer answers did not alone explain an '
-                                      'improvement. I learned to separate controllable settings, inspect actual '
-                                      'inputs and responses, and distinguish run-to-run variation from the '
-                                      'effects of team changes.'}]}],
+                                                  'numerical scores.'}]},
+                'aliases': ['learning'],
+                'insight': {'ko': 'MCP를 연결했다는 사실이나 더 긴 답변을 생성했다는 사실만으로 품질 개선을 설명할 수 없었습니다. 제어할 수 있는 설정을 나누고, 실제 '
+                                  '입력과 응답을 확인하며, 반복 변동과 팀 변경을 구분하는 실험 태도를 배웠습니다.',
+                            'en': 'Connecting MCP or generating longer answers did not alone explain an '
+                                  'improvement. I learned to separate controllable settings, inspect actual '
+                                  'inputs and responses, and distinguish run-to-run variation from the effects of '
+                                  'team changes.'}}],
   'links': [({'ko': '팀 저장소와 실행 구조', 'en': 'Team repository and architecture'},
              'https://github.com/Hackathon-AIM/health-conquer-submission'),
             ({'ko': '개인 구현: MCP 연결·안전 게이트', 'en': 'My implementation: MCP integration and safety gate'},
@@ -884,7 +936,7 @@ PROJECTS = [{'slug': 'video-motion',
   'images': ['fish-results.png'],
   'caption': {'ko': '개체별 증상 분류 결과 화면', 'en': 'Per-fish symptom classification results'},
   'sections': [{'id': 'problem',
-                'label': {'ko': '01 · 문제 정의', 'en': '01 · The problem'},
+                'label': {'ko': '프로젝트 소개', 'en': 'Project overview'},
                 'title': {'ko': '수조의 이미지에서, 개체별로 확인할 수 있는 결과까지.',
                           'en': 'From a tank image to a result tied to each fish.'},
                 'paragraphs': [{'ko': '물결·조명·겹친 개체가 섞인 전체 프레임에서는 어느 물고기의 증상인지 연결하기 어렵습니다. 저는 개체 탐지 → 크롭 → 7종 외형 '
@@ -909,9 +961,10 @@ PROJECTS = [{'slug': 'video-motion',
                          'en': 'Demo inputs include AI-generated footage. They do not demonstrate field '
                                'validation or early-detection outcomes at a working farm.'}},
                {'id': 'data',
-                'label': {'ko': '02 · 데이터와 병목', 'en': '02 · Data & bottlenecks'},
-                'title': {'ko': '분류 정확도가 높아도, 찾지 못한 개체는 평가할 수 없었습니다.',
-                          'en': 'A strong classifier cannot evaluate a fish the detector missed.'},
+                'label': {'ko': '핵심 난제 · 개체별 분석의 신뢰성', 'en': 'Core challenge · Reliable per-fish analysis'},
+                'title': {'ko': '탐지부터 분류·화면까지, 같은 개체의 결과를 유지하려면?',
+                          'en': 'How can the same fish be preserved across detection, classification and '
+                                'display?'},
                 'paragraphs': [{'ko': 'AI Hub의 개체·증상 라벨을 크롭에 연결하고 매핑되지 않는 라벨은 제외했습니다. 학습에는 클래스별 상한을 적용해 쏠림을 줄이되, '
                                       '평가 분포가 바뀌지 않도록 검증 데이터는 유지했습니다.',
                                 'en': 'I mapped AI Hub object and symptom annotations to crops and excluded '
@@ -929,24 +982,34 @@ PROJECTS = [{'slug': 'video-motion',
                 'insight': {'ko': '잘 나온 모델 점수만으로 파이프라인을 평가하지 않게 됐습니다. 앞 단계의 누락이 뒤 단계에 전달할 입력 자체를 없애는지 먼저 확인해야 '
                                   '했습니다.',
                             'en': 'I learned not to judge a pipeline by its strongest model score. An upstream '
-                                  'miss can remove the input that a later stage needs.'}},
-               {'id': 'application',
-                'label': {'ko': '03 · 결과를 화면으로', 'en': '03 · Making results inspectable'},
-                'title': {'ko': '예측값과 화면의 물고기가 같은 개체를 가리키도록.',
-                          'en': 'Making sure a prediction and its overlay refer to the same fish.'},
-                'paragraphs': [{'ko': '모델 좌표를 원본 이미지와 앱 화면으로 변환하고, 위치·증상·신뢰도를 함께 전달했습니다. 사용자가 개체별 결과와 수조별 기록을 확인할 '
-                                      '수 있도록 FastAPI 응답을 Flutter 화면에 연결했습니다.',
-                                'en': 'I converted model coordinates to source-image and app-display coordinates '
-                                      'and passed position, symptom and confidence together. FastAPI responses '
-                                      'were connected to Flutter so users could inspect individual predictions '
-                                      'and detection history by tank.'}],
-                'visual': {'images': [('evidence/fish-history.png',
-                                       {'ko': '실제 앱의 수조별 탐지 결과 기록. 안내 문구는 규칙 기반 출력입니다.',
-                                        'en': 'Actual detection-result history by tank. Guidance text is '
-                                              'rule-based.'})],
-                           'phones': True}},
+                                  'miss can remove the input that a later stage needs.'},
+                'challenge': {'ko': '물결·조명·겹침이 있는 프레임에서는 개체를 놓칠 수 있고, 크롭의 증상 분류 점수가 좋아도 탐지에서 빠진 물고기는 분석할 수 없습니다. '
+                                    '최종 앱에서도 예측값과 원본 위치가 일치해야 했습니다.',
+                              'en': 'Ripples, lighting and overlap can cause missed detections. Strong '
+                                    'crop-classification scores cannot recover fish missed upstream, and the app '
+                                    'must still align each prediction with its source position.'},
+                'decision': {'ko': '탐지 → 개체별 크롭 → 증상 분류 → 원본 좌표 표시로 단계를 나누고, 라벨·학습 분포·단계별 지표·좌표 변환을 각각 확인했습니다.',
+                             'en': 'I split the workflow into detection, per-fish crops, symptom classification '
+                                   'and source-coordinate display, checking labels, training distribution, stage '
+                                   'metrics and coordinate transforms separately.'},
+                'supporting': [{'id': 'application',
+                                'title': {'ko': '예측값과 화면의 물고기가 같은 개체를 가리키도록.',
+                                          'en': 'Making sure a prediction and its overlay refer to the same '
+                                                'fish.'},
+                                'paragraphs': [{'ko': '모델 좌표를 원본 이미지와 앱 화면으로 변환하고, 위치·증상·신뢰도를 함께 전달했습니다. 사용자가 개체별 '
+                                                      '결과와 수조별 기록을 확인할 수 있도록 FastAPI 응답을 Flutter 화면에 연결했습니다.',
+                                                'en': 'I converted model coordinates to source-image and '
+                                                      'app-display coordinates and passed position, symptom and '
+                                                      'confidence together. FastAPI responses were connected to '
+                                                      'Flutter so users could inspect individual predictions and '
+                                                      'detection history by tank.'}],
+                                'visual': {'images': [('evidence/fish-history.png',
+                                                       {'ko': '실제 앱의 수조별 탐지 결과 기록. 안내 문구는 규칙 기반 출력입니다.',
+                                                        'en': 'Actual detection-result history by tank. Guidance '
+                                                              'text is rule-based.'})],
+                                           'phones': True}}]},
                {'id': 'learning',
-                'label': {'ko': '04 · 배운 점', 'en': '04 · What I learned'},
+                'label': {'ko': '결과와 배운 점', 'en': 'Results & learning'},
                 'title': {'ko': '전처리부터 사용자 화면까지, 같은 대상을 보존합니다.',
                           'en': 'Preserving the same object from preprocessing to the interface.'},
                 'paragraphs': [{'ko': '라벨의 의미, 탐지된 개체, 크롭 분류와 표시 좌표가 연결되어야 결과를 설명할 수 있었습니다. 학습 데이터 조정과 검증을 분리하고, '
@@ -984,7 +1047,7 @@ PROJECTS = [{'slug': 'video-motion',
   'poster': 'medguard-poster.jpg',
   'caption': {'ko': '공격 전후와 방어 결과를 비교하는 실제 시연', 'en': 'Demo comparing original, attacked, and purified inputs'},
   'sections': [{'id': 'problem',
-                'label': {'ko': '01 · 문제 정의', 'en': '01 · The problem'},
+                'label': {'ko': '프로젝트 소개', 'en': 'Project overview'},
                 'title': {'ko': '공격을 지우는 과정에서, 분류에 필요한 정보도 사라질 수 있습니다.',
                           'en': 'Removing an attack can also remove information needed for classification.'},
                 'paragraphs': [{'ko': '흉부 X-ray 분류기에 대한 공격 방어는 노이즈를 많이 제거하는 문제로만 볼 수 없었습니다. 입력을 바꾸는 정화가 분류 결과와 원래 '
@@ -999,9 +1062,11 @@ PROJECTS = [{'slug': 'video-motion',
                                         'en': 'Actual Gradio demo comparing attacked images and predictions for '
                                               'the same input.'})]}},
                {'id': 'approach',
-                'label': {'ko': '02 · 대응 설계', 'en': '02 · The approach'},
-                'title': {'ko': '공격 유형과 정화 강도를 함께 비교했습니다.',
-                          'en': 'Comparing attack characteristics and purification strength together.'},
+                'label': {'ko': '핵심 난제 · 방어와 정보 보존',
+                          'en': 'Core challenge · Defense and information preservation'},
+                'title': {'ko': '공격을 줄이면서 분류에 필요한 영상 정보는 어떻게 보존할까?',
+                          'en': 'How can attacks be reduced while preserving information needed for '
+                                'classification?'},
                 'paragraphs': [{'ko': 'FFT로 주파수 변화를 살피고, RoentGen VAE 정화와 입력 이미지의 블렌딩을 조절했습니다. 강한 정화를 일률적으로 '
                                       '적용하기보다 공격 조건별 결과와 폐 영역 구조의 일치도를 함께 검토하는 실험 경로를 구성했습니다.',
                                 'en': 'I inspected frequency changes with FFT and varied RoentGen VAE '
@@ -1021,29 +1086,41 @@ PROJECTS = [{'slug': 'video-motion',
                 'insight': {'ko': '방어 후 분류 점수와 이미지 보존을 같은 것으로 보지 않게 됐습니다. 더 강한 변환이 필요한 정보까지 바꾸는지 함께 확인해야 했습니다.',
                             'en': 'I learned to distinguish post-defense classification scores from image '
                                   'preservation, checking whether stronger transformations also changed useful '
-                                  'information.'}},
-               {'id': 'results',
-                'label': {'ko': '03 · 확인한 결과', 'en': '03 · Results'},
-                'title': {'ko': '비교 조건을 고정하고, 결과의 범위를 남겼습니다.',
-                          'en': 'Reporting the result together with its comparison conditions.'},
-                'paragraphs': [{'ko': '공개 저장소의 동일 DiffAttack 조건에서 Medical DiffPure는 78.56%, Vanilla DiffPure는 '
-                                      '73.72%로 4.84%p 차이를 기록했습니다. Medical DiffPure의 FGSM·PGD 조건 정확도는 각각 58.31%, '
-                                      '61.47%였습니다.',
-                                'en': 'Under the repository’s DiffAttack setup, Medical DiffPure achieved 78.56% '
-                                      'accuracy versus 73.72% for Vanilla DiffPure, a 4.84 percentage-point '
-                                      'difference. Medical DiffPure recorded 58.31% and 61.47% under FGSM and '
-                                      'PGD, respectively.'},
-                               {'ko': '이 결과는 저장소에 기록된 설정의 비교입니다. 새로운 공격·다른 분포·정화 후 병변 보존까지 검증한 결과는 아니며, 실제 임상 적용 '
-                                      '효과와도 구분합니다.',
-                                'en': 'These are comparisons under the recorded settings. They do not validate '
-                                      'unseen attacks, other distributions, preservation of pathology after '
-                                      'purification or clinical outcomes.'}],
-                'visual': {'images': [('evidence/medguard-defense.jpg',
-                                       {'ko': '실제 방어 비교 화면. 정량 수치는 별도의 저장소 평가 기록을 사용했습니다.',
-                                        'en': 'Actual defense-comparison screen. Quantitative figures come from '
-                                              'the separate repository evaluation.'})]}},
+                                  'information.'},
+                'challenge': {'ko': '정화는 공격 노이즈뿐 아니라 원래 영상도 바꿉니다. 공격 조건에 따라 방어 효과가 달라지므로, 정화를 강하게 적용하는 것만으로 분류 '
+                                    '성능과 정보 보존을 함께 설명할 수 없었습니다.',
+                              'en': 'Purification changes the original image as well as the perturbation. Its '
+                                    'effect varies by attack, so stronger purification alone cannot establish '
+                                    'both classification performance and information preservation.'},
+                'decision': {'ko': '공격 조건을 나눠 FFT 주파수 변화, VAE 정화와 입력 블렌딩을 비교하고, 동일 조건의 분류 결과와 영상 구조를 함께 살피는 실험 '
+                                   '경로를 구성했습니다.',
+                             'en': 'I compared frequency changes, VAE purification and input blending across '
+                                   'attack conditions, examining classification results under matched settings '
+                                   'alongside image structure.'},
+                'supporting': [{'id': 'results',
+                                'title': {'ko': '비교 조건을 고정하고, 결과의 범위를 남겼습니다.',
+                                          'en': 'Reporting the result together with its comparison conditions.'},
+                                'paragraphs': [{'ko': '공개 저장소의 동일 DiffAttack 조건에서 Medical DiffPure는 78.56%, '
+                                                      'Vanilla DiffPure는 73.72%로 4.84%p 차이를 기록했습니다. Medical '
+                                                      'DiffPure의 FGSM·PGD 조건 정확도는 각각 58.31%, 61.47%였습니다.',
+                                                'en': 'Under the repository’s DiffAttack setup, Medical DiffPure '
+                                                      'achieved 78.56% accuracy versus 73.72% for Vanilla '
+                                                      'DiffPure, a 4.84 percentage-point difference. Medical '
+                                                      'DiffPure recorded 58.31% and 61.47% under FGSM and PGD, '
+                                                      'respectively.'},
+                                               {'ko': '이 결과는 저장소에 기록된 설정의 비교입니다. 새로운 공격·다른 분포·정화 후 병변 보존까지 검증한 '
+                                                      '결과는 아니며, 실제 임상 적용 효과와도 구분합니다.',
+                                                'en': 'These are comparisons under the recorded settings. They do '
+                                                      'not validate unseen attacks, other distributions, '
+                                                      'preservation of pathology after purification or clinical '
+                                                      'outcomes.'}],
+                                'visual': {'images': [('evidence/medguard-defense.jpg',
+                                                       {'ko': '실제 방어 비교 화면. 정량 수치는 별도의 저장소 평가 기록을 사용했습니다.',
+                                                        'en': 'Actual defense-comparison screen. Quantitative '
+                                                              'figures come from the separate repository '
+                                                              'evaluation.'})]}}]},
                {'id': 'learning',
-                'label': {'ko': '04 · 배운 점', 'en': '04 · What I learned'},
+                'label': {'ko': '결과와 배운 점', 'en': 'Results & learning'},
                 'title': {'ko': '방어의 목표를, 정확도 회복과 정보 보존으로 나눴습니다.',
                           'en': 'Separating accuracy recovery from information preservation.'},
                 'paragraphs': [{'ko': '공격 조건을 명시하고 같은 조건의 비교를 남기는 것이 결과 해석에 중요했습니다. 새로운 방어를 평가할 때도 평균 점수뿐 아니라 어떤 '
@@ -1080,7 +1157,7 @@ PROJECTS = [{'slug': 'video-motion',
   'caption': {'ko': '원본 시연 00:30–01:20 발췌 · 처리 진행과 결과 화면',
               'en': 'Original demo excerpt, 00:30–01:20 · Processing and results'},
   'sections': [{'id': 'problem',
-                'label': {'ko': '01 · 문제 정의', 'en': '01 · The problem'},
+                'label': {'ko': '프로젝트 소개', 'en': 'Project overview'},
                 'title': {'ko': '자유로운 입력을, 이어서 처리할 수 있는 정보로 바꾸기.',
                           'en': 'Turning free-form input into information the next stage can use.'},
                 'paragraphs': [{'ko': '텍스트·음성·이미지로 들어온 약물 정보를 같은 흐름에서 처리하고, 사용자가 읽을 수 있는 보고서로 전달하는 프로토타입입니다. 저는 '
@@ -1094,9 +1171,10 @@ PROJECTS = [{'slug': 'video-motion',
                                         'en': 'Input screen from the actual demo, supporting text, voice and '
                                               'image input.'})]}},
                {'id': 'workflow',
-                'label': {'ko': '02 · 처리 흐름', 'en': '02 · Processing flow'},
-                'title': {'ko': '입력 이해부터 보고서까지, 단계별 결과를 이어 붙였습니다.',
-                          'en': 'Connecting stage outputs from input understanding to the report.'},
+                'label': {'ko': '핵심 난제 · 입력부터 보고서까지 연결', 'en': 'Core challenge · Connecting input to a report'},
+                'title': {'ko': '서로 다른 입력과 여러 처리 단계를 하나의 서비스 흐름으로 만들려면?',
+                          'en': 'How can varied inputs and multiple processing stages become one usable '
+                                'workflow?'},
                 'paragraphs': [{'ko': '입력 이해·약물 인식·기본 지식·심화 분석·부작용 검토·근거 설명·개인화 정보·보고서 생성의 8단계를 구성했습니다. 앞 단계의 출력을 '
                                       '다음 단계에 전달하고, FastAPI 응답을 React의 요약과 상세 화면으로 연결했습니다.',
                                 'en': 'The eight stages cover input understanding, medication recognition, '
@@ -1117,23 +1195,35 @@ PROJECTS = [{'slug': 'video-motion',
                 'outcome': {'ko': '입력부터 조회·생성·보고서 표시까지 연결한 프로토타입과 시연을 확보했습니다. 위험도·권장사항의 의료적 정확도는 검증하지 않았습니다.',
                             'en': 'The prototype and demo connect input, lookup, generation and report display. '
                                   'Medical accuracy of the risk indicators and recommendations was not '
-                                  'validated.'}},
-               {'id': 'interface',
-                'label': {'ko': '03 · 사용자에게 전달', 'en': '03 · Communicating the workflow'},
-                'title': {'ko': '여러 호출의 결과를, 읽을 수 있는 하나의 화면으로.',
-                          'en': 'Presenting a multi-call workflow in a readable result screen.'},
-                'paragraphs': [{'ko': '처리 중에는 진행 상태를 보여주고, 최종 결과는 요약·주요 내용·주의사항과 상세 설명으로 나눴습니다. 생성된 내용을 그대로 길게 '
-                                      '나열하기보다 사용자가 현재 단계와 결과를 구분해 볼 수 있도록 구성했습니다.',
-                                'en': 'The interface shows progress during processing and organizes the result '
-                                      'into a summary, key points, cautions and detail. This helps users '
-                                      'distinguish the workflow state from its output rather than reading an '
-                                      'undifferentiated block of generated text.'}],
-                'visual': {'images': [('evidence/medai-result.jpg',
-                                       {'ko': '실제 결과 UI. 표시된 위험도는 모델 출력이며 임상적으로 검증된 확률이 아닙니다.',
-                                        'en': 'Actual results UI. The displayed risk indicator is model output, '
-                                              'not a clinically validated probability.'})]}},
+                                  'validated.'},
+                'challenge': {'ko': '텍스트·음성·이미지 입력에서 약물 정보를 파악하고, 조회·생성을 거쳐 사용자가 읽을 수 있는 결과까지 연결해야 했습니다. 앞 단계의 '
+                                    '약물명과 해석이 뒤 단계의 입력이 되므로 정보가 전달되는 경계를 명확히 해야 했습니다.',
+                              'en': 'Text, voice and image inputs had to lead to identified medication '
+                                    'information, lookup, generation and a readable result. Drug names and '
+                                    'interpretations from early stages became later inputs, making the handoffs '
+                                    'important.'},
+                'decision': {'ko': '역할별 처리 단계를 나누고 앞 단계의 출력을 다음 단계에 전달했습니다. 화면에서는 진행 상태와 최종 요약·상세 결과를 분리해 이 흐름을 '
+                                   '확인할 수 있게 했습니다.',
+                             'en': 'I separated processing roles and passed outputs between stages. The interface '
+                                   'distinguishes progress from final summaries and details so the workflow can '
+                                   'be inspected.'},
+                'supporting': [{'id': 'interface',
+                                'title': {'ko': '여러 호출의 결과를, 읽을 수 있는 하나의 화면으로.',
+                                          'en': 'Presenting a multi-call workflow in a readable result screen.'},
+                                'paragraphs': [{'ko': '처리 중에는 진행 상태를 보여주고, 최종 결과는 요약·주요 내용·주의사항과 상세 설명으로 나눴습니다. '
+                                                      '생성된 내용을 그대로 길게 나열하기보다 사용자가 현재 단계와 결과를 구분해 볼 수 있도록 구성했습니다.',
+                                                'en': 'The interface shows progress during processing and '
+                                                      'organizes the result into a summary, key points, cautions '
+                                                      'and detail. This helps users distinguish the workflow '
+                                                      'state from its output rather than reading an '
+                                                      'undifferentiated block of generated text.'}],
+                                'visual': {'images': [('evidence/medai-result.jpg',
+                                                       {'ko': '실제 결과 UI. 표시된 위험도는 모델 출력이며 임상적으로 검증된 확률이 아닙니다.',
+                                                        'en': 'Actual results UI. The displayed risk indicator is '
+                                                              'model output, not a clinically validated '
+                                                              'probability.'})]}}]},
                {'id': 'learning',
-                'label': {'ko': '04 · 배운 점과 과제', 'en': '04 · Learning & remaining work'},
+                'label': {'ko': '결과와 배운 점', 'en': 'Results & learning'},
                 'title': {'ko': '연결한 단계 수보다, 정보가 어떻게 전달되는지가 중요했습니다.',
                           'en': 'The flow of information mattered more than the number of stages.'},
                 'paragraphs': [{'ko': '약물명이나 앞 단계의 해석이 후속 설명의 입력이 되는 구조를 만들며, 오류가 어디에서 생겼는지 확인할 수 있어야 한다는 점을 '
