@@ -21,9 +21,9 @@ HOME = {'headline': {'ko': 'AI를 실제로 쓰이는<br>기능으로 만듭니�
 
 SUMMARIES = {'soccer-analysis': {'ko': '선수와 공을 추적하고, 드리블 동작을 검수 가능한 지표로.',
                      'en': 'Tracking the player and ball to produce dribbling metrics that can be checked against the footage.'},
- 'video-motion': {'ko': '영상 속 같은 사람의 움직임을 연결하고, 학습에 쓸 구간을 가려내는 연구입니다.',
-                  'en': 'A research pipeline that links a person’s motion across video and identifies segments suitable for '
-                        'learning.'},
+ 'video-motion': {'ko': '실제 영상에서 선수를 추적하고, 크롭·3D 복원·메쉬 재생으로 연결한 연구입니다.',
+ 'en': 'A research pipeline that tracks a player in real footage, crops the track, reconstructs 3D motion, and replays '
+       'the mesh.'},
  'danzzan': {'ko': '총학생회와 함께 운영한 대학 축제 서비스. 예매·인증·번역 백엔드를 담당했습니다.',
              'en': 'A university festival service operated with the student council. I built ticketing, authentication, and '
                    'translation features.'},
@@ -42,145 +42,253 @@ FOCUS = {'soccer-analysis': {'ko': '평가 지표 설계 · 공 추적 검수', 
  'conquer-health': {'ko': 'MCP 조회·본문 전달 · 출력 예산 실험', 'en': 'MCP evidence delivery · Output-budget experiments'}}
 
 PROJECTS = [{'slug': 'video-motion',
-  'title': {'ko': '로봇학습데이터 구축 파이프라인', 'en': 'A data pipeline for robot learning'},
-  'category': {'ko': 'Video understanding · 연구', 'en': 'Video understanding · Research'},
-  'subtitle': {'ko': '메쉬가 보이는 것에서 끝내지 않고, 같은 사람의 데이터인지 확인했습니다.',
-               'en': 'Beyond a visible mesh: checking that the data belongs to the same person.'},
-  'desc': {'ko': '그라운딩 210개 응답 비교에서 출발해 인물 추적·크롭·3D 복원으로 설계를 발전시킨 연구입니다. 농구와 공연 영상에서 가림·ID 변경·오연결을 구분하고, 사람과 시간 구간별 데이터 선별 기준을 '
-                 '정리했습니다.',
-           'en': 'Starting with 210 grounding responses, I developed a person-centered approach to tracking, cropping, and 3D '
-                 'reconstruction. In basketball and performance footage, I distinguished occlusion gaps, new IDs, and incorrect '
-                 'associations to define data-selection criteria.'},
-  'role': {'ko': '그라운딩 비교·실행기, 후속 추적·복원 실험 설계와 검수',
-           'en': 'Grounding comparisons and runners; design and review of follow-up tracking and reconstruction experiments'},
-  'period': {'ko': '2026.07– · 연구 진행 중', 'en': 'Since Jul 2026 · Ongoing research'},
-  'context': {'ko': 'AIV Lab / ETRI 연구과제', 'en': 'AIV Lab / ETRI research project'},
-  'stack': 'PyTorch / TimeLens2 / Qwen3-VL / CoMotion / Multi-HMR 2 / PHALP',
-  'repo': 'https://github.com/DKU-AIM/video-motion-pipeline',
-  'caption': {'ko': '공연 영상 ID 검수 기록 · 관측값을 재구성한 도식',
-              'en': 'Diagram reconstructed from the latest identity-review records; not footage or a mesh render.'},
-  'sections': [{'id': 'problem',
-                'label': {'ko': '목표와 역할', 'en': 'Goal & contribution'},
-                'title': {'ko': '모양이 그럴듯해도, 사람이 바뀌면 같은 데이터가 아닙니다.', 'en': 'A plausible mesh is not enough if it switches people.'},
-                'paragraphs': [{'ko': '영상의 행동 설명과 3D 동작을 학습 데이터로 연결하려면 인물·시간 구간·모션이 함께 맞아야 합니다. 처음에는 행동 구간을 먼저 찾았지만, 짧은 행동의 누락과 인물 ID '
-                                      '단절을 확인하면서 사람별 연속 구간을 확보하는 방향으로 설계를 바꿨습니다.',
-                                'en': 'Aligning video descriptions with 3D motion requires consistent person identities, time spans, '
-                                      'and motion. I began with action localization, then shifted toward continuous person-specific '
-                                      'segments after finding missed short actions and identity breaks.'}],
-                'items': [({'ko': '팀 과제에서', 'en': 'Within the team project'},
-                           {'ko': '모델별 GPU 실행 환경·그라운딩 실행기·입출력 정리와 비교 실험, 설계·발표를 맡았습니다. 팀의 추적·메쉬 복원은 다른 팀원의 기여와 구분합니다.',
-                            'en': 'I worked on GPU environments, grounding runners, input/output normalization, comparisons, design, '
-                                  'and presentation. The team’s tracking and mesh-reconstruction work includes other members’ '
-                                  'contributions.'}),
-                          ({'ko': '후속 개인 실험', 'en': 'Follow-up individual experiments'},
-                           {'ko': 'PHALP 추적·인물 크롭·HMR 2.0 재추론의 대상과 조건을 정하고 결과를 검수했습니다. AI 코딩 도구를 활용해 실행·정리했으며 사전학습 모델을 개발하거나 재학습한 작업은 '
-                                  '아닙니다.',
-                            'en': 'I defined and reviewed PHALP tracking, person crops, and HMR 2.0 re-inference experiments, using '
-                                  'AI coding tools for implementation and execution. I used pretrained models rather than developing '
-                                  'or retraining them.'})]},
-               {'id': 'grounding',
-                'label': {'ko': '설계를 바꾼 근거', 'en': 'Why the design changed'},
-                'title': {'ko': 'FPS를 높여도, 놓치는 행동은 남았습니다.', 'en': 'Higher sampling rates still missed actions.'},
-                'paragraphs': [{'ko': '7개 모델 × 5개 FPS × 2개 영상 × 3개 쿼리로 얻은 210개 응답을 비교했습니다. 모델별 출력 시각을 공통 형식으로 정리하고, 지나치게 넓은 구간과 영상에 '
-                                      '없는 행동을 원본에 대조했습니다. 210은 영상 수가 아니라 응답 수입니다.',
-                                'en': 'I compared 210 responses: seven models × five FPS settings × two videos × three queries. After '
-                                      'normalizing timestamps, I checked overly broad intervals and nonexistent actions against the '
-                                      'footage. This is a response count, not a video count.'},
-                               {'ko': '짧은 구간의 행동 판별을 앞에 연결해도 오탐과 누락이 함께 나타났습니다. 따라서 그라운딩 결과를 곧바로 정답으로 쓰지 않고, 인물 추적과 원본 시간축을 먼저 보존한 뒤 '
-                                      '동작 설명을 연결하는 방향을 택했습니다.',
-                                'en': 'Adding short-clip action classification still produced both false positives and misses. Rather '
-                                      'than treating grounding outputs as labels, I prioritized person tracks and source timestamps '
-                                      'before attaching action descriptions.'}],
-                'steps': [({'ko': '인물·시간 보존', 'en': 'Preserve identity & time'},
-                           {'ko': '원본 시각, 인물 ID, 크롭 좌표 기록', 'en': 'Record source times, track IDs, and crop coordinates'}),
-                          ({'ko': '크롭·3D 복원', 'en': 'Crop & reconstruct'},
-                           {'ko': '선택한 사람의 구간에 HMR 2.0 재실행', 'en': 'Rerun HMR 2.0 on selected person segments'}),
-                          ({'ko': '오류 검수·선별', 'en': 'Review & select'},
-                           {'ko': '누락·새 ID·오연결·중복을 구분', 'en': 'Separate gaps, new IDs, wrong associations, and duplicates'})]},
-               {'id': 'experiments',
-                'label': {'ko': '완료한 실험', 'en': 'Completed experiments'},
-                'title': {'ko': '농구의 선수별 복원에서, 공연의 가림 검수까지.', 'en': 'From player-specific reconstruction to occlusion review.'},
-                'paragraphs': [{'ko': '농구에서는 5개 클립의 96초·4,240프레임을 처리하고, 직접 선택한 선수 5명·6구간에 각 변 10% 여백을 둔 크롭과 HMR 2.0 재추론을 적용했습니다. 원래 '
-                                      'FPS와 크롭의 픽셀 크기를 유지했습니다.',
-                                'en': 'For basketball, I processed 96 seconds and 4,240 frames across five clips, then applied crops '
-                                      'with 10% margins on each side and HMR 2.0 re-inference to six manually selected segments from '
-                                      'five players. Original FPS and crop pixel dimensions were preserved.'},
-                               {'ko': '후속 공연 실험은 약 30초씩 10개 구간입니다. 이동 범위를 포함하는 고정 그룹 ROI에서 검출·복원·ID 연결을 수행하고, 입력·메쉬 ID·비교 영상 총 30개와 '
-                                      '수동 검수 기록을 정리했습니다.',
-                                'en': 'The follow-up performance study used ten clips of about 30 seconds each. Detection, '
-                                      'reconstruction, and identity association ran within fixed group ROIs covering movement, '
-                                      'producing 30 input, mesh-ID, and comparison videos alongside manual review records.'}],
-                'table': {'caption': {'ko': '각 실험에서 확보한 것', 'en': 'What each experiment established'},
-                          'headers': [{'ko': '범위', 'en': 'Scope'},
-                                      {'ko': '산출물', 'en': 'Output'},
-                                      {'ko': '검증 수준', 'en': 'Validation scope'}],
-                          'rows': [[{'ko': '그라운딩 210개 응답', 'en': '210 grounding responses'},
-                                    {'ko': '공통 시간 형식·오탐/누락 비교', 'en': 'Normalized times and false-positive/miss review'},
-                                    {'ko': '원본 장면 대조', 'en': 'Review against footage'}],
-                                   [{'ko': '농구 선수별 6구간', 'en': '6 player-specific segments'},
-                                    {'ko': '크롭·메쉬·SMPL 데이터', 'en': 'Crops, meshes, and SMPL data'},
-                                    {'ko': '선택 구간의 수동 검수', 'en': 'Manual review of selected segments'}],
-                                   [{'ko': '공연 10구간', 'en': '10 performance clips'},
-                                    {'ko': 'ID 오류 유형·제외/보류 기준', 'en': 'Identity-error categories and selection criteria'},
-                                    {'ko': '표본 프레임+관측 로그', 'en': 'Sampled frames and observation logs'}]]},
-                'note': {'ko': '처리량과 산출물 수는 정확도가 아닙니다. IDF1·HOTA·3D 정답 기반 정확도는 산출하지 않았습니다.',
-                         'en': 'Processed frames and output counts are not accuracy measurements. IDF1, HOTA, and 3D ground-truth '
-                               'accuracy were not evaluated.'}},
-               {'id': 'review',
-                'label': {'ko': '핵심 난제와 판단', 'en': 'Challenge & decisions'},
-                'title': {'ko': '잠깐 사라진 사람과, 다른 사람에게 붙은 ID를 구분했습니다.',
-                          'en': 'A temporary gap is different from an ID assigned to someone else.'},
-                'paragraphs': [{'ko': '같은 공연 구간 M09에서 두 종류의 오류를 확인했습니다. ID5는 18프레임, 약 0.60초 누락된 뒤 같은 사람·같은 ID로 돌아왔습니다. 이 경우 사람 전체를 '
-                                      '버리는 대신 누락 시간만 제외할 수 있습니다.',
-                                'en': 'In performance clip M09, ID5 disappeared for 18 frames, about 0.60 seconds, then returned on '
-                                      'the same person with the same ID. This supports excluding the missing interval rather than '
-                                      'discarding the person’s entire track.'},
-                               {'ko': '다른 공연자는 프레임 819의 ID4에서 820의 ID28로 바뀌었습니다. 마지막 분리 표본인 프레임 899에서는 기존 ID4가 다른 공연자에게 붙었습니다. 새 ID가 '
-                                      '생긴 시점과 잘못된 연결을 확인한 시점을 따로 기록하고, 관련 두 사람의 경계를 보류해 앞뒤 구간을 나누는 기준을 세웠습니다.',
-                                'en': 'Another performer changed from ID4 at frame 819 to ID28 at frame 820. At the final separated '
-                                      'sample, frame 899, the old ID4 was attached to a different performer. I recorded the new-ID '
-                                      'event separately from the confirmed wrong association and defined a rule to withhold the '
-                                      'uncertain boundary and split the affected tracks.'}],
-                'note': {'ko': '가림 때문에 최초 오연결 프레임은 확정하지 않았습니다. 검수한 표본의 판단을 전 프레임 추적 정확도로 확대하지 않습니다.',
-                         'en': 'Occlusion prevented identifying the first incorrect-association frame. Sampled review findings are '
-                               'not a dense tracking-accuracy evaluation.'}},
-               {'id': 'learning',
-                'label': {'ko': '결과와 다음 단계', 'en': 'Outcome & next steps'},
-                'title': {'ko': '복원 결과를 만드는 것만큼, 쓸 수 있는 범위를 정하는 일이 중요했습니다.',
-                          'en': 'Defining usable segments matters as much as reconstruction.'},
-                'paragraphs': [{'ko': '결과는 추적 오류를 모두 해결한 모델이 아니라, 사람 × 문제 시간 단위로 데이터를 검수하고 선별하는 기준입니다. 정상 구간을 함께 보존할 수 있도록 누락·ID '
-                                      '변경·타인 오연결·중복을 분리했습니다.',
-                                'en': 'The result is a set of person-and-time-specific review criteria, not a model that resolves '
-                                      'every tracking failure. Separating gaps, ID changes, wrong associations, and duplicates makes '
-                                      'it possible to preserve usable segments.'},
-                               {'ko': '자동 동작 분할·캡셔닝·품질 승인과 로봇 학습 적용은 후속 과제입니다. 먼저 일관된 데이터 단위를 확보하고, 이후 설명과 라벨을 연결하는 순서로 발전시키고 있습니다.',
-                                'en': 'Automatic action segmentation, captioning, quality approval, and robot-learning applications '
-                                      'remain future work. The next step is to attach descriptions and labels to consistently '
-                                      'reviewed data units.'}],
-                'details': {'label': {'ko': '이전 농구 메쉬 시연의 범위', 'en': 'Scope of the earlier basketball mesh demo'},
-                            'paragraphs': [{'ko': '아래는 기존 공개 포트폴리오의 8초·100프레임 CoMotion 추론 시연입니다. 최신 PHALP·HMR 2.0 실험과 별개인 이전 단계이며, 실제 '
-                                                  '모델 출력을 사용했습니다.',
-                                            'en': 'The video below is the earlier portfolio demo: an eight-second, 100-frame CoMotion '
-                                                  'inference run using actual model outputs. It is separate from the newer PHALP/HMR '
-                                                  '2.0 experiments.'}]},
-                'video': 'basketball-mesh-preview.mp4',
-                'poster': 'basketball-mesh-preview.jpg',
-                'caption': {'ko': '이전 단계 · CoMotion 실제 추론 시연 (8초·100프레임)',
-                            'en': 'Earlier phase · Actual CoMotion inference demo (8 seconds, 100 frames)'}}],
-  'links': [({'ko': '팀 공개 파이프라인·모델 실행 안내', 'en': 'Team pipeline and model setup'}, 'https://github.com/DKU-AIM/video-motion-pipeline'),
-            ({'ko': '개인 그라운딩 실행기·파서', 'en': 'My grounding runners and parsers'}, 'https://github.com/jiwoo1105/video-grounding'),
-            ('PHALP', 'https://github.com/brjathu/PHALP'),
-            ('HMR 2.0', 'https://github.com/shubham-goel/4D-Humans')],
-  'visual': 'tracking',
-  'team': {'ko': 'AIV Lab · 영상 이해·3D 모션 연구', 'en': 'AIV Lab · Video understanding & 3D motion'},
-  'display_stack': 'Python / PyTorch / PHALP / HMR 2.0 / SMPL',
-  'facts': [({'ko': '비교 실험', 'en': 'Grounding study'}, {'ko': '210개 응답 · 7개 모델', 'en': '210 responses · 7 models'}, True),
-            ({'ko': '후속 검수', 'en': 'Follow-up review'},
-             {'ko': '공연 10구간 · 농구 선수별 6구간', 'en': '10 performance clips · 6 player-specific basketball segments'},
-             True),
-            ({'ko': '현재 단계', 'en': 'Status'},
-             {'ko': '데이터 선별 기준 정리 · 연구 진행 중', 'en': 'Data-selection criteria · Research in progress'},
-             False)]},
+ 'title': {'ko': '로봇학습데이터 구축 파이프라인', 'en': 'A data pipeline for robot learning'},
+ 'category': {'ko': 'Video understanding · 연구', 'en': 'Video understanding · Research'},
+ 'subtitle': {'ko': '한 사람의 움직임을 따라, 영상에서 3D 모션 데이터까지.', 'en': 'From a person’s movement on screen to 3D motion data.'},
+ 'desc': {'ko': 'PHALP 인물 추적, 선수별 크롭, HMR 2.0 복원과 실제 SMPL 메쉬 재생을 연결한 연구 파이프라인입니다.',
+          'en': 'A research pipeline connecting PHALP person tracking, player-specific crops, HMR 2.0 reconstruction, '
+                'and replay of the resulting SMPL meshes.'},
+ 'role': {'ko': '그라운딩 비교·실행기, 후속 추적·복원 실험 설계와 검수',
+          'en': 'Grounding comparisons and runners; design and review of follow-up tracking and reconstruction '
+                'experiments'},
+ 'period': {'ko': '2026.07– · 연구 진행 중', 'en': 'Since Jul 2026 · Ongoing research'},
+ 'context': {'ko': 'AIV Lab / ETRI 연구과제', 'en': 'AIV Lab / ETRI research project'},
+ 'stack': 'Python / PyTorch / ViTDet-H / PHALP / HMR 2.0 / SMPL / MuJoCo',
+ 'repo': 'https://github.com/DKU-AIM/video-motion-pipeline',
+ 'caption': {'ko': '같은 6초의 선수 크롭 ↔ HMR 2.0 실제 출력 · 상세에서 단계별 시연',
+             'en': 'The same six seconds: person crop ↔ actual HMR 2.0 output. Explore every stage in the case study.'},
+ 'sections': [{'id': 'problem',
+               'label': {'ko': '목표와 역할', 'en': 'Goal & contribution'},
+               'title': {'ko': '같은 사람의 영상·시간·모션을 하나의 단위로.',
+                         'en': 'One data unit: the same person, time span, and motion.'},
+               'paragraphs': [{'ko': '목표는 사람의 동작을 담은 영상과 3D 모션을 대응시켜, 후속 로봇 학습 연구에 활용할 데이터 단위를 만드는 것입니다. 그라운딩 모델의 행동 '
+                                     '구간만 믿기보다, 인물 ID와 원본 시간축을 보존하고 각 단계의 결과를 대조하는 방식으로 설계를 발전시켰습니다.',
+                               'en': 'The goal is to pair video of human actions with 3D motion as data units for '
+                                     'future robot-learning research. I developed the design around preserving person '
+                                     'IDs and source timestamps and reviewing each stage, rather than relying solely '
+                                     'on action intervals predicted by grounding models.'}],
+               'items': [({'ko': '팀 과제에서', 'en': 'Within the team project'},
+                          {'ko': '모델별 GPU 실행 환경·그라운딩 실행기·입출력 정리와 비교 실험, 설계·발표를 맡았습니다. 팀의 추적·메쉬 복원은 다른 팀원의 기여와 구분합니다.',
+                           'en': 'I worked on GPU environments, grounding runners, input/output normalization, '
+                                 'comparisons, design, and presentation. The team’s tracking and mesh-reconstruction '
+                                 'work includes other members’ contributions.'}),
+                         ({'ko': '후속 개인 실험', 'en': 'Follow-up individual experiments'},
+                          {'ko': 'PHALP 추적·인물 크롭·HMR 2.0 재추론의 대상과 조건을 정하고 결과를 검수했습니다. AI 코딩 도구를 활용해 실행·정리했으며 사전학습 모델을 '
+                                 '개발하거나 재학습한 작업은 아닙니다.',
+                           'en': 'I defined and reviewed PHALP tracking, person crops, and HMR 2.0 re-inference '
+                                 'experiments, using AI coding tools for implementation and execution. I used '
+                                 'pretrained models rather than developing or retraining them.'})]},
+              {'id': 'grounding',
+               'label': {'ko': '설계를 바꾼 근거', 'en': 'Why the design changed'},
+               'title': {'ko': 'FPS를 높여도, 놓치는 행동은 남았습니다.', 'en': 'Higher sampling rates still missed actions.'},
+               'paragraphs': [{'ko': '7개 모델 × 5개 FPS × 2개 영상 × 3개 쿼리로 얻은 210개 응답을 비교했습니다. 모델별 출력 시각을 공통 형식으로 정리하고, '
+                                     '지나치게 넓은 구간과 영상에 없는 행동을 원본에 대조했습니다. 210은 영상 수가 아니라 응답 수입니다.',
+                               'en': 'I compared 210 responses: seven models × five FPS settings × two videos × three '
+                                     'queries. After normalizing timestamps, I checked overly broad intervals and '
+                                     'nonexistent actions against the footage. This is a response count, not a video '
+                                     'count.'},
+                              {'ko': '짧은 구간의 행동 판별을 앞에 연결해도 오탐과 누락이 함께 나타났습니다. 따라서 그라운딩 결과를 곧바로 정답으로 쓰지 않고, 인물 추적과 원본 '
+                                     '시간축을 먼저 보존한 뒤 동작 설명을 연결하는 방향을 택했습니다.',
+                               'en': 'Adding short-clip action classification still produced both false positives and '
+                                     'misses. Rather than treating grounding outputs as labels, I prioritized person '
+                                     'tracks and source timestamps before attaching action descriptions.'}]},
+              {'id': 'pipeline',
+               'label': {'ko': '파이프라인 설계', 'en': 'Pipeline design'},
+               'title': {'ko': '추적용 추정과, 크롭 후 복원을 나눴습니다.',
+                         'en': 'Tracking estimates and crop-based reconstruction serve different purposes.'},
+               'paragraphs': [{'ko': '먼저 전체 화면에서 ViTDet-H가 사람을 찾고, HMR 2.0이 몸과 카메라 정보를 추정합니다. PHALP는 이 몸·위치·외형 정보를 프레임 '
+                                     '사이에서 연결해 ID를 부여합니다. 따라서 HMR 2.0은 추적이 모두 끝난 뒤 처음 등장하는 모델이 아닙니다.',
+                               'en': 'First, ViTDet-H detects people in full-frame footage, and HMR 2.0 estimates body '
+                                     'and camera parameters. PHALP associates body, location, and appearance '
+                                     'information across frames to assign identities. HMR 2.0 therefore also '
+                                     'contributes to the tracking stage.'},
+                              {'ko': '이후 검수한 선수와 시간 구간을 직접 고르고, 인물 박스에 각 변 10% 여백을 더해 크롭합니다. 선택한 선수 중심으로 복원을 다시 확인하기 '
+                                     '위해 이 크롭에 HMR 2.0을 재실행했습니다. 원본 시각·ID·크롭 좌표를 함께 남겨 복원 결과를 원래 장면으로 되짚을 수 있게 했습니다.',
+                               'en': 'I then manually select a reviewed player and time interval and crop the person '
+                                     'box with 10% margins on each side. I rerun HMR 2.0 on those crops to inspect '
+                                     'reconstruction around the selected player. Source times, IDs, and crop '
+                                     'coordinates are retained so that outputs can be traced back to the original '
+                                     'scene.'}],
+               'items': [({'ko': '연결 기준', 'en': 'Alignment'},
+                          {'ko': '시연의 모든 단계는 원본 15:35–15:41, 60 FPS·360프레임에 대응합니다.',
+                           'en': 'Every demo stage maps to source time 15:35–15:41: 360 frames at 60 FPS.'}),
+                         ({'ko': '저장 결과', 'en': 'Saved outputs'},
+                          {'ko': 'SMPL 자세·체형·카메라 추정값, 프레임별 메쉬 정점·면과 관절 좌표. 월드 좌표계의 이동 경로는 별도 과제입니다.',
+                           'en': 'SMPL pose, shape, camera estimates, mesh vertices and faces, and joint coordinates. '
+                                 'Recovering motion in world coordinates is a separate task.'})]},
+              {'id': 'experiments',
+               'label': {'ko': '완료한 실험', 'en': 'Completed experiments'},
+               'title': {'ko': '농구의 선수별 복원에서, 공연의 가림 검수까지.',
+                         'en': 'From player-specific reconstruction to occlusion review.'},
+               'paragraphs': [{'ko': '농구에서는 5개 클립의 96초·4,240프레임을 처리하고, 직접 선택한 선수 5명·6구간에 각 변 10% 여백을 둔 크롭과 HMR 2.0 '
+                                     '재추론을 적용했습니다. 원래 FPS와 크롭의 픽셀 크기를 유지했습니다.',
+                               'en': 'For basketball, I processed 96 seconds and 4,240 frames across five clips, then '
+                                     'applied crops with 10% margins on each side and HMR 2.0 re-inference to six '
+                                     'manually selected segments from five players. Original FPS and crop pixel '
+                                     'dimensions were preserved.'},
+                              {'ko': '대표 선수의 드리블 360프레임과 슛 244프레임에서는 저장된 SMPL 메쉬를 MuJoCo에 불러와 원본 배경 없이 재생했습니다. 위 플레이어의 '
+                                     '‘3D 재생’은 이 드리블 결과입니다. 실제 추론 데이터를 확인하는 재생 시험으로, 로봇의 균형 제어나 동작 추종을 검증한 실험은 아닙니다.',
+                               'en': 'For the featured player’s 360-frame dribble and 244-frame shot, the saved SMPL '
+                                     'meshes were loaded into MuJoCo and replayed without the original background. The '
+                                     'player above shows the dribble under “3D replay.” This playback checks the '
+                                     'inferred data; it does not validate robot balance control or motion tracking.'},
+                              {'ko': '후속 공연 실험은 약 30초씩 10개 구간입니다. 이동 범위를 포함하는 고정 그룹 ROI에서 검출·복원·ID 연결을 수행하고, 입력·메쉬 '
+                                     'ID·비교 영상 총 30개와 수동 검수 기록을 정리했습니다.',
+                               'en': 'The follow-up performance study used ten clips of about 30 seconds each. '
+                                     'Detection, reconstruction, and identity association ran within fixed group ROIs '
+                                     'covering movement, producing 30 input, mesh-ID, and comparison videos alongside '
+                                     'manual review records.'}],
+               'table': {'caption': {'ko': '각 실험에서 확보한 것', 'en': 'What each experiment established'},
+                         'headers': [{'ko': '범위', 'en': 'Scope'},
+                                     {'ko': '산출물', 'en': 'Output'},
+                                     {'ko': '검증 수준', 'en': 'Validation scope'}],
+                         'rows': [[{'ko': '그라운딩 210개 응답', 'en': '210 grounding responses'},
+                                   {'ko': '공통 시간 형식·오탐/누락 비교', 'en': 'Normalized times and false-positive/miss review'},
+                                   {'ko': '원본 장면 대조', 'en': 'Review against footage'}],
+                                  [{'ko': '농구 선수별 6구간', 'en': '6 player-specific segments'},
+                                   {'ko': '크롭·메쉬·SMPL 데이터', 'en': 'Crops, meshes, and SMPL data'},
+                                   {'ko': '선택 구간의 수동 검수', 'en': 'Manual review of selected segments'}],
+                                  [{'ko': '공연 10구간', 'en': '10 performance clips'},
+                                   {'ko': 'ID 오류 유형·제외/보류 기준',
+                                    'en': 'Identity-error categories and selection criteria'},
+                                   {'ko': '표본 프레임+관측 로그', 'en': 'Sampled frames and observation logs'}]]},
+               'note': {'ko': '처리량과 산출물 수는 정확도가 아닙니다. IDF1·HOTA·3D 정답 기반 정확도는 산출하지 않았습니다.',
+                        'en': 'Processed frames and output counts are not accuracy measurements. IDF1, HOTA, and 3D '
+                              'ground-truth accuracy were not evaluated.'}},
+              {'id': 'review',
+               'label': {'ko': '핵심 난제와 판단', 'en': 'Challenge & decisions'},
+               'title': {'ko': '잠깐 사라진 사람과, 다른 사람에게 붙은 ID를 구분했습니다.',
+                         'en': 'A temporary gap is different from an ID assigned to someone else.'},
+               'paragraphs': [{'ko': '같은 공연 구간 M09에서 두 종류의 오류를 확인했습니다. ID5는 18프레임, 약 0.60초 누락된 뒤 같은 사람·같은 ID로 돌아왔습니다. '
+                                     '이 경우 사람 전체를 버리는 대신 누락 시간만 제외할 수 있습니다.',
+                               'en': 'In performance clip M09, ID5 disappeared for 18 frames, about 0.60 seconds, then '
+                                     'returned on the same person with the same ID. This supports excluding the '
+                                     'missing interval rather than discarding the person’s entire track.'},
+                              {'ko': '다른 공연자는 프레임 819의 ID4에서 820의 ID28로 바뀌었습니다. 마지막 분리 표본인 프레임 899에서는 기존 ID4가 다른 공연자에게 '
+                                     '붙었습니다. 새 ID가 생긴 시점과 잘못된 연결을 확인한 시점을 따로 기록하고, 관련 두 사람의 경계를 보류해 앞뒤 구간을 나누는 기준을 '
+                                     '세웠습니다.',
+                               'en': 'Another performer changed from ID4 at frame 819 to ID28 at frame 820. At the '
+                                     'final separated sample, frame 899, the old ID4 was attached to a different '
+                                     'performer. I recorded the new-ID event separately from the confirmed wrong '
+                                     'association and defined a rule to withhold the uncertain boundary and split the '
+                                     'affected tracks.'}],
+               'note': {'ko': '가림 때문에 최초 오연결 프레임은 확정하지 않았습니다. 검수한 표본의 판단을 전 프레임 추적 정확도로 확대하지 않습니다.',
+                        'en': 'Occlusion prevented identifying the first incorrect-association frame. Sampled review '
+                              'findings are not a dense tracking-accuracy evaluation.'}},
+              {'id': 'learning',
+               'label': {'ko': '결과와 다음 단계', 'en': 'Outcome & next steps'},
+               'title': {'ko': '다음 목표는, 검수한 모션에 행동 설명을 연결하는 것.',
+                         'en': 'Next: connect reviewed motion to action descriptions.'},
+               'paragraphs': [{'ko': '이번 연구에서 확보한 것은 실제 영상에 대응하는 사람별 크롭·3D 모션과, 사용할 구간을 판단하는 기준입니다. 추론이 끝났다는 사실만으로 학습에 '
+                                     '적합한 데이터가 되지는 않았습니다. 인물·시간·모션의 대응을 유지하고 오류 구간을 따로 표시해야 결과를 다시 확인하고 선별할 수 있었습니다.',
+                               'en': 'The work produced person-specific crops and 3D motion aligned with real footage, '
+                                     'along with criteria for selecting usable segments. Finishing inference alone did '
+                                     'not make the outputs suitable for learning. Preserving identity, time, and '
+                                     'motion alignment—and marking faulty intervals—made the results reviewable.'},
+                              {'ko': '이 기반 위에 자동 행동 분할과 캡셔닝, 품질 승인 단계를 연결할 계획입니다. 로봇에 적용하려면 별도로 관절 매핑과 리타게팅, 접촉·균형 제어, '
+                                     '정책 학습을 검증해야 합니다. 현재의 메쉬 재생과 이 후속 목표를 구분해 연구를 이어가고 있습니다.',
+                               'en': 'The next steps are automatic action segmentation, captioning, and quality '
+                                     'approval. Robot applications will additionally require joint mapping, '
+                                     'retargeting, contact and balance control, and policy-learning validation. These '
+                                     'remain separate from the mesh playback demonstrated here.'}]}],
+ 'links': [({'ko': '팀 공개 파이프라인·모델 실행 안내', 'en': 'Team pipeline and model setup'},
+            'https://github.com/DKU-AIM/video-motion-pipeline'),
+           ({'ko': '개인 그라운딩 실행기·파서', 'en': 'My grounding runners and parsers'},
+            'https://github.com/jiwoo1105/video-grounding'),
+           ('PHALP', 'https://github.com/brjathu/PHALP'),
+           ('HMR 2.0', 'https://github.com/shubham-goel/4D-Humans'),
+           ('MuJoCo', 'https://github.com/google-deepmind/mujoco'),
+           ('SMPL · Loper et al. (2015)', 'https://smpl.is.tue.mpg.de/'),
+           ({'ko': '시연 원본 · FIBA Basketball', 'en': 'Demo source · FIBA Basketball'},
+            'https://www.youtube.com/watch?v=kXuDZJ2TT3I&t=935s')],
+ 'team': {'ko': 'AIV Lab · 영상 이해·3D 모션 연구', 'en': 'AIV Lab · Video understanding & 3D motion'},
+ 'display_stack': 'Python / PyTorch / PHALP / HMR 2.0 / SMPL',
+ 'facts': [({'ko': '복원 실험', 'en': 'Reconstruction study'},
+            {'ko': '4,240프레임 · 선수별 6구간', 'en': '4,240 frames · 6 player-specific segments'},
+            True),
+           ({'ko': '설계의 출발점', 'en': 'Design research'},
+            {'ko': '7개 모델 · 그라운딩 210개 응답 비교', 'en': '7 models · 210 grounding responses compared'},
+            True),
+           ({'ko': '현재 단계', 'en': 'Status'},
+            {'ko': '추적·크롭·복원·메쉬 재생 및 구간 검수', 'en': 'Tracking, crops, reconstruction, mesh replay, and segment review'},
+            False)],
+ 'video': 'motion/compare.mp4',
+ 'poster': 'motion/compare.jpg',
+ 'showcase': {'title': {'ko': '먼저, 영상으로 살펴보세요.', 'en': 'See the pipeline in motion.'},
+              'source': 'https://www.youtube.com/watch?v=kXuDZJ2TT3I&t=935s',
+              'stages': [{'label': {'ko': '비교 보기', 'en': 'Compare'},
+                          'title': {'ko': '선수 영상과 복원 결과를 나란히', 'en': 'Person crop and reconstruction, side by side'},
+                          'description': {'ko': '왼쪽은 선택한 선수의 크롭, 오른쪽은 같은 프레임에 실제 HMR 2.0 메쉬를 겹친 결과입니다. 단계를 바꾸면 같은 시점이 '
+                                                '유지됩니다.',
+                                          'en': 'Left: the selected player’s crop. Right: the actual HMR 2.0 mesh '
+                                                'overlaid on the same frame. Switching stages preserves the playback '
+                                                'position.'},
+                          'video': 'motion/compare.mp4',
+                          'poster': 'motion/compare.jpg'},
+                         {'label': {'ko': '입력', 'en': 'Input'},
+                          'title': {'ko': '01. 공개 경기 영상에서 시작', 'en': '01. Start with game footage'},
+                          'description': {'ko': 'FIBA U20 결승 영상의 15:35–15:41 구간입니다. 남색 21번 선수를 대상으로, 60 FPS의 같은 '
+                                                '360프레임을 모든 단계에서 사용했습니다.',
+                                          'en': 'A six-second excerpt from the FIBA U20 final, 15:35–15:41. Every '
+                                                'stage uses the same 360 frames at 60 FPS, focusing on the player in '
+                                                'navy jersey 21.'},
+                          'video': 'motion/input.mp4',
+                          'poster': 'motion/input.jpg'},
+                         {'label': {'ko': '추적', 'en': 'Track'},
+                          'title': {'ko': '02. 인물 박스와 ID를 연결', 'en': '02. Associate people across frames'},
+                          'description': {'ko': 'ViTDet-H 검출과 HMR 2.0의 몸·외형 특징을 사용해 PHALP가 인물을 연결합니다. 이 시연의 대상은 ID '
+                                                '9이며, 공 추적 결과는 포함하지 않습니다.',
+                                          'en': 'PHALP associates people using ViTDet-H detections and HMR 2.0-based '
+                                                'body and appearance features. The selected player is ID 9. This demo '
+                                                'does not include ball tracking.'},
+                          'video': 'motion/tracking.mp4',
+                          'poster': 'motion/tracking.jpg'},
+                         {'label': {'ko': '크롭', 'en': 'Crop'},
+                          'title': {'ko': '03. 선수와 연속 구간을 선택', 'en': '03. Select a player and a continuous segment'},
+                          'description': {'ko': '검수한 ID 9의 6초를 직접 선택했습니다. 매 프레임 선수 박스의 각 변에 10% 여백을 더하고, 원본 픽셀 크기를 유지한 '
+                                                '채 고정 캔버스에 배치했습니다.',
+                                          'en': 'I manually selected six reviewed seconds of ID 9. Each frame’s player '
+                                                'box is expanded by 10% on every side and placed on a fixed-size '
+                                                'canvas without resizing the source pixels.'},
+                          'video': 'motion/crop.mp4',
+                          'poster': 'motion/crop.jpg'},
+                         {'label': {'ko': '메쉬', 'en': 'Mesh'},
+                          'title': {'ko': '04. 선수 크롭에서 3D 몸을 다시 추정',
+                                    'en': '04. Re-estimate the body from the person crop'},
+                          'description': {'ko': '선수 크롭에 HMR 2.0을 다시 실행해 SMPL 자세·체형·카메라 값과 메쉬를 저장했습니다. 영상 위의 청록색 몸은 이 '
+                                                '추론에서 나온 실제 출력입니다.',
+                                          'en': 'HMR 2.0 runs again on the person crop to save SMPL pose, shape, '
+                                                'camera parameters, and meshes. The cyan body overlaid on the footage '
+                                                'is the actual inference output.'},
+                          'video': 'motion/overlay.mp4',
+                          'poster': 'motion/overlay.jpg'},
+                         {'label': {'ko': '3D 재생', 'en': '3D replay'},
+                          'title': {'ko': '05. 저장한 메쉬를 배경 없이 재생',
+                                    'en': '05. Replay the saved mesh without the video background'},
+                          'description': {'ko': '저장된 6,890개 정점의 SMPL 메쉬를 MuJoCo에서 재생했습니다. 루트를 고정한 기구학적 재생이며, 월드 이동 경로 '
+                                                '복원·충돌·균형 제어·로봇 학습은 포함하지 않습니다.',
+                                          'en': 'The saved SMPL mesh, with 6,890 vertices per frame, is replayed in '
+                                                'MuJoCo. This is fixed-root kinematic playback, without recovered '
+                                                'world translation, collisions, balance control, or robot learning.'},
+                          'video': 'motion/replay.mp4',
+                          'poster': 'motion/replay.jpg'}],
+              'pipeline': [({'ko': '원본 영상', 'en': 'Source video'},
+                            {'ko': '원본 시각과 FPS 보존', 'en': 'Preserve source time and FPS'}),
+                           ({'ko': '인물 추적', 'en': 'Person tracking'},
+                            {'ko': 'ViTDet-H · HMR 2.0 특징 → PHALP ID 연결',
+                             'en': 'ViTDet-H + HMR 2.0 features → PHALP association'}),
+                           ({'ko': '선수별 크롭', 'en': 'Person crops'},
+                            {'ko': '대상·구간 수동 선택 · 박스 각 변 10% 여백',
+                             'en': 'Manual person/segment selection · 10% margins per side'}),
+                           ({'ko': '3D 모션 복원', 'en': '3D reconstruction'},
+                            {'ko': '크롭에 HMR 2.0 재실행 → SMPL 저장', 'en': 'Rerun HMR 2.0 on crops → save SMPL'}),
+                           ({'ko': '메쉬 재생·검수', 'en': 'Replay & review'},
+                            {'ko': '저장한 정점을 MuJoCo에서 재생 · 영상과 대조',
+                             'en': 'Replay saved vertices in MuJoCo · review against footage'})],
+              'scope': {'ko': '지금 연결한 범위는 영상에서 사람별 모션을 복원하고 검수하는 단계입니다. 자동 행동 분할·캡셔닝·품질 승인과 로봇 정책 학습은 후속 과제로 남아 있습니다.',
+                        'en': 'This pipeline currently reconstructs and reviews person-specific motion from video. '
+                              'Automatic action segmentation, captioning, quality approval, and robot policy learning '
+                              'remain future work.'}}},
  {'slug': 'conquer-health',
   'title': 'Conquer Health',
   'category': {'ko': 'LLM 시스템 · 해커톤', 'en': 'LLM systems · Hackathon'},

@@ -24,7 +24,7 @@ class Page(HTMLParser):
             self.ids.append(a['id'])
         if tag == 'img' and 'alt' not in a:
             issues.append(f'{current}: image missing alt')
-        for key in ('src', 'href', 'poster'):
+        for key in ('src', 'href', 'poster', 'data-src', 'data-poster'):
             if key in a:
                 self.refs.append((a[key], tag, 'data-language-link' in a))
 

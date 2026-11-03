@@ -1,0 +1,83 @@
+{
+  "source": {
+    "title": "FINAL | Slovenia v France | Full Basketball Game | FIBA U20 EuroBasket 2024",
+    "uploader": "FIBA Basketball",
+    "url": "https://www.youtube.com/watch?v=kXuDZJ2TT3I&t=935s",
+    "source_time_seconds": [
+      935,
+      941
+    ],
+    "person": "Navy jersey 21 / PHALP ID 9"
+  },
+  "processing": {
+    "source_clip_frames": [
+      300,
+      660
+    ],
+    "frames": 360,
+    "fps": 60,
+    "duration_seconds": 6,
+    "silent": true,
+    "input_tracking_web_size": [
+      1280,
+      720
+    ],
+    "crop_margin_per_side": 0.1,
+    "crop_native_size": [
+      380,
+      438
+    ],
+    "outputs": "Existing PHALP / HMR 2.0 outputs; no new model inference for the web edit",
+    "replay": "Actual saved SMPL vertices in MuJoCo, fixed root; kinematic visualization without collisions, balance control, or recovered world translation"
+  },
+  "files": {
+    "compare.mp4": {
+      "sha256": "72942d85b4fa697683cc3eb4f54536a81fead30d69e90d61502b854c77d56866",
+      "bytes": 1471252,
+      "width": 760,
+      "height": 438,
+      "frames": 360,
+      "fps": 60
+    },
+    "crop.mp4": {
+      "sha256": "3e3a9ed09036d52a68dac5e4599eee6db9ced34d2c1cb6ca90284adf28a60ebf",
+      "bytes": 696632,
+      "width": 380,
+      "height": 438,
+      "frames": 360,
+      "fps": 60
+    },
+    "input.mp4": {
+      "sha256": "b7059a33da2dc33b371e1abf766cab4b5f500e0fb314536f2033e44da76b8b2f",
+      "bytes": 3518956,
+      "width": 1280,
+      "height": 720,
+      "frames": 360,
+      "fps": 60
+    },
+    "overlay.mp4": {
+      "sha256": "707f154d82a0b82081942219d27240921b97ce81d563a3a77d6723ad6ce0b729",
+      "bytes": 852255,
+      "width": 380,
+      "height": 438,
+      "frames": 360,
+      "fps": 60
+    },
+    "replay.mp4": {
+      "sha256": "793c621489e3f456c3bd87ead78427a7c9dcb43b02f89d943833935a547ddebb",
+      "bytes": 412355,
+      "width": 800,
+      "height": 600,
+      "frames": 360,
+      "fps": 60
+    },
+    "tracking.mp4": {
+      "sha256": "5a67706c841cc168cc49f77ecea0831b2af0d5ce7b85e203f35e177ff5d77806",
+      "bytes": 4170323,
+      "width": 1280,
+      "height": 720,
+      "frames": 360,
+      "fps": 60
+    }
+  }
+}

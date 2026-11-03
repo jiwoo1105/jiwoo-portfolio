@@ -31,6 +31,7 @@ def render(lang, slug=None):
     theme_label=L('다크 모드로 전환','Switch to dark mode')
     language_links = (f'<span lang="ko" aria-current="page">KO</span><a data-language-link href="{alternate}" lang="en" hreflang="en" aria-label="View this page in English">EN</a>' if lang=='ko' else f'<a data-language-link href="{alternate}" lang="ko" hreflang="ko" aria-label="이 페이지를 한국어로 보기">KO</a><span lang="en" aria-current="page">EN</span>')
     companion_script = f'<script type="module" src="{asset}companion-loader.js"></script>' if not project else ''
+    showcase_script = f'<script src="{asset}motion-showcase.js" defer></script>' if project and project.get('showcase') else ''
     head = f'''<!doctype html>
 <html lang="{lang}" data-theme="light"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,7 +39,7 @@ def render(lang, slug=None):
 <meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}assets/hero.jpg">
 <link rel="canonical" href="{BASE}{path}"><link rel="alternate" hreflang="ko" href="{BASE}{local_path}"><link rel="alternate" hreflang="en" href="{BASE}en/{local_path}">
 <script src="{asset}preferences.js"></script><link rel="icon" href="{asset}favicon.svg" type="image/svg+xml"><link rel="preload" as="font" href="{asset}pretendard.woff2" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{asset}site.css"><link rel="stylesheet" href="{asset}refresh.css"><link rel="stylesheet" href="{asset}portfolio.css"><script src="{asset}site.js" defer></script>{companion_script}</head>
+<link rel="stylesheet" href="{asset}site.css"><link rel="stylesheet" href="{asset}refresh.css"><link rel="stylesheet" href="{asset}portfolio.css"><script src="{asset}site.js" defer></script>{companion_script}{showcase_script}</head>
 <body class="{'project-page' if slug else 'home'}"><a class="skip-link" href="#main">{L('본문으로 바로가기','Skip to content')}</a>
 <header class="site-header {'hero-header' if not slug else ''}"><a class="brand" href="{home}" aria-label="{L('박지우 홈','Park Jiwoo home')}"><span class="brand-symbol">©</span><span>Park Jiwoo</span></a>
 <div class="header-controls"><nav class="desktop-nav" aria-label="{L('주요 메뉴','Main navigation')}">{links}</nav><div class="language-switch" aria-label="{L('언어','Language')}">{language_links}</div><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="{theme_label}" title="{theme_label}"><span class="theme-symbol" aria-hidden="true">◐</span><span class="theme-label">{L('다크','Dark')}</span></button><button class="menu-trigger" type="button" aria-controls="menu-dialog" aria-haspopup="dialog"><span class="menu-dot"></span>{L('메뉴','Menu')}</button></div></header>
@@ -85,6 +86,22 @@ def render(lang, slug=None):
         if not compact: result+=f'<div><dt>{L("사용 기술","Technologies")}</dt><dd class="tech-list">'+''.join(f'<span>{esc(tag.strip())}</span>' for tag in p.get('display_stack',p['stack']).split('/'))+'</dd></div>'
         return result+'</dl>'
 
+    def showcase(p):
+        demo=p['showcase']; stages=demo['stages']; first=stages[0]
+        result=f'<section id="demo" class="motion-showcase section-wrap" data-motion-showcase aria-labelledby="demo-heading"><div class="motion-heading"><div><span class="eyebrow">VIDEO → MOTION DATA</span><h2 id="demo-heading">{t(demo["title"])}</h2></div><p>{L("같은 선수 · 같은 6초 · 실제 모델 출력","One player · The same 6 seconds · Actual model outputs")}</p></div>'
+        result+=f'<div class="motion-stages" role="group" aria-label="{L("시연 단계 선택","Choose a demo stage")}" hidden>'
+        for i,s in enumerate(stages):
+            result+=f'<button type="button" aria-pressed="{str(i==0).lower()}" aria-controls="motion-player" data-stage data-src="{asset}{s["video"]}" data-poster="{asset}{s["poster"]}" data-title="{esc(t(s["title"]))}" data-description="{esc(t(s["description"]))}"><span>{"↔" if i==0 else f"{i:02d}"}</span>{t(s["label"])}</button>'
+        result+=f'</div><div class="motion-player-frame"><video id="motion-player" controls playsinline loop muted preload="metadata" poster="{asset}{first["poster"]}" aria-labelledby="motion-stage-title" aria-describedby="motion-stage-description"><source src="{asset}{first["video"]}" type="video/mp4"><a href="{asset}{first["video"]}">{L("영상 파일 열기","Open video file")}</a></video></div>'
+        result+=f'<div class="motion-caption"><div aria-live="polite" aria-atomic="true"><h3 id="motion-stage-title">{t(first["title"])}</h3><p id="motion-stage-description">{t(first["description"])}</p></div><label class="motion-speed" hidden>{L("재생 속도","Playback speed")}<select data-playback-speed aria-label="{L("영상 재생 속도","Video playback speed")}"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label></div><p class="motion-error" role="status" hidden></p>'
+        result+='<noscript><div class="motion-fallback">'+''.join(f'<a href="{asset}{s["video"]}">{t(s["label"])}</a>' for s in stages)+'</div></noscript>'
+        result+=f'<p class="motion-source">{L("영상 출처","Footage")}: {external("FIBA Basketball · Slovenia v France, U20 EuroBasket 2024", demo["source"])} <span>15:35–15:41 · 60 FPS · ID 9 / #21</span></p>'
+        result+=f'<div class="motion-pipeline"><div class="motion-pipeline-heading"><h3>{L("영상이 데이터가 되는 과정","From video to motion data")}</h3><span>{L("단계를 눌러 결과 확인","Select a stage above to inspect its output")}</span></div><ol>'
+        for title,desc in demo['pipeline']:
+            result+=f'<li><strong>{t(title)}</strong><span>{t(desc)}</span></li>'
+        result+=f'</ol><p class="motion-scope">{t(demo["scope"])}</p></div></section>'
+        return result
+
     def card(p, featured=True):
         url=f'projects/{p["slug"]}.html'
         result=f'<article id="{p["slug"]}" class="project-card {"project-card-featured" if featured else "project-card-small"}">{media(p)}<div class="project-card-copy"><div class="project-card-meta"><span>{t(p.get("team",p["category"]))}</span><span>{t(p["period"])}</span></div><h3><a href="{url}">{t(p["title"])}<span aria-hidden="true">↗</span></a></h3><p class="project-summary">{t(content.SUMMARIES[p["slug"]])}</p>'
@@ -104,8 +121,13 @@ def render(lang, slug=None):
         body+=f'''</div></section><section class="contact section-wrap" id="contact" aria-labelledby="contact-title"><div class="contact-top"><span class="eyebrow">{L('함께 풀어볼 문제가 있나요?','Have a problem we could work on together?')}</span><span class="contact-name">Park Jiwoo</span></div><div class="contact-heading"><h2 id="contact-title">Let’s talk<span class="blue-period">.</span></h2><a class="circle-link contact-circle magnetic" href="mailto:psskej00@gmail.com" aria-label="{L('박지우에게 이메일 보내기','Email Jiwoo')}" ><span aria-hidden="true">↗</span></a></div><div class="contact-actions"><a class="outline-link" href="mailto:psskej00@gmail.com">psskej00@gmail.com ↗</a><a class="outline-link" href="https://github.com/jiwoo1105" target="_blank" rel="noopener noreferrer">GitHub ↗</a><button class="copy-email" type="button" data-copy-email="psskej00@gmail.com">{L('이메일 복사','Copy email')}</button><span class="copy-status sr-only" role="status"></span></div></section>'''
     else:
         p=project
-        body=f'<section class="case-header section-wrap"><a href="{home}#work" class="back-link">← {L("모든 프로젝트","All projects")}</a><div class="case-heading-meta"><span>{t(p["category"])}</span><span>{t(p["period"])}</span></div><h1 class="case-title editorial-title">{t(p["title"])}</h1><p class="case-subtitle">{t(p["subtitle"])}</p><div class="case-hero-links">{external(L("프로젝트 코드","Project code"),p["repo"])}<a href="#problem">{L("나의 기여 살펴보기","Explore my contribution")} ↓</a></div></section>'
-        body+='<div class="case-at-a-glance section-wrap"><div>'+media(p,True)+f'</div><div class="case-summary-panel"><h2>{L("프로젝트 한눈에 보기","At a glance")}</h2><p>{t(p["context"])}</p>'+facts(p)+'</div></div>'
+        demo_link=f'<a href="#demo">{L("영상으로 보기","Watch the demo")} ↓</a>' if p.get('showcase') else ''
+        body=f'<section class="case-header section-wrap"><a href="{home}#work" class="back-link">← {L("모든 프로젝트","All projects")}</a><div class="case-heading-meta"><span>{t(p["category"])}</span><span>{t(p["period"])}</span></div><h1 class="case-title editorial-title">{t(p["title"])}</h1><p class="case-subtitle">{t(p["subtitle"])}</p><div class="case-hero-links">{demo_link}{external(L("프로젝트 코드","Project code"),p["repo"])}<a href="#problem">{L("나의 기여 살펴보기","Explore my contribution")} ↓</a></div></section>'
+        if p.get('showcase'):
+            body+=showcase(p)
+            body+=f'<div class="motion-facts section-wrap"><div class="case-summary-panel"><h2>{L("실험 범위와 나의 역할","Scope & my contribution")}</h2><p>{t(p["context"])}</p>'+facts(p)+'</div></div>'
+        else:
+            body+='<div class="case-at-a-glance section-wrap"><div>'+media(p,True)+f'</div><div class="case-summary-panel"><h2>{L("프로젝트 한눈에 보기","At a glance")}</h2><p>{t(p["context"])}</p>'+facts(p)+'</div></div>'
         body+=f'<div class="case-layout section-wrap"><nav class="case-nav" aria-label="{L("프로젝트 목차","Case study sections")}"><span>{L("이 프로젝트의 이야기","In this case study")}</span>'+''.join(f'<a href="#{s["id"]}">{t(s["label"])}</a>' for s in p['sections'])+f'<a href="#sources">{L("코드와 근거","Code & evidence")}</a></nav><div class="case-content">'
         for s in p['sections']:
             body+=f'<section class="case-block" id="{s["id"]}"><h2>{t(s["label"])}</h2><div class="case-text"><h3>{t(s["title"])}</h3>'
