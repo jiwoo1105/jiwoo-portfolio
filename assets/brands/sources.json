@@ -1,0 +1,18 @@
+{
+  "retrieved": "2026-11-03",
+  "usage": "Identify the ETRI research context and the Npay Face Sign entry integration in their respective project case studies.",
+  "files": {
+    "etri.svg": {
+      "source": "https://etri.re.kr/images/kor/layout_2019/logo.svg",
+      "sha256": "256f92ae51d3a6a916dbdd2b4adfbc78e3b23accedc672f3bf9978c8733021db",
+      "bytes": 22278,
+      "modification": "None. Official original SVG; displayed at a proportional size."
+    },
+    "npay.svg": {
+      "source": "https://developers.pay.naver.com/img/logo/signature/logo_navergr_small.svg",
+      "sha256": "23cc5e3d585b289d238febf9401e08d5d6e33c4fcc75d87db7984fae2786b472",
+      "bytes": 1866,
+      "modification": "None. Official original SVG; displayed at a proportional size."
+    }
+  }
+}

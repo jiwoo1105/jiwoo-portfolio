@@ -111,3 +111,16 @@ MuJoCo 영상은 실제 저장한 SMPL 정점을 고정 루트로 재생한 **�
 헤더는 모든 페이지에서 고정되며 밝은·어두운 테마에 맞는 불투명 배경을 사용합니다. 작은 화면에서는 상단에 이름·KO/EN·테마, 하단에 프로젝트·소개·수상/자격·연락 메뉴를 배치합니다. 앵커 이동과 상세 목차의 고정 위치는 공통 헤더 높이를 기준으로 맞췄습니다. 수상·자격·교육 섹션은 루닛 AIM 팀 벤치마크상, SQLD 자격, AWS 교육 수료를 구분해 표시합니다.
 
 2026-11-03 추가 본인 확인을 마스터에 먼저 반영한 뒤, 로봇 프로젝트의 개인 기여를 **파이프라인 전반 설계·구현 주도, 모델 연동·실험·결과 검수**로 정정했습니다. 사전학습 모델 자체의 개발을 주장하지 않습니다. 메인 카드는 처리량 대신 원본 시간·인물 ID·크롭·3D 모션의 프레임별 연결과 오류 구간 선별 기준을 설명하며, 처리량은 상세의 실험 범위에 남깁니다. IDF1/HOTA나 정답 기반 3D 정확도 수치는 측정하지 않아 추가하지 않았습니다.
+
+## 사용 기술과 협업 표시 · 2026-11-03
+
+프로젝트별 작업 채팅에 개인 기술·실제 적용 용도·코드/커밋 근거를 질의했습니다. 첫 사진에는 Python, PyTorch, FastAPI, Spring Boot, Redis를 짧게 표시하고, 바로 아래에는 비전/3D, LLM 응용, 서비스 개발 및 실험 환경/검증으로 정리했습니다. 각 기술은 적용 프로젝트로 연결됩니다. 단순 의존성과 다른 팀원의 기술은 개인 기술 목록에 자동으로 포함하지 않았습니다.
+
+- 영상/3D: Python·PyTorch·Transformers 모델 실행, OpenCV 영상 처리, PHALP·HMR 2.0·SMPL 추론 연동. 초기 팀 역할표는 역사적 분담이며 최신 본인 확인의 파이프라인 전반 구현 주도 범위와 구분합니다.
+- 축구: YOLOv8·SAM2 공 추적과 MediaPipe 관절 추정, NumPy·SciPy 계산, pytest·GitHub Actions 검증. 사전학습 모델을 사용한 분석 구현이며 모델 자체 학습을 의미하지 않습니다.
+- 단짠: [Redis·Lua 예매 처리](https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/f68eeb5), [JWT 예외 처리](https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/b4916f7), [가입 입력 저장](https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/e16c05a), [번역 실패 대응](https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/49e969e), [관리자·사용자 화면 연동](https://github.com/DKU-Dan-Zzan/Danzzan-FE/pull/121). 기본 학교·전화번호 인증 체계를 모두 혼자 구현했다는 뜻이 아닙니다. 최신 후속 기능을 봄·가을 운영 당시 성과로 소급하지 않습니다.
+- 의료: 기존 확인된 Python·FastAPI·MCP 조회와 본문 전달 및 출력 예산 실험. L2-preview는 제공 모델, HealthBench는 평가 도구입니다.
+
+ETRI는 연구과제 맥락으로, 총학생회·NAVER Face Sign은 축제 입장 절차의 운영 연계로 표시합니다. Face Sign 얼굴인식 모델·SDK를 직접 구현했거나 Npay 결제를 개발했다는 의미가 아닙니다. 공식 SVG 원본과 출처·해시는 `assets/brands/sources.json`에 기록했습니다.
+
+연락 영역은 [Dennis Snellenberg](https://dennissnellenberg.com/contact)의 여백과 [Paco Coursey](https://paco.me/)의 단순한 연락 경로를 참고해 작은 편지 형태로 새로 구성했습니다. 두 언어의 이메일 링크·복사·GitHub를 같은 구조로 제공하고 테마를 따릅니다. CSS와 주요 JS 주소에 파일 해시를 붙여 새 배포에서 이전 캐시가 섞이는 일을 방지합니다.

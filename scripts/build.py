@@ -2,6 +2,7 @@
 """Build both static locales with the Python standard library only."""
 from pathlib import Path
 import html
+import hashlib
 import importlib.util
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +20,8 @@ def render(lang, slug=None):
         return value[lang] if isinstance(value, dict) else value
     def L(ko, en):
         return ko if lang == 'ko' else en
+    def version(name):
+        return hashlib.sha256((ROOT / 'assets' / name).read_bytes()).hexdigest()[:10]
     project = next((p for p in PROJECTS if p['slug'] == slug), None)
     local_path = f'projects/{slug}.html' if slug else 'index.html'
     path = ('en/' if lang == 'en' else '') + local_path
@@ -39,8 +42,8 @@ def render(lang, slug=None):
 <title>{esc(title)}</title><meta name="description" content="{esc(description)}"><meta name="theme-color" content="#ffffff">
 <meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(description)}"><meta property="og:type" content="website"><meta property="og:image" content="{BASE}assets/hero.jpg">
 <link rel="canonical" href="{BASE}{path}"><link rel="alternate" hreflang="ko" href="{BASE}{local_path}"><link rel="alternate" hreflang="en" href="{BASE}en/{local_path}">
-<script src="{asset}preferences.js"></script><link rel="icon" href="{asset}favicon.svg" type="image/svg+xml"><link rel="preload" as="font" href="{asset}pretendard.woff2" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{asset}site.css"><link rel="stylesheet" href="{asset}refresh.css"><link rel="stylesheet" href="{asset}portfolio.css"><script src="{asset}site.js" defer></script>{companion_script}{showcase_script}</head>
+<script src="{asset}preferences.js?v={version('preferences.js')}"></script><link rel="icon" href="{asset}favicon.svg" type="image/svg+xml"><link rel="preload" as="font" href="{asset}pretendard.woff2" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{asset}site.css?v={version('site.css')}"><link rel="stylesheet" href="{asset}refresh.css?v={version('refresh.css')}"><link rel="stylesheet" href="{asset}portfolio.css?v={version('portfolio.css')}"><script src="{asset}site.js?v={version('site.js')}" defer></script>{companion_script}{showcase_script}</head>
 <body class="{'project-page' if slug else 'home'}"><a class="skip-link" href="#main">{L('본문으로 바로가기','Skip to content')}</a>
 <header class="site-header {'hero-header' if not slug else ''}"><a class="brand" href="{home}" aria-label="{L('박지우 홈','Park Jiwoo home')}"><span class="brand-symbol">©</span><span>Park Jiwoo</span></a>
 <div class="header-controls"><nav class="desktop-nav" aria-label="{L('주요 메뉴','Main navigation')}">{links}</nav><div class="language-switch" aria-label="{L('언어','Language')}">{language_links}</div><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="{theme_label}" title="{theme_label}"><span class="theme-symbol" aria-hidden="true">◐</span><span class="theme-label">{L('다크','Dark')}</span></button><button class="menu-trigger" type="button" aria-controls="menu-dialog" aria-haspopup="dialog"><span class="menu-dot"></span>{L('메뉴','Menu')}</button></div></header>
@@ -86,12 +89,13 @@ def render(lang, slug=None):
         return f'<figure class="project-visual"><div class="preview-media {cls}">{result}</div><figcaption>{caption}</figcaption></figure>'
 
     def facts(p, compact=False, card=False):
-        rows=[(L('직접 담당','My contribution'),p['role'],False)]
+        rows=[(L('직접 담당','My contribution'),p.get('role_items',p['role']),False)]
         rows+=p.get('card_facts',p.get('facts',[])) if card else p.get('facts',[])
         if compact: rows=rows[:2]
         result='<dl class="project-facts">'
         for label,value,emphasis in rows:
-            result+=f'<div><dt>{t(label)}</dt><dd class="{"fact-highlight" if emphasis else ""}">{t(value)}</dd></div>'
+            value_html='<ul class="role-items">'+''.join(f'<li><strong>{t(task)}</strong><span>{t(tech)}</span></li>' for task,tech in value)+'</ul>' if isinstance(value,list) else t(value)
+            result+=f'<div><dt>{t(label)}</dt><dd class="{"fact-highlight" if emphasis else ""}">{value_html}</dd></div>'
         if not compact: result+=f'<div><dt>{L("사용 기술","Technologies")}</dt><dd class="tech-list">'+''.join(f'<span>{esc(tag.strip())}</span>' for tag in p.get('display_stack',p['stack']).split('/'))+'</dd></div>'
         return result+'</dl>'
 
@@ -111,15 +115,30 @@ def render(lang, slug=None):
         result+=f'</ol><p class="motion-scope">{t(demo["scope"])}</p></div></section>'
         return result
 
+    def affiliation(p):
+        mark=p.get('affiliation')
+        if not mark: return ''
+        return f'<div class="project-affiliation affiliation-{mark["kind"]}"><span class="affiliation-logo"><img src="{asset}{mark["logo"]}" alt="{esc(mark["alt"])}" loading="lazy"></span><span>{t(mark["label"])}</span></div>'
+
     def card(p, featured=True):
         url=f'projects/{p["slug"]}.html'
         result=f'<article id="{p["slug"]}" class="project-card {"project-card-featured" if featured else "project-card-small"}">{media(p)}<div class="project-card-copy"><div class="project-card-meta"><span>{t(p.get("team",p["category"]))}</span><span>{t(p["period"])}</span></div><h3><a href="{url}">{t(p["title"])}<span aria-hidden="true">↗</span></a></h3><p class="project-summary">{t(content.SUMMARIES[p["slug"]])}</p>'
+        result+=affiliation(p)
         result+=facts(p,compact=not featured,card=True)
         result+=f'<div class="project-card-links"><a href="{url}">{L("프로젝트 읽기","Read the case study")} <span aria-hidden="true">→</span></a>{external("GitHub",p["repo"])}</div></div></article>'
         return result
 
+    def technologies():
+        result=f'<section class="technologies section-wrap" id="technologies" aria-labelledby="technologies-title"><div class="technology-heading"><h2 id="technologies-title">{L("사용 기술","Technologies")}</h2><p>{L("직접 구현한 기능과 실험에 사용했습니다.","Tools I’ve used to build and test.")}</p></div><div class="technology-grid">'
+        for group in content.TECHNOLOGIES:
+            result+=f'<article class="technology-group"><h3>{t(group["title"])}</h3><ul class="technology-tags">'+''.join(f'<li>{esc(tag)}</li>' for tag in group['tags'])+'</ul>'
+            result+=f'<p>{t(group["description"])}</p><div class="technology-projects">'+''.join(f'<a href="projects/{slug}.html">{t(label)} <span aria-hidden="true">↗</span></a>' for slug,label in group['links'])+'</div></article>'
+        result+=f'</div><div class="technology-workflow"><div><h3>{L("실험 환경·검증","Environment & verification")}</h3><p>{L("GPU 실험 환경 구성 · 로컬 통합 실행 · 계산·API 테스트", "GPU experiment environments · Local integration runs · Calculation & API tests")}</p></div><ul class="technology-tags">'+''.join(f'<li>{esc(tag)}</li>' for tag in content.WORKFLOW_TECH)+'</ul></div></section>'
+        return result
+
     if not project:
-        body=f'''<section class="hero" aria-labelledby="hero-title"><img class="hero-photo" src="{asset}hero.jpg" srcset="{asset}hero-mobile.jpg 1600w, {asset}hero.jpg 3600w" sizes="100vw" alt="{L('산과 호수 위에서 패러글라이딩을 즐기는 박지우','Jiwoo paragliding above mountains and a lake')}" width="3600" height="3150" fetchpriority="high"><div class="hero-introduction"><p class="hero-identity">{L('박지우','Jiwoo Park')} <span>AI / ML Developer</span></p><h1 id="hero-title">{t(content.HOME['headline'])}</h1></div><div class="hero-bottom"><a class="hero-scroll" href="#about">{L('아래로 둘러보기','Take a look around')} <span aria-hidden="true">↓</span></a><button class="motion-toggle" data-motion-toggle aria-pressed="false" type="button"><span class="motion-symbol" aria-hidden="true">Ⅱ</span><span class="motion-label">{L('움직임 멈추기','Pause motion')}</span></button></div></section>
+        body=f'''<section class="hero" aria-labelledby="hero-title"><img class="hero-photo" src="{asset}hero.jpg" srcset="{asset}hero-mobile.jpg 1600w, {asset}hero.jpg 3600w" sizes="100vw" alt="{L('산과 호수 위에서 패러글라이딩을 즐기는 박지우','Jiwoo paragliding above mountains and a lake')}" width="3600" height="3150" fetchpriority="high"><div class="hero-introduction"><p class="hero-identity">{L('박지우','Jiwoo Park')} <span>AI / ML Developer</span></p><h1 id="hero-title">{t(content.HOME['headline'])}</h1><a class="hero-technologies" href="#technologies" aria-label="{L('사용 기술과 적용 프로젝트 보기','Explore technologies and projects')}"><span>{' · '.join(content.CORE_TECH)}</span><span aria-hidden="true">↘</span></a></div><div class="hero-bottom"><a class="hero-scroll" href="#about">{L('아래로 둘러보기','Take a look around')} <span aria-hidden="true">↓</span></a><button class="motion-toggle" data-motion-toggle aria-pressed="false" type="button"><span class="motion-symbol" aria-hidden="true">Ⅱ</span><span class="motion-label">{L('움직임 멈추기','Pause motion')}</span></button></div></section>
+{technologies()}
 <section class="about section-wrap" id="about" aria-labelledby="about-title"><div class="companion" data-companion><div class="companion-stage"><img class="companion-placeholder" src="{asset}companion-fallback.svg" alt="{L('컴퓨터 앞에서 작업하는 작은 강아지','A little dog working at a computer')}" width="600" height="450" loading="lazy"><canvas aria-hidden="true"></canvas><span class="companion-bubble" data-companion-status role="status"></span></div><div class="companion-caption"><span>{L('작은 작업실에서.','At the little desk.')}</span><button type="button" data-companion-greet hidden>{L('인사하기','Say hello')} <span aria-hidden="true">✳</span></button></div></div><div class="about-copy"><span class="eyebrow">{L('안녕하세요, 박지우입니다.','A little about Jiwoo.')}</span><h2 id="about-title">{t(content.HOME['about_title'])}</h2>''' + ''.join(f'<p>{t(p)}</p>' for p in content.HOME['about']) + f'''<a class="about-work-link" href="#work">{L('제가 만든 것들','See what I’ve built')} <span aria-hidden="true">↘</span></a></div></section>
 <section class="work section-wrap" id="work" aria-labelledby="work-title"><div class="section-heading work-heading"><div><h2 id="work-title">Selected work</h2><p>{L('직접 만들고, 실험하고, 운영했습니다.','Built, tested, and put to work.')}</p></div><button class="work-motion-toggle" type="button" data-motion-toggle aria-pressed="false"><span class="motion-symbol" aria-hidden="true">Ⅱ</span><span class="motion-label">{L('애니메이션 멈추기','Pause motion')}</span></button></div><div class="featured-work">''' + ''.join(card(p) for p in PROJECTS[:4]) + f'''</div><div class="other-work"><div class="section-heading other-work-heading"><div><h2>{L('다른 프로젝트','Other projects')}</h2><p>{L('호기심이 이어진 곳들.','Where curiosity led next.')}</p></div></div><div class="other-project-grid">''' + ''.join(card(p,False) for p in PROJECTS[4:]) + f'''</div></div><a class="text-link github-work" href="https://github.com/jiwoo1105" target="_blank" rel="noopener noreferrer">{L('GitHub에서 더 보기','Explore more on GitHub')} ↗</a></section>
 <section class="credentials section-wrap" id="credentials" aria-labelledby="credentials-title"><div class="section-heading credentials-heading"><div><h2 id="credentials-title">{L('수상·자격·교육','Awards & credentials')}</h2><p>{L('함께 만든 성과, 꾸준히 쌓아온 배움.','Team achievements and continued learning.')}</p></div></div><div class="credential-list">'''
@@ -137,11 +156,18 @@ def render(lang, slug=None):
             attrs=' target="_blank" rel="noopener noreferrer"' if new_tab else ''
             action=f'<a href="{url}"{attrs} aria-label="{esc(name)} · {action_label}{L(" (새 탭)"," (new tab)") if new_tab else ""}">{action_label} <span aria-hidden="true">↗</span></a>' if url else ''
             body+=f'<article class="credential-row"><div class="credential-meta"><span class="credential-kind">{kind}</span><time datetime="{date}">{date.replace("-",".")}</time></div><div class="credential-copy"><h3>{name}</h3><p>{issuer}</p></div>{action}</article>'
-        body+=f'''</div></section><section class="contact section-wrap" id="contact" aria-labelledby="contact-title"><div class="contact-top"><span class="eyebrow">{L('함께 풀어볼 문제가 있나요?','Have a problem we could work on together?')}</span><span class="contact-name">Park Jiwoo</span></div><div class="contact-heading"><h2 id="contact-title">Let’s talk<span class="blue-period">.</span></h2><a class="circle-link contact-circle magnetic" href="mailto:psskej00@gmail.com" aria-label="{L('박지우에게 이메일 보내기','Email Jiwoo')}" ><span aria-hidden="true">↗</span></a></div><div class="contact-actions"><a class="outline-link" href="mailto:psskej00@gmail.com">psskej00@gmail.com ↗</a><a class="outline-link" href="https://github.com/jiwoo1105" target="_blank" rel="noopener noreferrer">GitHub ↗</a><button class="copy-email" type="button" data-copy-email="psskej00@gmail.com">{L('이메일 복사','Copy email')}</button><span class="copy-status sr-only" role="status"></span></div></section>'''
+        body+=f'''</div></section><section class="contact contact-refresh section-wrap" id="contact" aria-labelledby="contact-title">
+<div class="contact-intro"><h2 id="contact-title">Let’s talk.</h2><p class="contact-invitation">{L('함께 만들고 싶은 것이 있다면,<br>편하게 이야기해요.','Have something in mind?<br>I’d love to hear about it.')}</p><p class="contact-context">{L('AI 연구와 서비스 개발,<br>그리고 함께할 기회에 관해.','About AI research, software,<br>and opportunities to work together.')}</p></div>
+<div class="contact-letter"><div class="letter-top"><div class="letter-recipient"><span>{L('받는 사람','To')}</span><strong>{L('박지우','Jiwoo Park')}</strong><small>AI / ML Developer</small></div><div class="letter-stamp" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M12 29 53 12 36 53 29 35 12 29Z"/><path d="m29 35 24-23M29 35l-4 11 11 7"/></svg><span>JIWOO</span></div></div>
+<a class="contact-email" href="mailto:psskej00@gmail.com" aria-label="{L('박지우에게 이메일 보내기: psskej00@gmail.com','Email Jiwoo at psskej00@gmail.com')}"><span>psskej00@gmail.com</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+<div class="contact-mail-tools"><span>{L('주소를 누르면 메일을 작성할 수 있어요.','Select the address to compose an email.')}</span><button class="copy-email" type="button" data-copy-email="psskej00@gmail.com"><svg class="copy-glyph" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="6" y="6" width="10" height="11" rx="2"/><path d="M12 6V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"/></svg><svg class="check-glyph" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg><span data-copy-label>{L('이메일 복사','Copy email')}</span></button><span class="copy-status sr-only" role="status"></span></div>
+<a class="contact-github" href="https://github.com/jiwoo1105" target="_blank" rel="noopener noreferrer"><span><strong>GitHub</strong><span>@jiwoo1105</span></span><span class="github-cta">{L('코드 살펴보기','Explore the code')} <span aria-hidden="true">↗</span></span></a></div></section>'''
     else:
         p=project
         demo_link=f'<a href="#demo">{L("영상으로 보기","Watch the demo")} ↓</a>' if p.get('showcase') else ''
         body=f'<section class="case-header section-wrap"><a href="{home}#work" class="back-link">← {L("모든 프로젝트","All projects")}</a><div class="case-heading-meta"><span>{t(p["category"])}</span><span>{t(p["period"])}</span></div><h1 class="case-title editorial-title">{t(p["title"])}</h1><p class="case-subtitle">{t(p["subtitle"])}</p><div class="case-hero-links">{demo_link}{external(L("프로젝트 코드","Project code"),p["repo"])}<a href="#problem">{L("나의 기여 살펴보기","Explore my contribution")} ↓</a></div></section>'
+        if p.get('affiliation'):
+            body+=f'<div class="case-affiliation section-wrap">{affiliation(p)}</div>'
         if p.get('showcase'):
             body+=showcase(p)
             body+=f'<div class="motion-facts section-wrap"><div class="case-summary-panel"><h2>{L("실험 범위와 나의 역할","Scope & my contribution")}</h2><p>{t(p["context"])}</p>'+facts(p)+'</div></div>'

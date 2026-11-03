@@ -143,17 +143,20 @@
     let resetTimer;
     button.addEventListener('click', async () => {
       const status = button.parentElement.querySelector('.copy-status');
+      const label = button.querySelector('[data-copy-label]') || button;
       try {
         if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
         await navigator.clipboard.writeText(button.dataset.copyEmail);
-        button.textContent = words.copied;
+        label.textContent = words.copied;
+        button.dataset.copied = 'true';
         if (status) status.textContent = words.success;
       } catch {
-        button.textContent = words.manual;
+        label.textContent = words.manual;
+        button.dataset.copied = 'false';
         if (status) status.textContent = words.failure;
       }
       clearTimeout(resetTimer);
-      resetTimer = setTimeout(() => { button.textContent = words.copy; }, 2500);
+      resetTimer = setTimeout(() => { label.textContent = words.copy; delete button.dataset.copied; }, 2500);
     });
   });
 })();

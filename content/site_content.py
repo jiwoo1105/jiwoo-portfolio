@@ -1,5 +1,26 @@
 """Reviewed bilingual content. Regenerate the static site with scripts/build.py."""
 
+# Verified against project chats, implementation and commits on 2026-11-03.
+CORE_TECH = ['Python', 'PyTorch', 'FastAPI', 'Spring Boot', 'Redis']
+TECHNOLOGIES = [
+ {'title': {'ko': '비전·3D 모션', 'en': 'Vision & 3D motion'},
+  'tags': ['Python', 'PyTorch', 'OpenCV', 'PHALP', 'HMR 2.0 · SMPL', 'MediaPipe', 'YOLOv8 · SAM2', 'NumPy · SciPy'],
+  'description': {'ko': '사전학습 모델을 연결해 인물·공을 추적하고, 3D 모션과 터치 구간 지표를 계산합니다.',
+                  'en': 'I integrate pretrained models to track people and balls, reconstruct 3D motion, and compute touch-window metrics.'},
+  'links': [('video-motion', {'ko': '로봇 데이터 파이프라인', 'en': 'Motion data pipeline'}), ('soccer-analysis', {'ko': '축구 드리블 분석', 'en': 'Dribbling analysis'})]},
+ {'title': {'ko': 'LLM 응용·실험', 'en': 'LLM applications'},
+  'tags': ['Python', 'FastAPI', 'MCP', 'Transformers', 'L2-preview', 'HealthBench'],
+  'description': {'ko': 'MCP로 조회한 문서를 모델 입력에 전달하고, 출력 예산·응답 흐름을 실험합니다. 영상 모델의 입력과 결과도 같은 조건으로 비교합니다.',
+                  'en': 'I pass documents retrieved through MCP into model inputs and test output budgets and response flows. I also compare video models under consistent conditions.'},
+  'links': [('conquer-health', 'Conquer Health'), ('video-motion', {'ko': '영상 그라운딩 실험', 'en': 'Video grounding experiments'})]},
+ {'title': {'ko': '서비스 개발', 'en': 'Service development'},
+  'tags': ['Java · Spring Boot', 'Redis · Lua', 'Spring Security · JWT', 'MySQL · JPA', 'React · TypeScript', 'DeepL API'],
+  'description': {'ko': '동시 예매와 인증 예외 처리를 구현하고, 관리자 설정·가입 화면을 연결합니다. 번역 실패 시 원문 제공과 후속 보정도 처리합니다.',
+                  'en': 'I build concurrent ticketing and authentication error handling, connect admin settings and sign-up screens, and handle translation failures with source-text fallback and follow-up translation.'},
+  'links': [('danzzan', {'ko': '단짠', 'en': 'Danzzan'})]}
+]
+WORKFLOW_TECH = ['Docker', 'Linux', 'Git', 'pytest', 'JUnit 5 · Mockito', 'GitHub Actions']
+
 HOME = {'headline': {'ko': 'AI를 실제로 쓰이는<br>기능으로 만듭니다.', 'en': 'I build AI<br>people can use.'},
  'description': {'ko': '박지우의 AI / ML 포트폴리오. 컴퓨터 비전·3D 동작 분석, 의료 AI, 실제 서비스 개발 경험을 소개합니다.',
                  'en': 'Jiwoo Park’s AI/ML portfolio: computer vision, 3D motion analysis, medical AI, and real-world service '
@@ -51,6 +72,8 @@ PROJECTS = [{'slug': 'video-motion',
           'en': 'Led the overall pipeline design and implementation, including model integration, experiments, and output review'},
  'period': {'ko': '2026.07– · 연구 진행 중', 'en': 'Since Jul 2026 · Ongoing research'},
  'context': {'ko': 'AIV Lab / ETRI 연구과제', 'en': 'AIV Lab / ETRI research project'},
+ 'affiliation': {'logo': 'brands/etri.svg', 'alt': 'ETRI 한국전자통신연구원',
+                 'label': {'ko': '연구과제', 'en': 'Research project'}, 'kind': 'etri'},
  'stack': 'Python / PyTorch / ViTDet-H / PHALP / HMR 2.0 / SMPL / MuJoCo',
  'repo': 'https://github.com/DKU-AIM/video-motion-pipeline',
  'caption': {'ko': '같은 6초의 선수 크롭 ↔ HMR 2.0 실제 출력 · 상세에서 단계별 시연',
@@ -301,8 +324,16 @@ PROJECTS = [{'slug': 'video-motion',
            'en': 'A university festival service built in collaboration with the student council and NAVER. I worked on Redis/Lua '
                  'ticket allocation, authentication, translation, and admin settings, and participated in spring and autumn festival '
                  'operations.'},
-  'role': {'ko': 'Redis·Lua 예매 처리, JWT 인증, 번역·실패 대응',
-           'en': 'Redis/Lua ticketing, JWT authentication, translation and failure handling'},
+  'role': {'ko': '대규모 티켓팅 백엔드, 로그인·회원가입, 다국어 지원',
+           'en': 'High-traffic ticketing backend, sign-in and registration, multilingual support'},
+  'role_items': [({'ko': '대규모 티켓팅', 'en': 'High-traffic ticketing'},
+                  {'ko': 'Redis·Lua 기반 동시 예매 처리', 'en': 'Concurrent reservation handling with Redis and Lua'}),
+                 ({'ko': '로그인·회원가입', 'en': 'Sign-in & registration'},
+                  {'ko': 'JWT 재발급·예외 처리, 가입 입력·검증·저장', 'en': 'JWT refresh and error handling; sign-up validation and persistence'}),
+                 ({'ko': '다국어 지원', 'en': 'Multilingual support'},
+                  {'ko': '번역 처리·실패 대응', 'en': 'Translation and failure handling'})],
+  'affiliation': {'logo': 'brands/npay.svg', 'alt': 'Npay',
+                  'label': {'ko': 'Face Sign 연계 입장', 'en': 'Face Sign entry integration'}, 'kind': 'npay'},
   'period': '2025.12–2026.09',
   'context': {'ko': '대학 축제 웹 서비스 / 팀 프로젝트', 'en': 'University festival web service / Team project'},
   'stack': 'Spring Boot / Redis / Lua / MySQL / React / Docker',
@@ -407,7 +438,7 @@ PROJECTS = [{'slug': 'video-motion',
   'facts': [({'ko': '실사용자', 'en': 'Real users'}, {'ko': '6,000명 이상 · 팀 운영 성과', 'en': '6,000+ · Team operational outcome'}, True),
             ({'ko': '운영', 'en': 'Operations'}, {'ko': '2026 봄·가을축제 2회', 'en': 'Spring and autumn festivals, 2026'}, True),
             ({'ko': '협업', 'en': 'Collaboration'},
-             {'ko': '총학생회 · NAVER Face Sign 연계 입장', 'en': 'Student council · NAVER Face Sign entry integration'},
+             {'ko': '총학생회 협업 & NAVER Face Sign 연계 입장', 'en': 'Student council collaboration & NAVER Face Sign entry integration'},
              False)]},
  {'slug': 'soccer-analysis',
   'title': {'ko': '축구 드리블 동작 분석', 'en': 'Soccer dribbling analysis'},
