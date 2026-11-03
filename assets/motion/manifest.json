@@ -78,6 +78,29 @@
       "height": 720,
       "frames": 360,
       "fps": 60
+    },
+    "cover.mp4": {
+      "sha256": "b586a32c708b885b33eebd79f0752f97eef40cf66c6094491f37325ad7528fa6",
+      "bytes": 1346218,
+      "width": 960,
+      "height": 720,
+      "frames": 360,
+      "fps": 60
     }
+  },
+  "cover": {
+    "panels": [
+      "input",
+      "tracking",
+      "replay"
+    ],
+    "alignment": "Same 360 frames, side by side in one video",
+    "replay_display_crop": [
+      130,
+      70,
+      540,
+      530
+    ],
+    "note": "Replay header and empty margins removed for layout; fixed-root kinematic visualization, not robot control. Original stage files remain unchanged."
   }
 }

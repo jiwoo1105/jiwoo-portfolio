@@ -21,9 +21,8 @@ HOME = {'headline': {'ko': 'AI를 실제로 쓰이는<br>기능으로 만듭니�
 
 SUMMARIES = {'soccer-analysis': {'ko': '선수와 공을 추적하고, 드리블 동작을 검수 가능한 지표로.',
                      'en': 'Tracking the player and ball to produce dribbling metrics that can be checked against the footage.'},
- 'video-motion': {'ko': '실제 영상에서 선수를 추적하고, 크롭·3D 복원·메쉬 재생으로 연결한 연구입니다.',
- 'en': 'A research pipeline that tracks a player in real footage, crops the track, reconstructs 3D motion, and replays '
-       'the mesh.'},
+ 'video-motion': {'ko': '영상의 움직임을 3D로 복원하고,<br>인물과 시간의 연결을 검수합니다.',
+                  'en': 'Reconstructing 3D motion,<br>with checks on identity and timing.'},
  'danzzan': {'ko': '총학생회와 함께 운영한 대학 축제 서비스. 예매·인증·번역 백엔드를 담당했습니다.',
              'en': 'A university festival service operated with the student council. I built ticketing, authentication, and '
                    'translation features.'},
@@ -37,7 +36,7 @@ SUMMARIES = {'soccer-analysis': {'ko': '선수와 공을 추적하고, 드리블
                  'en': 'A prototype linking drug-information lookup with an eight-stage LLM workflow.'}}
 
 FOCUS = {'soccer-analysis': {'ko': '평가 지표 설계 · 공 추적 검수', 'en': 'Metric design · Ball-tracking review'},
- 'video-motion': {'ko': '그라운딩 비교 실험 · 3D 복원 검수', 'en': 'Comparative grounding experiments · 3D reconstruction review'},
+ 'video-motion': {'ko': '파이프라인 전반 설계·구현 · 모델 연동·검수', 'en': 'Pipeline design and implementation · Model integration and review'},
  'danzzan': {'ko': 'Redis·Lua 예매 처리 · 인증·번역', 'en': 'Redis/Lua ticketing · Authentication and translation'},
  'conquer-health': {'ko': 'MCP 조회·본문 전달 · 출력 예산 실험', 'en': 'MCP evidence delivery · Output-budget experiments'}}
 
@@ -48,9 +47,8 @@ PROJECTS = [{'slug': 'video-motion',
  'desc': {'ko': 'PHALP 인물 추적, 선수별 크롭, HMR 2.0 복원과 실제 SMPL 메쉬 재생을 연결한 연구 파이프라인입니다.',
           'en': 'A research pipeline connecting PHALP person tracking, player-specific crops, HMR 2.0 reconstruction, '
                 'and replay of the resulting SMPL meshes.'},
- 'role': {'ko': '그라운딩 비교·실행기, 후속 추적·복원 실험 설계와 검수',
-          'en': 'Grounding comparisons and runners; design and review of follow-up tracking and reconstruction '
-                'experiments'},
+ 'role': {'ko': '파이프라인 전반 설계·구현 주도, 모델 연동·실험·결과 검수',
+          'en': 'Led the overall pipeline design and implementation, including model integration, experiments, and output review'},
  'period': {'ko': '2026.07– · 연구 진행 중', 'en': 'Since Jul 2026 · Ongoing research'},
  'context': {'ko': 'AIV Lab / ETRI 연구과제', 'en': 'AIV Lab / ETRI research project'},
  'stack': 'Python / PyTorch / ViTDet-H / PHALP / HMR 2.0 / SMPL / MuJoCo',
@@ -67,17 +65,12 @@ PROJECTS = [{'slug': 'video-motion',
                                      'future robot-learning research. I developed the design around preserving person '
                                      'IDs and source timestamps and reviewing each stage, rather than relying solely '
                                      'on action intervals predicted by grounding models.'}],
-               'items': [({'ko': '팀 과제에서', 'en': 'Within the team project'},
-                          {'ko': '모델별 GPU 실행 환경·그라운딩 실행기·입출력 정리와 비교 실험, 설계·발표를 맡았습니다. 팀의 추적·메쉬 복원은 다른 팀원의 기여와 구분합니다.',
-                           'en': 'I worked on GPU environments, grounding runners, input/output normalization, '
-                                 'comparisons, design, and presentation. The team’s tracking and mesh-reconstruction '
-                                 'work includes other members’ contributions.'}),
-                         ({'ko': '후속 개인 실험', 'en': 'Follow-up individual experiments'},
-                          {'ko': 'PHALP 추적·인물 크롭·HMR 2.0 재추론의 대상과 조건을 정하고 결과를 검수했습니다. AI 코딩 도구를 활용해 실행·정리했으며 사전학습 모델을 '
-                                 '개발하거나 재학습한 작업은 아닙니다.',
-                           'en': 'I defined and reviewed PHALP tracking, person crops, and HMR 2.0 re-inference '
-                                 'experiments, using AI coding tools for implementation and execution. I used '
-                                 'pretrained models rather than developing or retraining them.'})]},
+               'items': [({'ko': '직접 설계·구현', 'en': 'Design & implementation'},
+                          {'ko': '파이프라인 전반의 설계와 구현을 주도했습니다. 모델별 GPU 실행 환경과 실행기를 구성하고, 그라운딩 비교에서 인물 추적·선수별 크롭·HMR 2.0 재추론·SMPL 메쉬 재생까지 연결했습니다. 각 단계의 입출력과 원본 시간·인물 ID를 정리해 결과를 대조할 수 있게 했습니다.',
+                           'en': 'I led the overall pipeline design and implementation: GPU environments and model runners, grounding comparisons, person tracking, player-specific crops, HMR 2.0 re-inference, and SMPL mesh replay. I organized stage inputs and outputs around source timestamps and person IDs so that results could be compared across stages.'}),
+                         ({'ko': '실험·품질 검수', 'en': 'Experiments & quality review'},
+                          {'ko': '실험 대상·조건과 검수 기준을 정하고, 누락·새 ID 발생·타인 오연결을 구분했습니다. 문제가 생긴 사람과 시간 구간을 제외·보류하고 정상 구간은 보존하는 선별 기준을 정리했습니다. 사전학습 모델을 연동했으며, 구현·실행·문서화에는 AI 코딩 도구를 활용했습니다.',
+                           'en': 'I defined experiment conditions and review criteria, distinguishing missing detections, newly assigned IDs, and associations with the wrong person. I established criteria to exclude or hold problematic person-time intervals while retaining unaffected segments. The pipeline integrates pretrained models; AI coding tools supported implementation, execution, and documentation.'})]},
               {'id': 'grounding',
                'label': {'ko': '설계를 바꾼 근거', 'en': 'Why the design changed'},
                'title': {'ko': 'FPS를 높여도, 놓치는 행동은 남았습니다.', 'en': 'Higher sampling rates still missed actions.'},
@@ -212,6 +205,15 @@ PROJECTS = [{'slug': 'video-motion',
            ({'ko': '현재 단계', 'en': 'Status'},
             {'ko': '추적·크롭·복원·메쉬 재생 및 구간 검수', 'en': 'Tracking, crops, reconstruction, mesh replay, and segment review'},
             False)],
+ 'cover': {'video': 'motion/cover.mp4', 'poster': 'motion/cover.jpg',
+           'caption': {'ko': '같은 프레임의 원본 영상, PHALP 인물 추적, 실제 SMPL 메쉬 재생',
+                       'en': 'Frame-aligned source footage, PHALP person tracking, and actual SMPL mesh replay'}},
+ 'card_facts': [({'ko': '데이터 연결', 'en': 'Data alignment'},
+                 {'ko': '원본 시각·인물 ID·크롭 좌표·3D 모션을 프레임 단위로 연결',
+                  'en': 'Source time, person ID, crop coordinates, and 3D motion aligned frame by frame'}, False),
+                ({'ko': '검수 기준', 'en': 'Quality review'},
+                 {'ko': '누락·ID 변경·오연결을 구분하고, 문제 구간의 제외·보류 기준 수립',
+                  'en': 'Criteria for excluding or holding segments with gaps, ID changes, or incorrect associations'}, False)],
  'video': 'motion/compare.mp4',
  'poster': 'motion/compare.jpg',
  'showcase': {'title': {'ko': '먼저, 영상으로 살펴보세요.', 'en': 'See the pipeline in motion.'},
