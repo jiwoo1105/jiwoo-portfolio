@@ -1,225 +1,788 @@
-"""Reviewed Korean/English editorial source. Regenerate pages with scripts/build.py."""
+"""Reviewed bilingual content. Regenerate the static site with scripts/build.py."""
 
-def L(ko, en):
-    return {'ko': ko, 'en': en}
+HOME = {'headline': {'ko': 'AI를 실제로 쓰이는<br>기능으로 만듭니다.', 'en': 'I build AI<br>people can use.'},
+ 'description': {'ko': '박지우의 AI / ML 포트폴리오. 컴퓨터 비전·3D 동작 분석, 의료 AI, 실제 서비스 개발 경험을 소개합니다.',
+                 'en': 'Jiwoo Park’s AI/ML portfolio: computer vision, 3D motion analysis, medical AI, and real-world service '
+                       'development.'},
+ 'about_title': {'ko': '동작하는 이유까지,<br>이해하며 만듭니다.', 'en': 'I build with an understanding<br>of how things work.'},
+ 'about': [{'ko': '컴퓨터 비전과 3D 동작 분석을 연구하는 AIV Lab 학부연구생 박지우입니다. 영상 속 움직임을 데이터로 해석하고, AI를 실제로 쓸 수 있는 기능으로 만드는 데 관심이 있습니다.',
+            'en': 'I’m Jiwoo Park, an undergraduate researcher in the AIV Lab at Dankook University, working on computer vision and '
+                  '3D motion analysis. I’m interested in turning movement in video into meaningful data and building AI features '
+                  'people can use.'},
+           {'ko': '코드가 왜 이렇게 동작하는지, 이 문제에 왜 이 설계가 필요한지 생각하며 개발합니다. 예상과 다른 결과가 나오면 입력 데이터와 처리 과정을 나눠 살펴보고, 실험과 로그로 원인을 확인합니다.',
+            'en': 'As I build, I ask why the code behaves as it does and why a design fits the problem. When results differ from what '
+                  'I expect, I examine the input data and each processing stage, using experiments and logs to investigate the '
+                  'cause.'},
+           {'ko': '컴퓨터 비전·의료 AI 연구와 축제 서비스 개발을 거치며, 연구에서는 결과의 근거를, 서비스에서는 사용자가 겪을 상황을 살피는 법을 배웠습니다. 선택한 방법을 설명할 수 있고, 팀과 함께 더 나은 답을 '
+                  '찾아가는 AI 엔지니어가 되고자 합니다.',
+            'en': 'Through computer vision and medical AI projects, as well as a festival service, I’ve learned to examine the '
+                  'evidence behind research results and consider the situations users encounter. I aim to be an AI engineer who can '
+                  'explain technical choices and work with a team to find better solutions.'}]}
 
-def S(id, label, title, *paragraphs, **extra):
-    return dict(id=id, label=label, title=title, paragraphs=list(paragraphs), **extra)
+SUMMARIES = {'soccer-analysis': {'ko': '선수와 공을 추적하고, 드리블 동작을 검수 가능한 지표로.',
+                     'en': 'Tracking the player and ball to produce dribbling metrics that can be checked against the footage.'},
+ 'video-motion': {'ko': '영상 속 같은 사람의 움직임을 연결하고, 학습에 쓸 구간을 가려내는 연구입니다.',
+                  'en': 'A research pipeline that links a person’s motion across video and identifies segments suitable for '
+                        'learning.'},
+ 'danzzan': {'ko': '총학생회와 함께 운영한 대학 축제 서비스. 예매·인증·번역 백엔드를 담당했습니다.',
+             'en': 'A university festival service operated with the student council. I built ticketing, authentication, and '
+                   'translation features.'},
+ 'conquer-health': {'ko': '루닛 L2-preview의 의료 답변을 개선하며, MCP 근거 전달과 출력 예산을 실험했습니다.',
+                    'en': 'I explored MCP evidence delivery and output budgets to improve medical responses from Lunit’s L2-preview.'},
+ 'fish-detection': {'ko': '넙치를 찾고, 개체별 외형 증상을 분류하는 앱.',
+                    'en': 'An app that detects olive flounder and classifies each fish’s visible symptoms.'},
+ 'medguard': {'ko': '흉부 X-ray 모델의 적대적 공격과 방어를 비교한 실험.',
+              'en': 'Experiments comparing adversarial attacks and defenses for a chest X-ray classifier.'},
+ 'medai-agent': {'ko': '약물 정보 조회와 8단계 LLM 분석을 연결한 프로토타입.',
+                 'en': 'A prototype linking drug-information lookup with an eight-stage LLM workflow.'}}
 
-HOME = {
-    'headline': L('AI를 실제로 쓰이는<br>기능으로 만듭니다.', 'I build AI<br>people can use.'),
-    'description': L('박지우의 AI / ML 포트폴리오. 컴퓨터 비전·3D 동작 분석, 의료 AI, 실제 서비스 개발 경험을 소개합니다.', 'Jiwoo Park’s AI/ML portfolio: computer vision, 3D motion analysis, medical AI, and real-world service development.'),
-    'about_title': L('동작하는 이유까지,<br>이해하며 만듭니다.', 'I build with an understanding<br>of how things work.'),
-    'about': [
-        L('컴퓨터 비전과 3D 동작 분석을 연구하는 AIV Lab 학부연구생 박지우입니다. 영상 속 움직임을 데이터로 해석하고, AI를 실제로 쓸 수 있는 기능으로 만드는 데 관심이 있습니다.', 'I’m Jiwoo Park, an undergraduate researcher in the AIV Lab at Dankook University, working on computer vision and 3D motion analysis. I’m interested in turning movement in video into meaningful data and building AI features people can use.'),
-        L('코드가 왜 이렇게 동작하는지, 이 문제에 왜 이 설계가 필요한지 생각하며 개발합니다. 예상과 다른 결과가 나오면 입력 데이터와 처리 과정을 나눠 살펴보고, 실험과 로그로 원인을 확인합니다.', 'As I build, I ask why the code behaves as it does and why a design fits the problem. When results differ from what I expect, I examine the input data and each processing stage, using experiments and logs to investigate the cause.'),
-        L('컴퓨터 비전·의료 AI 연구와 축제 서비스 개발을 거치며, 연구에서는 결과의 근거를, 서비스에서는 사용자가 겪을 상황을 살피는 법을 배웠습니다. 선택한 방법을 설명할 수 있고, 팀과 함께 더 나은 답을 찾아가는 AI 엔지니어가 되고자 합니다.', 'Through computer vision and medical AI projects, as well as a festival service, I’ve learned to examine the evidence behind research results and consider the situations users encounter. I aim to be an AI engineer who can explain technical choices and work with a team to find better solutions.'),
-    ],
-}
+FOCUS = {'soccer-analysis': {'ko': '평가 지표 설계 · 공 추적 검수', 'en': 'Metric design · Ball-tracking review'},
+ 'video-motion': {'ko': '그라운딩 비교 실험 · 3D 복원 검수', 'en': 'Comparative grounding experiments · 3D reconstruction review'},
+ 'danzzan': {'ko': 'Redis·Lua 예매 처리 · 인증·번역', 'en': 'Redis/Lua ticketing · Authentication and translation'},
+ 'conquer-health': {'ko': 'MCP 조회·본문 전달 · 출력 예산 실험', 'en': 'MCP evidence delivery · Output-budget experiments'}}
 
-# Homepage summaries stay short; case studies retain methods, evidence and limits.
-SUMMARIES = {
-    'soccer-analysis': L('선수와 공을 추적하고, 드리블 동작을 검수 가능한 지표로.', 'Tracking the player and ball to produce dribbling metrics that can be checked against the footage.'),
-    'video-motion': L('스포츠 영상의 행동 구간·인물·3D 메쉬를 연결하는 연구.', 'Linking action segments, person identities, and 3D meshes in sports video.'),
-    'danzzan': L('총학생회·네이버와 함께 만든 축제 서비스. 예매부터 현장까지.', 'A festival service built with the student council and NAVER, covering ticketing and on-site operations.'),
-    'conquer-health': L('직접 생성과 선택적 근거 조회를 검증한 의료 대화 해커톤.', 'A medical dialogue hackathon exploring direct generation and selective evidence retrieval.'),
-    'fish-detection': L('넙치를 찾고, 개체별 외형 증상을 분류하는 앱.', 'An app that detects olive flounder and classifies each fish’s visible symptoms.'),
-    'medguard': L('흉부 X-ray 모델의 적대적 공격과 방어를 비교한 실험.', 'Experiments comparing adversarial attacks and defenses for a chest X-ray classifier.'),
-    'medai-agent': L('약물 정보 조회와 8단계 LLM 분석을 연결한 프로토타입.', 'A prototype linking drug-information lookup with an eight-stage LLM workflow.'),
-}
-
-FOCUS = {
-    'soccer-analysis': L('평가 지표 설계 · 공 추적 검수', 'Metric design · Ball-tracking review'),
-    'video-motion': L('그라운딩 비교 실험 · 3D 복원 검수', 'Comparative grounding experiments · 3D reconstruction review'),
-    'danzzan': L('Redis·Lua 예매 처리 · 인증·번역', 'Redis/Lua ticketing · Authentication and translation'),
-    'conquer-health': L('MCP 조회·본문 전달 · 출력 예산 실험', 'MCP evidence delivery · Output-budget experiments'),
-}
-
-PROJECTS = [
-dict(slug='soccer-analysis', title=L('축구 드리블 동작 분석', 'Soccer dribbling analysis'), category=L('Computer vision · 연구', 'Computer vision · Research'),
-    subtitle=L('선수와 공의 움직임을 지표로 만들고, 계산에 쓰인 원본 장면까지 확인할 수 있게 했습니다.', 'I turned player and ball motion into metrics that can be checked against the original footage.'),
-    desc=L('한 대의 카메라로 촬영한 드리블 영상에서 선수의 관절과 공을 추적합니다. 터치 주변의 헤드업·어깨 움직임과 전체 유효 프레임의 상체 각도를 계산하고, 원본 장면과 대조할 수 있는 연구용 보고서로 만듭니다.', 'I track body landmarks and the ball in single-camera dribbling videos, measure head-up movement and shoulder motion around touches and torso angle across all valid frames, and generate research reports that can be checked against the source footage.'),
-    role=L('지표 설계, 터치 구간 실험, 분석 파이프라인 구현·검수', 'Metric design, touch-window experiments, pipeline development and review'),
-    period=L('2025.11– · 연구 진행 중', 'Since Nov 2025 · Ongoing research'), context='AIV Lab',
-    stack='Python / MediaPipe / YOLO / SAM2 / NumPy / SciPy', repo='https://github.com/jiwoo1105/soccer_motion_analysis',
-    video='soccer-ball-tracking.mp4', poster='soccer-ball-poster.jpg', caption=L('선수 관절 + 실제 공 검출 좌표와 궤적', 'Body landmarks + detected ball positions and trail'),
-    sections=[
-        S('problem', L('배경과 역할', 'Context & my role'), L('관찰한 자세를, 다시 확인할 수 있는 측정값으로.', 'From visual observations to inspectable measurements.'),
-          L('드리블 자세를 영상별로 비교하려면 무엇을, 어느 구간에서 측정했는지 설명할 수 있어야 합니다. 이 연구는 단안 영상의 관절과 공 궤적을 활용해 상체 움직임을 수치화하고, 계산에 사용한 실제 장면을 함께 보여주는 분석 도구를 만드는 작업입니다.', 'Comparing dribbling technique requires a clear account of what was measured and over which frames. This project uses body landmarks and ball trajectories from monocular video to quantify upper-body movement and show the footage behind each measurement.'),
-          L('평가 의도와 지표 정의, 비교 실험 방향을 정하고 원본 장면 검수를 진행했습니다. AI 코딩 도구와 협업해 영상 입력부터 지표 계산, HTML·JSON 보고서 생성까지 분석 흐름을 구현하고 검증했습니다.', 'I defined the evaluation goals and metrics, directed comparative experiments, and reviewed the source footage. Working with AI coding tools, I developed and checked the pipeline from video input to metric calculation and HTML/JSON reporting.')),
-        S('pipeline', L('난제와 해결', 'Challenge & approach'), L('배경 공을 따라가면, 자세를 평가할 시점도 달라집니다.', 'Tracking the wrong ball also changes when technique is measured.'),
-          L('기본 경로는 MediaPipe Pose Heavy로 관절과 얼굴 지점을 포함한 신체 랜드마크 33개의 이미지 좌표와 추정 3D 좌표를 추출합니다. YOLOv8n으로 공의 초기 위치를 찾고 SAM2.1로 마스크를 추적한 뒤, 공의 수평 궤적과 발목 근접 조건으로 터치 후보를 계산합니다.', 'The default pipeline extracts 33 landmarks in image coordinates and estimated 3D coordinates with MediaPipe Pose Heavy. YOLOv8n initializes the ball location, SAM2.1 tracks its mask, and the horizontal trajectory and proximity to the ankles provide candidate touch events.'),
-          L('SAM2가 선수가 다루는 공 대신 배경 공을 따라가는 사례를 확인했습니다. 발목과의 거리로 초기 대상을 고르고, 당시 실험에서는 250px 초과 상태가 5프레임 이어지면 재탐색하도록 했습니다. 이후 YOLO11s 발목 ROI 재검출과 같은 프레임을 대조해 실제 드리블 공을 가리키는지 검수했습니다.', 'I found cases where SAM2 followed a background ball instead of the player’s ball. I selected the initial target by ankle proximity and, in that experiment, triggered re-detection when the ball-to-ankle distance exceeded 250 pixels for five consecutive frames. I then compared the same frames with YOLO11s re-detection in an ankle-centered ROI to check that the target was the actual dribbling ball.'),
-          L('250px는 해당 입력 영상의 조건에 따른 기준입니다. 이 페이지의 영상은 별도 YOLO11 실험의 실제 검출값을 시각화한 것이며, 미검출 구간을 보간하거나 전체 추적 정확도 개선율로 표현하지 않았습니다.', 'The 250-pixel threshold depends on the input video conditions. This demo visualizes actual detections from the separate YOLO11 experiment, without interpolating missed detections or claiming a dataset-wide tracking improvement.')),
-        S('metrics', L('지표 설계', 'Metric design'), L('터치 전후 16프레임에서 어깨 움직임을 집계합니다.', 'Measuring shoulder motion within 16 frames of each touch.'),
-          L('어깨선의 3D 단위 방향을 평활화하고, 인접 프레임 사이 방향 변화에 FPS를 곱해 각속도를 구합니다. 현재는 공 터치 앞뒤 각각 16프레임에 포함된 유효한 인접 프레임 쌍에서 계산한 각속도를 평균합니다. 터치 구간끼리 겹치는 쌍은 한 번만 반영합니다.', 'I smooth the 3D unit vector along the shoulder line and multiply the angular change between adjacent frames by FPS to obtain angular speed. The current method averages the angular speeds computed from valid adjacent-frame pairs within 16 frames before and after each touch, counting overlapping pairs only once.'),
-          L('헤드업은 터치 주변의 어깨 중앙–눈 중앙 벡터가 수직축과 이루는 각도의 변화 범위를 측정합니다. 상체 지표는 무릎–엉덩이–어깨 각도를 전체 유효 프레임에서 평균합니다. 항목별로 측정 대상과 시간 범위를 명시해 서로 다른 움직임을 혼동하지 않도록 했습니다.', 'The head-up metric measures the angular range of the shoulder-midpoint–eye-midpoint vector relative to the vertical axis around touches. The torso metric averages knee–hip–shoulder angles across all valid frames. Each metric states its measurement and time window explicitly.')),
-        S('validation', L('결과와 검증', 'Results & validation'), L('계산이 맞는지와 평가가 타당한지를 나누어 봅니다.', 'Checking the calculation and the meaning of the score.'),
-          L('3개 영상, 771프레임의 기존 추론 결과로 터치 ±16프레임 보고서를 재생성했고, 어깨 집계와 총점이 별도 계산과 1e−10 이내로 일치하는지 확인했습니다. 필수 항목을 계산할 수 없을 때는 총점을 N/A로 남깁니다.', 'Using saved inference outputs from three videos totaling 771 frames, I regenerated the ±16-frame reports and checked that the shoulder aggregation and total score agreed with an independent calculation within 1e−10. The total is marked N/A when a required metric cannot be calculated.'),
-          L('이 검증은 구현한 계산의 일관성을 확인한 것입니다. 전문가 등급은 항목별 정답 점수가 아니며, 독립적인 숙련도 평가 검증은 남아 있습니다. 가려짐, 단안 깊이 오차, 터치 오검출이 측정에 미치는 영향을 계속 검토하고 있습니다.', 'This verifies computational consistency. The available expert grades are not ground-truth scores for each metric, and independent validation of skill assessment remains open. Occlusion, monocular depth errors, and false touch detections can still affect the measurements.'),
-          note=L('2026.10.13 기준. 공개 데모는 추적 시각화이며, 자동 채점의 정확도를 입증하는 영상은 아닙니다.', 'As of 13 October 2026. The demo illustrates tracking; it does not establish the accuracy of automated skill scoring.')),
-        S('learning', L('배운 점', 'What I learned'), L('공을 찾는 것과, 분석할 공을 고르는 것은 달랐습니다.', 'Detecting a ball and selecting the right ball are different tasks.'),
-          L('대상을 잘못 고르면 터치 시점과 자세 지표까지 연쇄적으로 달라집니다. 그래서 최종 점수만 보기보다 공 선택 → 터치 후보 → 측정 구간을 원본 프레임에서 따로 확인하게 됐습니다. 계산의 재현성과 평가 지표의 타당성도 각각 검증해야 한다는 기준을 세웠습니다.', 'A wrong target propagates into touch timing and pose metrics. I learned to inspect target selection, candidate touches, and measurement windows separately against the source frames, rather than checking only the final score. Reproducible calculations and valid assessment metrics also require separate evidence.')),
-    ], links=[(L('분석 도구와 실행 안내', 'Analysis tool and usage'), 'https://github.com/jiwoo1105/soccer_motion_analysis'), (L('터치 ±16프레임 반영 기록', 'Touch-window implementation'), 'https://github.com/jiwoo1105/soccer_motion_analysis/commit/38e0ad5')]),
-
-dict(slug='video-motion', title=L('로봇학습데이터 구축 파이프라인', 'A data pipeline for robot learning'), category=L('Video understanding · 연구', 'Video understanding · Research'),
-    subtitle=L('210개 그라운딩 응답과 실제 메쉬 출력을 비교하며, 같은 사람의 동작 데이터를 연결할 기준을 검토했습니다.', 'I compared 210 grounding responses and actual mesh outputs to examine how to link motion data for the same person.'),
-    desc=L('스포츠 영상에서 인물별 움직임을 복원하고 동작 설명과 연결하는 데이터 구축 연구입니다. 그라운딩 모델의 한계를 비교한 뒤, 선수 중심 클립과 3D 메쉬를 함께 검수하는 방향으로 발전시키고 있습니다.', 'I study how to build motion datasets from sports video. After comparing the limitations of temporal grounding models, I’m developing an approach centered on person-specific clips, 3D meshes, and action descriptions.'),
-    role=L('모델 실행 환경, 그라운딩 비교, 인물 추적·3D 복원 검수', 'Model runners, grounding comparisons, identity and 3D reconstruction review'),
-    period=L('2026.07– · 연구 진행 중', 'Since Jul 2026 · Ongoing research'), context=L('AIV Lab / ETRI 연구과제', 'AIV Lab / ETRI research project'),
-    stack='PyTorch / TimeLens2 / Qwen3-VL / CoMotion / Multi-HMR 2 / PHALP', repo='https://github.com/DKU-AIM/video-motion-pipeline',
-    video='basketball-mesh-preview.mp4', poster='basketball-mesh-preview.jpg', caption=L('공개 농구 영상 → CoMotion → SMPL 메쉬', 'Public basketball video → CoMotion → SMPL mesh'),
-    sections=[
-        S('problem', L('배경과 역할', 'Context & my role'), L('움직임을 복원하는 것에서, 학습 데이터를 만드는 것으로.', 'From reconstructed motion to usable training data.'),
-          L('여러 사람이 등장하는 영상에서 행동과 3D 모션을 연결하려면 시간 구간과 인물 ID가 함께 맞아야 합니다. 복원이 시각적으로 그럴듯해도 중간에 대상 인물이 바뀌거나 동작 설명이 다른 구간을 가리키면 일관된 데이터로 쓰기 어렵습니다.', 'Linking actions to 3D motion in multi-person video requires both temporal alignment and consistent person identities. Even a plausible reconstruction is difficult to use as data if it switches people or its description refers to a different segment.'),
-          L('모델별 GPU 실행 환경과 실행기, 출력 파서를 정리하고, 원본 영상과 인물 크롭의 메쉬 복원 결과를 비교했습니다. 영상·시간 구간·인물 ID·모션을 함께 검수할 수 있도록 결과를 정리하는 데 집중했습니다.', 'I set up GPU environments, model runners, and output parsers, and compared mesh reconstruction from full frames and person crops. My focus has been organizing outputs so video, time spans, person IDs, and motion can be reviewed together.')),
-        S('input', L('입력 설계', 'Input design'), L('짧은 동작을 보존하면서, 모델의 입력 한도 안에 담아야 했습니다.', 'Preserving short actions within the model’s input limits.'),
-          L('긴 영상은 GPU 메모리와 입력 프레임 수에 제약이 있었습니다. 간격을 넓혀 샘플링하면 짧은 행동이 빠질 수 있어, 경계가 겹치는 짧은 창으로 나눠 보는 방식을 설계했습니다. 모델별 입력 규칙을 실행기에 반영하고, 서로 다른 출력의 시작·종료 시각을 공통 형식으로 정리했습니다.', 'Long videos were constrained by GPU memory and frame limits. Sparse sampling could omit short actions, so I designed overlapping windows, encoded model-specific input rules in the runners, and normalized start/end timestamps from different outputs.'),
-          L('짧은 클립의 실행과 결과 비교 기반을 마련했습니다. 경계에서 중복으로 찾은 행동과 실제 반복 행동을 원본 시간축에서 구별하는 병합 검증은 남아 있습니다.', 'This established short-clip execution and a basis for comparing outputs. Validating how to merge boundary duplicates without collapsing genuinely repeated actions remains open.')),
-        S('grounding', L('비교 실험', 'Comparative experiments'), L('FPS를 높이는 것만으로 짧은 동작을 찾을 수는 없었습니다.', 'Higher FPS did not solve short-action localization.'),
-          L('그라운딩 실험에서 7개 모델, 5개 FPS, 2개 영상, 3개 쿼리로 얻은 210개 응답을 비교했습니다. 입력 샘플링을 촘촘하게 해도 구간을 지나치게 넓게 반환하거나 영상에 없는 동작을 찾는 사례가 남았습니다.', 'I compared 210 responses across seven models, five FPS settings, two videos, and three queries in grounding experiments. Denser sampling still produced overly broad intervals and predictions of actions that were absent from the video.'),
-          L('Qwen3-VL의 짧은 구간 행동 판별을 TimeLens2 앞에 연결하는 방식도 살폈습니다. 없는 슛을 걸러낸 사례와 실제 드리블을 놓친 사례가 함께 있어, 오탐과 누락을 원본 장면에서 따로 검수했습니다.', 'I also explored placing short-clip action classification with Qwen3-VL before TimeLens2. It filtered out a nonexistent shot in one case but missed real dribbling in another, so I reviewed false positives and misses separately against the footage.')),
-        S('mesh', L('실제 복원', 'Reconstruction demo'), L('메쉬의 모양과 사람의 일관성을 따로 확인합니다.', 'Reviewing mesh quality and identity consistency separately.'),
-          L('이 페이지의 공개 농구 클립은 8초, 100프레임을 CoMotion에 입력한 실제 추론 결과입니다. 출력된 자세·체형·위치 파라미터를 SMPL 인체 메쉬로 변환하고 원본과 같은 시점으로 렌더링했습니다.', 'The demo uses actual CoMotion inference on an eight-second, 100-frame public basketball clip. Its pose, shape, and position parameters were converted into an SMPL body mesh and rendered from the source camera viewpoint.'),
-          L('CoMotion, Multi-HMR 2와 추적 기반 접근을 비교하며 중복 검출, 가려짐, 인물 ID 변화와 메쉬 품질을 구분해 확인했습니다. 상자 겹침으로 중복을 줄이는 처리만으로 동일 인물의 ID가 유지되는 것은 아니었습니다.', 'Across CoMotion, Multi-HMR 2, and tracking-based approaches, I examined duplicate detections, occlusion, identity changes, and mesh quality separately. Reducing duplicate boxes did not by itself ensure consistent person IDs.'),
-          note=L('메쉬는 사전학습 모델의 추론 결과입니다. 자체 모델 학습 성과나 로봇 제어·동작 전이 결과를 뜻하지 않습니다. 입력 영상의 권리는 원저작자에게 있습니다.', 'The mesh is an inference output from a pretrained model. It is not evidence of training a new model, robot control, or motion transfer. Rights to the source video remain with its owner.')),
-        S('next', L('현재 연구 방향', 'Current research direction'), L('선수 중심 클립에 설명과 라벨을 연결합니다.', 'Connecting person-centered clips to descriptions and labels.'),
-          L('현재 제안하는 흐름은 선수 추적 → 선수 중심 크롭과 짧은 구간 분할 → VLM 동작 설명 → 키워드 기반 라벨링과 품질 선별입니다. 같은 클립에서 추출한 메쉬를 설명·라벨과 연결하려 합니다.', 'The proposed workflow is person tracking, person-centered cropping and short-clip segmentation, VLM action descriptions, then keyword-based labeling and quality filtering. The goal is to associate each clip’s mesh with its description and labels.'),
-          L('그라운딩과 메쉬 비교 실험은 수행했지만, 이 변경안 전체가 자동으로 검증된 데이터셋을 만드는 단계까지 완료된 것은 아닙니다. 클립 경계, 복수 동작의 라벨링, 인물 ID 일관성과 품질 선별 기준을 구체화하고 있습니다.', 'Grounding and mesh comparison experiments have been carried out, but the revised workflow is not yet a complete system for automatically producing a validated dataset. Clip boundaries, multi-action labeling, identity consistency, and quality-filtering criteria are still being developed.')),
-        S('learning', L('배운 점', 'What I learned'), L('보기 좋은 메쉬가 곧 학습에 쓸 수 있는 데이터는 아니었습니다.', 'A plausible mesh is not yet usable training data.'),
-          L('시간 구간을 맞추는 것, 같은 사람을 유지하는 것, 자세를 복원하는 것은 서로 다른 검증 과제였습니다. 중복 검출이 줄어도 ID가 바뀔 수 있어, 한 지표의 개선을 전체 파이프라인의 개선으로 해석하지 않게 됐습니다. 원본 영상·구간·인물 ID를 함께 남기는 것이 다음 실험을 비교할 출발점입니다.', 'Temporal alignment, identity consistency, and pose reconstruction are separate validation tasks. Fewer duplicate detections can still coincide with identity switches, so improvement in one metric does not establish improvement across the pipeline. Keeping the source video, time interval, and person ID together provides the basis for the next comparison.')),
-    ], links=[(L('공개 파이프라인과 모델별 실행 안내', 'Public pipeline and model runners'),'https://github.com/DKU-AIM/video-motion-pipeline'),('CoMotion','https://github.com/apple-aiml-research/ml-comotion')]),
-
-dict(slug='danzzan', title=L('단짠 / Danzzan', 'Danzzan'), category=L('Backend · 실제 서비스 운영', 'Backend · Live service'),
-    subtitle=L('실사용자 6,000명 이상이 이용한 축제 서비스에서 예매·인증·번역을 구현하고 운영에 참여했습니다.', 'I built ticketing, authentication, and translation features for a festival service used by over 6,000 people, and helped operate it.'),
-    desc=L('총학생회·네이버와 협업한 대학 축제 서비스입니다. Redis·Lua로 예매 상태와 재고를 처리하고, 인증·번역·관리자 설정을 개선하며 봄·가을 축제 운영에 참여했습니다.', 'A university festival service built in collaboration with the student council and NAVER. I worked on Redis/Lua ticket allocation, authentication, translation, and admin settings, and participated in spring and autumn festival operations.'),
-    role=L('예매 상태·재고 정합성, JWT 인증, 번역 기능·실패 처리', 'Ticket state and inventory consistency, JWT authentication, translation and failure handling'),
-    period=L('2025.12– · 운영 및 개선', 'Since Dec 2025 · Operations and iteration'),context=L('대학 축제 웹 서비스 / 팀 프로젝트', 'University festival web service / Team project'),
-    stack='Spring Boot / Redis / Lua / MySQL / React / Docker',repo='https://github.com/DKU-Dan-Zzan/Danzzan-BE',
-    images=['danzzan-ticketing.png','danzzan-consent.png'],caption=L('실제 예매·사전 등록 안내 화면', 'Ticket reservation and preregistration screens'),
-    stats=[('6,000+', L('실사용자', 'Service users')),('≈ 4,000', L('티켓팅 동시접속', 'Concurrent ticketing users'))],
-    sections=[
-        S('problem',L('배경과 역할','Context & my role'),L('몰리는 요청과 계속 바뀌는 운영 조건을 함께 다뤘습니다.', 'Handling traffic bursts and changing operational needs.'),
-          L('학생에게 흩어진 부스 정보, 공연 일정, 공지와 예매를 한곳에서 제공하고 운영진이 현장 상황을 반영할 수 있도록 만든 팀 서비스입니다. 한정된 티켓의 중복 발급을 막는 일과 예매·입장 상태를 사용자에게 정확히 보여주는 일이 핵심 과제였습니다.', 'The team brought booth information, performances, notices, and ticket reservations into one service while allowing organizers to respond to on-site needs. Key challenges were preventing duplicate ticket allocation and presenting reservation and entry states accurately.'),
-          L('저는 Redis 대기열과 Lua 발급 처리, JWT 로그인·회원가입, 번역 기능을 맡았습니다. 실사용자 6,000명 이상, 티켓팅 동시접속 약 4,000명은 실제 운영 규모이며 팀 공동 성과입니다. 부하 테스트의 가상 사용자 수와 구분합니다.', 'I worked on the Redis queue, Lua ticket allocation, JWT login and signup, and translation features. Over 6,000 real users and approximately 4,000 concurrent ticketing users describe the team service’s actual operations, not virtual users in a load test.')),
-        S('ticketing',L('동시 요청 처리','Concurrent requests'),L('대기열을 상태 전이와 재고 정합성 문제로 풀었습니다.', 'Treating the queue as a state and inventory problem.'),
-          L('대기·입장 준비·예매 가능·완료·만료를 구분하는 Redis 대기열 상태를 구현했습니다. Lua Script에서 입장 자격, 중복 신청과 남은 재고를 확인하고 재고 차감을 원자적으로 처리합니다. 실패 시 재고 복구 경로도 함께 다뤘습니다.', 'I implemented Redis queue states for waiting, entry preparation, eligibility, completion, and expiry. Lua scripts check eligibility, duplicate requests, and remaining inventory and perform the inventory decrement atomically. I also handled inventory restoration after failures.'),
-          L('단순히 성공 응답을 반환하는 것보다, 중간 단계에서 멈췄을 때 사용자가 어떤 상태인지 설명하는 데 집중했습니다. 빈 대기열, 비동기 예매 진행 중, 입장 만료와 예매 오픈 전 오류를 구분하도록 개선했습니다. Kafka·DB 비동기 처리에는 다른 팀원의 기여가 포함됩니다.', 'I focused on explaining the user’s state when processing stopped between steps, not just returning a success response. Improvements distinguished empty queues, pending asynchronous reservations, expired queue admission, and requests before opening time. Other teammates contributed to Kafka/database asynchronous processing.')),
-        S('recovery',L('운영 개선','Operational improvements'),L('실패한 뒤에도 다시 시도할 수 있는 서비스로.', 'Making failures recoverable.'),
-          L('만료된 토큰이 로그인 요청에 붙으면 인증 필터에서 401이 발생해 다시 로그인할 수 없는 문제가 있었습니다. 로그인·토큰 재발급 등 공개 경로를 JWT 인증 필터의 검사 대상에서 제외해 인증 복구 흐름을 바로잡았습니다.', 'An expired token attached to a login request could trigger a 401 in the authentication filter and block the user from logging in again. I corrected the recovery path by bypassing the JWT authentication filter’s checks for public login and token-refresh endpoints.'),
-          L('번역 API 실패가 공지 등록 실패로 이어지지 않도록 예외를 처리했습니다. 콘텐츠 저장 시 번역을 보관하고, 영어가 없으면 한국어를 제공하며, 누락된 영문은 나중에 보충하는 흐름을 구현했습니다. 이미 작성된 번역은 보존합니다.', 'I handled translation API failures so they would not block notice creation. Translations are stored with content; missing English text falls back to Korean and can be backfilled later without overwriting existing translations.'),
-          L('예매 시간·수량·공연일을 관리자와 사용자 화면에 연결하고, 시작된 회차의 수정 제한과 티켓팅 ON/OFF 정책을 정리했습니다. 운영자가 직접 바꿀 수 있는 범위를 늘리는 방향으로 개선했습니다.', 'I connected ticket times, quantities, and performance dates across admin and user screens, and refined restrictions on editing open rounds and the ticketing on/off policy. The aim was to give organizers more control over routine changes.')),
-        S('collaboration',L('협업','Collaboration'),L('총학생회·네이버와 이어지는 현장 입장 흐름.', 'An entry flow connected with the student council and NAVER.'),
-          L('총학생회와 협업한 축제 운영에 네이버 Face Sign 연계 입장 흐름을 적용했습니다. 단짠은 티켓 예매, 제3자 제공 동의와 사전 등록 안내를 담당하고, 얼굴 정보 등록과 인증은 네이버가 처리합니다. 얼굴인식 모델 자체를 개발한 프로젝트는 아닙니다.', 'The festival service, built with the student council, supported an entry flow linked to NAVER Face Sign. Danzzan handled reservations, third-party data-sharing consent, and preregistration guidance; NAVER handled face registration and authentication. The project did not develop the face-recognition model.'),
-          L('예매 완료와 얼굴 등록 완료가 다른 단계라는 점을 안내하고, 봄 축제에서 받은 다국어 요구를 가을 축제 개선에 반영했습니다. 대외 협업과 행사 운영은 팀 공동 성과이며, 개인 기여는 예매·인증·번역 및 운영 상태 개선에 있습니다.', 'The interface explained that reserving a ticket and completing face registration were separate steps. Requests for multilingual support from the spring festival informed autumn improvements. External collaboration and festival operations were team achievements; my contributions were in ticketing, authentication, translation, and operational states.')),
-        S('delivery', L('일정과 협업', 'Delivery & teamwork'), L('마감일만 공유하던 방식을, 진행 상황을 함께 보는 방식으로 바꿨습니다.', 'I made progress visible before the deadline.'),
-          L('작업 지연이 반복될 때 Jira로 작업을 작게 나누고, 스프린트와 데일리 스크럼으로 진행 상황과 막힌 부분을 공유하도록 했습니다. 이후 티켓팅 일정이 앞당겨지자 남은 작업과 우선순위를 다시 정리했고, 팀은 변경된 기한 안에 개발을 마쳤습니다.', 'When work repeatedly slipped, I introduced smaller Jira tasks, sprints, and daily scrums to share progress and blockers. When the ticketing launch was subsequently brought forward, we revisited the remaining work and priorities, and the team completed development by the revised deadline.')),
-        S('learning',L('배운 점','What I learned'),L('운영자가 쓰는 순간까지가 개발의 범위였습니다.', 'Development extends into day-to-day operations.'),
-          L('이 경험을 통해 동시 요청을 처리하는 코드뿐 아니라 실패 시 복구, 사용자 안내, 운영자의 설정 권한까지 함께 설계해야 한다는 점을 배웠습니다. 이후 포스터 크롭 추천과 홈·티켓 배경 통합 적용을 개선하고 있으며, 2026.10.13 기준 해당 후속 작업은 별도 PR에서 로컬 검증한 상태입니다.', 'The work taught me to design recovery, user guidance, and organizer controls alongside concurrent request processing. Follow-up work includes poster-crop suggestions and unified home/ticket backgrounds; as of 13 October 2026, those changes have been tested locally in separate pull requests.'),
-          note=L('후속 테마 작업을 기존 축제 운영 성과나 이미 배포된 기능으로 합산하지 않습니다.', 'The follow-up theme work is not counted as a deployed feature or part of the earlier festival operating results.')),
-    ], links=[(L('백엔드 저장소','Backend repository'),'https://github.com/DKU-Dan-Zzan/Danzzan-BE'),(L('프론트엔드 저장소','Frontend repository'),'https://github.com/DKU-Dan-Zzan/Danzzan-FE'),(L('비동기 예매 상태 개선 커밋','Asynchronous reservation state fix'),'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/11395c73ad285a7fae8553b6d8c59405f881c474')]),
-]
-
-PROJECTS += [
-dict(slug='conquer-health',title='Conquer Health',category=L('LLM 시스템 · 해커톤','LLM systems · Hackathon'),
-    subtitle=L('의료 대화의 근거 연결과 추론 흐름을 구현·검수하며, AIM 팀의 HealthBench 벤치마크상 수상에 기여했습니다.', 'I contributed to Team AIM’s HealthBench benchmark award by implementing and reviewing evidence retrieval and inference workflows for medical dialogue.'),
-    desc=L('루닛 L2-preview의 추론 흐름을 개선한 의료 대화 프로젝트입니다. MCP 문서 조회·본문 전달, 출력 예산 실험과 답변 검수를 맡았으며, 팀은 직접 생성과 선택적 조회를 결합해 벤치마크상을 받았습니다.', 'A medical dialogue project improving inference around Lunit L2-preview. I worked on MCP document lookup, passing retrieved text to generation, output-budget experiments, and response review. The team combined direct generation with selective retrieval and won the benchmark award.'),
-    role=L('MCP 조회·본문 전달, 출력 예산 실험, 답변 검수', 'MCP lookup and evidence delivery, output-budget experiments, response review'),
-    period=L('2026.08 · 팀 프로젝트', 'Aug 2026 · Team project'),context=L('루닛 의료 AI 해커톤 / AIM 팀 5인','Lunit medical AI hackathon / Team AIM, five members'),
-    stack='Python / FastAPI / MCP / L2-preview / HealthBench / Docker',repo='https://github.com/Hackathon-AIM/health-conquer-submission',
-    visual='health',caption=L('팀 최종 평가 기록 / HealthBench · 개발 대시보드와 별도 평가', 'Team-reported final evaluation / HealthBench · Separate from the development dashboard'),
-    award=L('루닛 · 벤치마크 1위 · AIM 팀 수상', 'Lunit · 1st in benchmark · Team AIM award'),
-    sections=[
-        S('problem',L('배경과 역할','Context & my role'),L('문서를 찾는 것에서, 답변의 근거로 쓰이게 하는 것까지.', 'Making retrieved documents useful to the answer.'),
-          L('제공된 L2-preview의 가중치를 바꾸지 않고 의료 질의응답을 개선하는 과제였습니다. 문서를 조회해도 필요한 본문이 생성 입력에 전달되지 않거나, 질문의 요구가 답변에서 누락되면 도구 호출의 성공만으로는 충분하지 않았습니다.', 'The task was to improve medical question answering without changing the provided L2-preview weights. A successful lookup was insufficient if the relevant document text did not reach generation or the answer missed part of the question.'),
-          L('저는 초기 MCP 검색·생성 연결과 약물 안전 게이트를 구현하고, 검색 본문이 모델 입력에 포함되는지와 답변이 질문의 요구·근거를 반영하는지를 나누어 검수했습니다. 이후 출력 예산 실험과 멀티턴 응답 지시 보강에도 참여했습니다. 팀의 최종 제출안과 개인 구현 범위는 커밋 단위로 구분했습니다.', 'I implemented the initial MCP retrieval/generation connection and medication safety gate, checking evidence delivery separately from whether the response addressed the question and used that evidence. I also worked on output-budget experiments and multi-turn response instructions. Individual contributions and the final team submission are distinguished by commit.')),
-        S('baseline',L('기준선과 판단','Baseline & decisions'),L('단계를 더하기 전에, 직접 생성의 성능부터 확인했습니다.', 'Testing direct generation before adding more stages.'),
-          L('팀 실험 장부에서 검색·라우팅 후보는 29.13점, 순수 L2 직접 생성은 32.44점을 기록했습니다. 팀은 직접 생성을 기준으로 삼고 temperature=0, 답변 요구사항을 다루도록 하는 짧은 지시, thinking 응답이 잘리거나 비면 thinking을 끄고 다시 생성하는 복구를 차례로 검토했습니다.', 'The team ledger records 29.13 for a retrieval/routing candidate and 32.44 for direct L2 generation. The team used direct generation as the baseline and examined temperature=0, a short instruction to address the user’s requests, and recovery that regenerates without thinking when a thinking-enabled response is truncated or empty.'),
-          L('thinking과 실패 복구를 결합한 동일 동작의 반복 평가에서는 49.72·50.03·47.79점이 나왔습니다. 한편 전체 개발 이력에는 모델 서버 상태와 누적 변경이 함께 달라진 구간도 있어, 서로 다른 후보의 점수 차이를 각 기법의 순수 효과로 계산하지 않았습니다.', 'Repeated evaluations of the same serving behavior with thinking and failure recovery yielded 49.72, 50.03, and 47.79. Across the broader development history, model-serving conditions and cumulative changes also varied, so score differences between distinct candidates were not treated as isolated effects of individual techniques.')),
-        S('inference',L('개인 실험','My experiment'),L('출력 예산을 늘렸지만, 점수 개선이라고 단정하지 않았습니다.', 'A larger output budget did not establish a score improvement.'),
-          L('출력 상한을 다시 확인하고, 제 후보 e6de327에서 서버 상한 설정을 2,048에서 32,768로 정정하면서 요청 출력 예산은 2,048에서 4,096토큰으로 늘렸습니다. 추론 중 잘림으로 재생성 경로에 들어가는 일을 줄이려는 실험이었습니다. 서버 상한과 실제 요청 예산은 서로 다른 설정입니다.', 'After rechecking the output limit, my candidate e6de327 corrected the configured server cap from 2,048 to 32,768 and raised the requested output budget from 2,048 to 4,096 tokens. The goal was to reduce truncation that triggered regeneration. The server cap and requested output budget are distinct settings.'),
-          L('장부상 이 후보는 49.59점으로, 기준선 반복 3회의 평균 49.18점과 0.41점 차이였습니다. 관측된 반복 변동 안에 있어 토큰 상향만의 개선 근거로 삼지 않았습니다. 점수와 함께 잘림, 폴백 발생, 지연을 확인할 필요가 있었습니다.', 'The ledger records 49.59 for this candidate, 0.41 points above the baseline’s three-run mean of 49.18. The difference lies within the observed run-to-run variation, so it does not establish a benefit from increasing the token budget alone. Truncation, fallback frequency, and latency also needed inspection.')),
-        S('retrieval',L('최종 접근','Final approach'),L('직접 생성을 유지하고, 정확한 조회가 필요한 질문에만 MCP를 연결했습니다.', 'Keeping direct generation and retrieving only where an exact lookup was needed.'),
-          L('팀의 후속 제출 계열은 검증된 기준선 복원 → 선택적 MCP → 후속 질문의 참조 처리 → 긴 답변 보존으로 발전했습니다. 한국어 약가·허가·성분·질병 코드처럼 명확한 조회에 도구를 제한하고, “그 약·그 코드”의 대상이 최근 대화에서 하나로 정해질 때만 조회하도록 했습니다.', 'The team’s later submission sequence restored the established baseline, added selective MCP lookup, resolved references in follow-up questions, and preserved longer answers. Retrieval was limited to explicit Korean queries such as medication prices, approvals, ingredients, and disease codes. References such as “that drug” or “that code” were resolved only when recent conversation identified a unique target.'),
-          L('조회가 실패하거나 대상이 모호하면 직접 생성 경로를 유지했습니다. 정상 답변의 뒷부분이 후처리에서 잘리지 않도록 길이 상한도 6,000자에서 12,000자로 늘렸습니다. 이 최종 계열은 팀 공동 산출물이며, 선택적 MCP가 평가 문항에서 실행된 빈도와 점수 기여도는 별도 로그가 있어야 판단할 수 있습니다.', 'Failed or ambiguous lookups preserved the direct-generation path. The post-processing character limit was also raised from 6,000 to 12,000 to retain complete answers. This final sequence was team work; assessing selective MCP’s score contribution requires logs showing where it actually ran.')),
-        S('award',L('결과와 증빙','Results & evidence'),L('벤치마크 1위. 평가 단계별 숫자는 구분해서 남겼습니다.', 'First place in the benchmark, with evaluation stages kept separate.'),
-          L('AIM 팀은 HealthBench 기반 평가 최고점으로 루닛 Conquer Health 벤치마크상을 받았습니다. 팀의 공개 최종 평가 기록은 3라운드 평균 46.51점, 최종 평가 참여 14개 팀 중 1위입니다. 아래 상장은 수상 증빙이며 숫자 점수는 기재하지 않습니다.', 'Team AIM won Lunit’s Conquer Health benchmark award for the highest HealthBench-based evaluation score. The team’s public final record reports a three-round average of 46.51 and first place among 14 teams. The certificate below documents the award but does not state a numerical score.'),
-          L('이번에 대조한 개발 실험 장부에는 ef3609d의 54.37점과 마감 대시보드 53.53점·1위가 기록돼 있습니다. 이는 최종 3라운드 평가와 다른 기록입니다. 마감 점수를 Trial 56에 대응시키는 연결은 아직 추정이므로 확정된 제출 결과로 표시하지 않았습니다.', 'The development ledger reviewed here records 54.37 for ef3609d and 53.53 with first place on the closing dashboard. These are separate from the final three-round evaluation. The mapping of the closing score to Trial 56 remains an inference, not a confirmed submission result.'),
-          image='conquer-award.png',image_alt=L('루닛이 AIM 팀에 발급한 벤치마크 상장','Benchmark award certificate issued by Lunit to Team AIM'),image_class='award-figure',
-          stats=[('46.51',L('팀 최종 기록 · 3라운드 평균','Team final record · Three-round average')),('1 / 14',L('팀 최종 기록 · 평가 순위','Team final record · Evaluation rank'))]),
-        S('learning',L('배운 점','What I learned'),L('좋은 실험은, 좋아 보이는 점수를 의심하는 데서 시작했습니다.', 'A promising score still needs a trustworthy comparison.'),
-          L('같은 동작의 평가가 47.79–50.03으로 2.24점 흔들렸습니다. 팀은 이를 바탕으로 작은 점수 차이를 단일 제출만으로 채택하지 않는 ±2.5점의 경험적 판단 기준을 뒀습니다. 이는 3회 관측에 따른 운영 기준이며 통계적으로 확정된 신뢰구간은 아닙니다.', 'Scores for the same behavior ranged from 47.79 to 50.03, a 2.24-point spread. The team used a ±2.5-point empirical threshold to avoid accepting small changes based on a single submission. This was an operating rule based on three observations, not a statistically established confidence interval.'),
-          L('도구 호출 성공, 답변의 근거 반영, 응답 완결성, 벤치마크 점수는 각각 다른 확인 대상이었습니다. 이 경험 이후에는 기능을 추가했다는 사실보다 어떤 조건에서 무엇이 달라졌는지를 설명하고, 개선을 확인하지 못한 실험도 다음 판단의 근거로 남기려 합니다.', 'Tool-call success, evidence use, response completeness, and benchmark score were distinct things to check. The experience taught me to explain what changed under which conditions and retain inconclusive experiments as evidence for the next decision.'),
-          note=L('대회 실험·수상 기록입니다. 실제 환자 대상 임상 성능을 검증한 결과는 아닙니다.', 'These are hackathon experiments and award records, not clinical validation on patients.')),
-    ], links=[(L('팀 저장소와 실행 구조','Team repository and architecture'),'https://github.com/Hackathon-AIM/health-conquer-submission'),(L('개인 구현: MCP 연결·안전 게이트','My implementation: MCP integration and safety gate'),'https://github.com/Hackathon-AIM/health-conquer-submission/commit/75a96193672ebe55bfbbaa42a382c9681794bb41'),(L('개인 실험: 출력 예산 조정','My experiment: output budget'),'https://github.com/Hackathon-AIM/health-conquer-submission/commit/e6de32700de51aeb320172b1dd87ad52721305f5'),(L('실험 장부 대조와 점수 해석','Ledger review and score interpretation'),'https://github.com/Hackathon-AIM/health-conquer-submission/blob/main/docs/experiment-retrospective.md'),(L('팀의 최종 평가 기록','Team-reported final evaluation'),'https://juhee0223.github.io/juhee-portfolio/projects/conquer-health.html')]),
-
-dict(slug='fish-detection',title=L('넙치 증상 탐지 / Flatfish doctor','Flatfish doctor'),category=L('Computer vision · 애플리케이션','Computer vision · Application'),
-    subtitle=L('넙치 개체 탐지와 7종 외형 상태 분류를 앱으로 연결했습니다. 증상 분류의 최고 검증 Top-1은 87.68%입니다.', 'I connected fish detection and seven-category appearance classification to an app. The symptom classifier reached a peak validation Top-1 accuracy of 87.68%.'),
-    desc=L('넙치를 탐지한 뒤 개체별 크롭을 정상을 포함한 7개 외형 상태로 분류합니다. 데이터 전처리와 모델 학습부터 FastAPI 추론, Flutter 결과 화면까지 연결했습니다.', 'A two-stage pipeline detects olive flounder and classifies individual crops into seven appearance categories, including normal. I connected data preparation and model training to FastAPI inference and a Flutter results interface.'),
-    role=L('데이터 전처리, 탐지·분류 학습, 추론 API·앱', 'Data preparation, detection/classification training, inference API and app'),
-    period='2026.03–2026.06',context=L('넙치 외형 증상 모니터링', 'Visual symptom monitoring for olive flounder'),
-    stack='YOLO / PyTorch / OpenCV / FastAPI / Flutter',repo='https://github.com/jiwoo1105/fish-disease-detection',
-    images=['fish-results.png'],caption=L('개체별 증상 분류 결과 화면', 'Per-fish symptom classification results'),
-    sections=[
-        S('problem',L('배경과 역할','Context & my role'),L('수조 전체의 배경보다, 개체의 상태에 집중합니다.', 'Focusing on each fish, not the tank background.'),
-          L('수조 영상에는 물결과 조명 변화, 서로 겹치는 개체가 함께 들어옵니다. 전체 프레임에서 바로 증상을 판단하기보다 먼저 넙치의 위치를 찾고, 개체별 이미지를 잘라 증상을 분류하는 2단계 구조를 사용했습니다.', 'Tank footage includes ripples, lighting changes, and overlapping fish. Instead of classifying symptoms from the whole frame, the pipeline first locates fish and then classifies cropped images of each individual.'),
-          L('데이터 전처리, 탐지·분류 모델 학습, 좌표 변환과 추론 API, 결과 화면을 구현했습니다. 사용자가 분류 결과를 원본 개체 위치와 함께 확인하도록 연결하는 작업이었습니다.', 'I implemented data preparation, detection and classification training, coordinate conversion, the inference API, and the results interface, so users could relate a prediction back to the fish’s location in the original image.')),
-        S('data',L('데이터와 모델','Data and models'),L('라벨을 크롭 데이터에 연결하고 클래스 편향을 줄였습니다.', 'Linking labels to crops and controlling class imbalance.'),
-          L('AI Hub 넙치 질병 데이터의 개체·증상 라벨을 매핑해 분류용 크롭을 만들었습니다. 매핑되지 않는 라벨은 제외하고, 특정 증상에 학습 샘플이 치우치지 않도록 학습 데이터에 클래스별 상한을 적용했습니다.', 'I mapped individual-fish and symptom labels from AI Hub’s flounder disease dataset to create classification crops. Unmapped labels were excluded, and per-class caps were applied to training samples to reduce class imbalance.'),
-          L('분류 대상은 정상·출혈·백점·반점/결절·체색변화·여윔·궤양의 7개 외형 상태입니다. 증상에서 질병·대응 안내로 이어지는 부분은 규칙 기반 매핑이며, 영상만으로 병원체를 확정하는 진단 모델과는 구분됩니다.', 'The seven visible states are normal, hemorrhage, white spots, spots/nodules, color change, emaciation, and ulcers. Rule-based mappings link symptom labels to disease information and suggested actions; the system does not identify the causative pathogen from video.')),
-        S('validation',L('검증','Validation'),L('탐지와 분류의 성능을 따로 읽습니다.', 'Reading detection and classification results separately.'),
-          L('저장된 검증 결과에서 증상 분류의 최고 Top-1 정확도는 87.68%, 개체 탐지 mAP50은 0.4455였습니다. 서로 다른 과제의 지표이므로 하나의 종합 정확도로 합치지 않습니다.', 'Saved validation results show a peak symptom-classification Top-1 accuracy of 87.68% and a fish-detection mAP50 of 0.4455. These measure different tasks and are not combined into a single system accuracy.'),
-          L('겹침과 탁한 수조 환경에서 탐지가 병목으로 남아 있습니다. 분류기가 올바르게 학습돼도 앞 단계에서 개체를 놓치면 결과를 만들 수 없으므로, 오탐·누락 데이터와 실제 환경 검증을 후속 과제로 보고 있습니다.', 'Detection remains a bottleneck with overlap and turbid water. Even a well-performing classifier cannot produce a result for a fish missed by the detector, so false detections, missed fish, and field validation remain priorities.'),
-          image='fish-validation.jpg',image_alt=L('분류 모델의 저장된 검증 배치 예측','Saved validation-batch predictions from the symptom classifier'),
-          stats=[('87.68%',L('분류 최고 검증 Top-1','Peak validation Top-1')),('0.4455',L('개체 탐지 mAP50','Fish-detection mAP50'))]),
-        S('application',L('서비스 연결','Application'),L('모델 결과를 사용자가 읽을 수 있는 화면으로.', 'Turning predictions into a readable interface.'),
-          L('추론 결과를 개체 위치, 증상명과 신뢰도로 정리해 Flutter 앱에 표시했습니다. 서버 추론과 앱 화면을 연결하면서 원본·크롭·화면 사이 좌표 변환을 맞췄고, 결과 로그와 개체별 안내를 확인할 수 있도록 구성했습니다.', 'I organized inference outputs into fish locations, symptom labels, and confidence values for the Flutter app. Connecting inference to the interface required consistent coordinates across the source image, crops, and display, as well as readable result logs and per-fish information.'),
-          note=L('저장된 데이터의 모델 검증과 앱 시연 범위입니다. 실제 양식장에서 질병 조기 발견 효과를 입증한 결과는 아닙니다.', 'The evidence covers dataset validation and an application demo, not demonstrated early-detection outcomes at working fish farms.')),
-        S('learning', L('배운 점', 'What I learned'), L('데이터를 조정하는 단계와 성능을 확인하는 단계를 분리했습니다.', 'Training-data changes and validation serve different purposes.'),
-          L('클래스별 샘플 수 조절은 학습 데이터에만 적용하고, 검증 데이터의 분포는 유지했습니다. 분류 정확도가 높아도 앞 단계의 탐지 누락을 해결하지는 못하므로 두 모델의 결과를 따로 봤습니다. 앱까지 연결하면서 모델 점수뿐 아니라 원본 개체와 결과 좌표가 맞는지도 확인해야 했습니다.', 'I capped class counts in the training set while leaving the validation distribution unchanged. A strong classifier cannot recover fish missed by the detector, so I examined the two models separately. Connecting inference to the app also required checking that result coordinates matched the original fish, beyond the model scores.')),
-    ], links=[(L('모델·앱 코드와 학습 결과','Model/app code and training results'),'https://github.com/jiwoo1105/fish-disease-detection'),(L('전체 시연 영상','Full demonstration'),'https://youtu.be/3LDmc6zdG0A')]),
-
-dict(slug='medguard',title='MedGuard',category=L('의료영상 · AI 보안 실험','Medical imaging · AI security experiments'),
-    subtitle=L('흉부 X-ray 분류기의 공격·방어를 비교했습니다. 기록된 DiffAttack 조건에서 Medical DiffPure는 Vanilla DiffPure보다 4.84%p 높은 정확도를 보였습니다.', 'I compared attacks and defenses for a chest X-ray classifier. Under the recorded DiffAttack conditions, Medical DiffPure exceeded Vanilla DiffPure accuracy by 4.84 percentage points.'),
-    desc=L('흉부 X-ray 분류기에 대한 FGSM·PGD·잠재공간 공격을 비교하고, FFT 분석과 의료 도메인 VAE를 결합한 정화 흐름을 실험했습니다.', 'I compared FGSM, PGD, and latent-space attacks on a chest X-ray classifier and experimented with a purification pipeline combining FFT analysis and a medical-domain VAE.'),
-    role=L('공격·방어 실험, 주파수 분석, 비교 시연', 'Attack/defense experiments, frequency analysis, comparison demo'),
-    period='2026.02–2026.06',context=L('의료영상 분류 강건성 실험','Robustness experiments for medical-image classification'),
-    stack='PyTorch / ResNet-50 / RoentGen VAE / FFT / Gradio',repo='https://github.com/jiwoo1105/AISecurity',
-    video='medguard-demo.mp4',poster='medguard-poster.jpg',caption=L('공격 전후와 방어 결과를 비교하는 실제 시연','Demo comparing original, attacked, and purified inputs'),
-    sections=[
-        S('problem',L('배경과 역할','Context & my role'),L('작은 입력 변화가 분류 결과를 바꾸는 경우.', 'When input perturbations change a prediction.'),
-          L('흉부 X-ray의 폐렴 이진 분류기를 대상으로 입력에 대한 적대적 공격과 방어를 비교했습니다. 픽셀 공간 공격과 VAE 잠재공간 공격이 서로 다른 주파수 특성을 보이는지, 정화 과정이 분류 성능과 이미지 구조에 어떤 영향을 주는지 살폈습니다.', 'I compared adversarial attacks and defenses for a binary pneumonia classifier on chest X-rays. The experiments examined frequency differences between pixel-space and VAE latent-space attacks, and the effects of purification on classification and image structure.'),
-          L('ResNet-50 분류기, FGSM·PGD 및 DiffAttack 계열 구현, FFT 시각화와 Gradio 비교 데모를 연결했습니다. AI 코딩 도구를 활용해 구현과 디버깅을 진행하며 실험 조건과 비교 결과를 정리했습니다.', 'I connected a ResNet-50 classifier, FGSM/PGD and a DiffAttack-style implementation, FFT visualizations, and a Gradio comparison demo. I used AI coding tools for implementation and debugging and organized the experimental conditions and results.')),
-        S('approach',L('접근','Approach'),L('공격 특성과 정화 강도를 함께 비교했습니다.', 'Comparing perturbation patterns and purification strength.'),
-          L('FFT 분석으로 고주파 성분의 변화를 확인하고, RoentGen VAE를 이용한 정화와 정화 전 입력 이미지의 블렌딩을 실험했습니다. 공개 구현의 Medical DiffPure는 공격 유형에 따른 처리 강도와 폐 영역의 구조 일치도를 함께 고려하는 실험적 파이프라인입니다.', 'I used FFT analysis to inspect changes in high-frequency components and experimented with purification using the RoentGen VAE and blending the purified output with the input image. The repository’s Medical DiffPure is an experimental pipeline that considers attack-specific purification strength and structural consistency in lung regions.'),
-          L('주파수 변화가 작다는 사실만으로 정상 이미지와 특정 공격을 완벽히 구별할 수는 없습니다. 따라서 데모의 공격 분류 규칙을 일반적인 공격 탐지 보장으로 표현하지 않고, 정해진 실험 조건의 비교로 다룹니다.', 'A small frequency change cannot reliably distinguish a clean image from every attack. I therefore treat the demo’s attack-classification rules as part of a controlled experiment, not as a general attack-detection guarantee.')),
-        S('results',L('실험 기록','Reported experiments'),L('같은 설정에서 방어 방법을 비교합니다.', 'Comparing defenses within the reported setup.'),
-          L('공개 저장소에는 Medical DiffPure의 공격하 정확도가 FGSM 58.31%, PGD 61.47%, DiffAttack 78.56%로 기록돼 있습니다. DiffAttack 조건의 Vanilla DiffPure 73.72%와 비교하면 4.84%p 차이입니다.', 'The public repository reports robust accuracy of 58.31% under FGSM, 61.47% under PGD, and 78.56% under DiffAttack for Medical DiffPure. The DiffAttack result is 4.84 percentage points higher than the reported 73.72% for Vanilla DiffPure.'),
-          L('이 수치는 저장소에 기록된 설정의 비교 결과입니다. 모든 의료영상 모델이나 새로운 공격에 대한 우위를 뜻하지 않습니다. 적응형 공격, 다른 데이터 분포, 정화 후 병변 정보 보존은 추가 검증이 필요합니다.', 'These are results recorded for the repository’s experimental setup. They do not establish superiority across medical-image models or unseen attacks. Adaptive attacks, other data distributions, and preservation of diagnostic features after purification require further evaluation.'),
-          stats=[('78.56%',L('기록된 DiffAttack 조건 정확도','Reported accuracy under DiffAttack')),('+4.84 pp',L('같은 조건의 Vanilla DiffPure 대비','Over Vanilla DiffPure in that setup'))]),
-        S('learning', L('배운 점', 'What I learned'), L('정화 후 정확도와 보존된 이미지 정보를 함께 봐야 했습니다.', 'Accuracy after purification is only part of the evidence.'),
-          L('공격에 맞춘 정화가 분류 정확도를 높여도 원래 필요한 영상 정보까지 바꿀 수 있습니다. 그래서 공격 조건, 정화 강도, 이미지 구조를 함께 비교하는 관점을 배웠습니다. 다음 검증에서는 같은 조건의 정확도뿐 아니라 병변 정보 보존과 새로운 공격에 대한 동작을 별도로 확인해야 합니다.', 'Purification tailored to an attack can improve classification while also changing useful image information. I learned to compare attack conditions, purification strength, and image structure together. Further validation must examine lesion preservation and behavior under new attacks alongside accuracy under matched conditions.')),
-    ], links=[(L('공격·방어 코드와 실험 기록','Attack/defense code and experiment records'),'https://github.com/jiwoo1105/AISecurity')]),
-
-dict(slug='medai-agent',title='MedAI Agent',category=L('LLM 워크플로우 · 프로토타입','LLM workflows · Prototype'),
-    subtitle=L('텍스트·음성·이미지 입력에서 약물 정보 조회와 8단계 LLM 처리를 거쳐 보고서를 보여주는 프로토타입을 구현했습니다.', 'I built a prototype that takes text, voice, or image input through drug-information lookup and eight LLM stages to a report.'),
-    desc=L('텍스트·음성·이미지 입력을 약물 정보 조회와 8단계 LLM 워크플로우에 연결한 프로토타입입니다. FastAPI와 React로 처리 단계와 분석 결과를 보여줍니다.', 'A prototype connecting text, voice, and image inputs to medication-information retrieval and an eight-stage LLM workflow. FastAPI and React expose the processing stages and resulting report.'),
-    role=L('입력·약물 조회·에이전트 흐름·결과 화면 연결','Input, medication lookup, agent orchestration, and results interface'),
-    period=L('2025 · 딥러닝 프로젝트','2025 · Deep learning project'),context=L('약물 정보 분석 프로토타입','Medication-information analysis prototype'),
-    stack='Python / FastAPI / GPT-4o / React / Vite',repo='https://github.com/jiwoo1105/MedAI_Agent',
-    video='medai-demo.mp4',poster='medai-poster.jpg',caption=L('입력과 단계별 분석 결과의 실제 시연','Demo of input and staged analysis results'),
-    sections=[
-        S('problem',L('배경과 역할','Context & my role'),L('입력 방식이 달라도 같은 분석 흐름으로.', 'One workflow for different input methods.'),
-          L('사용자가 약물 정보를 텍스트로 적거나 음성·이미지로 제공했을 때, 약물명과 질문의 맥락을 정리하고 결과를 읽기 쉬운 보고서로 보여주는 프로토타입입니다. 입력 화면, 외부 약물 API, LLM 처리와 결과 UI를 하나의 흐름으로 연결했습니다.', 'This prototype organizes medication names and question context from text, voice, or image inputs and presents the output as a readable report. It connects the input interface, an external medication-information API, LLM processing, and the results UI.')),
-        S('workflow',L('워크플로우','Workflow'),L('서로 다른 역할의 8단계를 연결했습니다.', 'Connecting eight stages with distinct roles.'),
-          L('입력 이해 → 약물 인식 → 기본 지식 → 심화 분석 → 부작용 검토 → 근거 설명 → 개인화된 정보 정리 → 보고서 생성의 순서로 구성했습니다. 각 단계의 출력을 다음 단계로 넘기고 최종 요약, 주요 내용과 주의사항을 화면에 모읍니다.', 'The sequence covers input understanding, medication recognition, background knowledge, detailed analysis, side-effect review, evidence explanation, context-specific information, and report generation. Outputs pass between stages and are collected into a summary, key findings, and cautions.'),
-          L('여기서 8개 에이전트는 역할을 나눈 LLM 처리 단계입니다. 서로 독립적인 의료 전문가 8명이 검증했다는 의미가 아닙니다. 식약처 e약은요 API의 조회 정보와 LLM이 생성한 설명도 구분해 이해해야 합니다.', 'The eight agents are LLM processing stages assigned different roles; they are not eight independent medical experts. Information retrieved from the MFDS medication API must also be distinguished from explanations generated by the LLM.')),
-        S('interface',L('사용자 화면','Interface'),L('기다리는 동안의 진행 상태와 결과를 함께 설계했습니다.', 'Designing both progress feedback and the final report.'),
-          L('React에서 텍스트·음성·이미지 입력을 제공하고, 처리 중에는 단계별 진행 상태를 보여줍니다. FastAPI 응답을 요약, 위험도 표시와 상세 설명으로 나눠 읽을 수 있게 구성했습니다. 여러 모델 호출이 이어지는 작업을 사용자에게 어떻게 전달할지 실험한 프로젝트입니다.', 'The React interface supports text, voice, and image input and displays progress through the processing stages. FastAPI responses are organized into a summary, a risk indicator, and detailed explanations. The project explores how to present a workflow that involves multiple model calls.')),
-        S('limits',L('검증 범위','Scope of validation'),L('동작하는 프로토타입과 의료적 정확성은 별개의 과제입니다.', 'A working prototype is not clinical validation.'),
-          L('공개 시연은 입력부터 결과 화면까지의 연결을 보여줍니다. 위험도 점수와 권장사항은 모델이 생성하는 참고 정보이며, 임상적으로 검증된 확률이나 처방 판단으로 해석할 수 없습니다.', 'The public demo shows the path from input to the results screen. Risk scores and recommendations are model-generated reference information, not clinically validated probabilities or prescribing decisions.'),
-          L('후속 과제는 약물명 인식 오류, 조회 근거 누락, 근거 없는 설명, 단계 간 오류 전파를 평가하는 것입니다. 에이전트 수를 늘리는 것보다 각 단계가 결과 품질에 기여하는지 측정할 필요가 있습니다.', 'Further evaluation should cover medication-name recognition errors, missing source information, unsupported explanations, and error propagation between stages. Each stage’s contribution to output quality needs to be measured.')),
-        S('learning', L('배운 점', 'What I learned'), L('단계를 연결한 뒤에는, 각 단계의 필요성을 검증해야 합니다.', 'After connecting the stages, each stage needs to justify its role.'),
-          L('입력·조회·생성·화면을 연결하는 과정에서 약물명 하나의 오류가 이후 설명과 보고서까지 전파될 수 있다는 점에 주목했습니다. 다음 단계는 처리 단계를 더 늘리는 것이 아니라, 조회한 사실과 생성한 설명을 추적하고 각 단계를 제외했을 때 품질이 어떻게 달라지는지 평가하는 것입니다.', 'Connecting input, lookup, generation, and display highlighted how a single drug-name error could propagate into later explanations and the report. The next step is to trace retrieved facts separately from generated explanations and evaluate how quality changes when each stage is removed, rather than simply adding more stages.')),
-    ], links=[(L('8단계 워크플로우와 시연 자료','Eight-stage workflow and demo'),'https://github.com/jiwoo1105/MedAI_Agent')]),
-]
+PROJECTS = [{'slug': 'video-motion',
+  'title': {'ko': '로봇학습데이터 구축 파이프라인', 'en': 'A data pipeline for robot learning'},
+  'category': {'ko': 'Video understanding · 연구', 'en': 'Video understanding · Research'},
+  'subtitle': {'ko': '메쉬가 보이는 것에서 끝내지 않고, 같은 사람의 데이터인지 확인했습니다.',
+               'en': 'Beyond a visible mesh: checking that the data belongs to the same person.'},
+  'desc': {'ko': '그라운딩 210개 응답 비교에서 출발해 인물 추적·크롭·3D 복원으로 설계를 발전시킨 연구입니다. 농구와 공연 영상에서 가림·ID 변경·오연결을 구분하고, 사람과 시간 구간별 데이터 선별 기준을 '
+                 '정리했습니다.',
+           'en': 'Starting with 210 grounding responses, I developed a person-centered approach to tracking, cropping, and 3D '
+                 'reconstruction. In basketball and performance footage, I distinguished occlusion gaps, new IDs, and incorrect '
+                 'associations to define data-selection criteria.'},
+  'role': {'ko': '그라운딩 비교·실행기, 후속 추적·복원 실험 설계와 검수',
+           'en': 'Grounding comparisons and runners; design and review of follow-up tracking and reconstruction experiments'},
+  'period': {'ko': '2026.07– · 연구 진행 중', 'en': 'Since Jul 2026 · Ongoing research'},
+  'context': {'ko': 'AIV Lab / ETRI 연구과제', 'en': 'AIV Lab / ETRI research project'},
+  'stack': 'PyTorch / TimeLens2 / Qwen3-VL / CoMotion / Multi-HMR 2 / PHALP',
+  'repo': 'https://github.com/DKU-AIM/video-motion-pipeline',
+  'caption': {'ko': '공연 영상 ID 검수 기록 · 관측값을 재구성한 도식',
+              'en': 'Diagram reconstructed from the latest identity-review records; not footage or a mesh render.'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '목표와 역할', 'en': 'Goal & contribution'},
+                'title': {'ko': '모양이 그럴듯해도, 사람이 바뀌면 같은 데이터가 아닙니다.', 'en': 'A plausible mesh is not enough if it switches people.'},
+                'paragraphs': [{'ko': '영상의 행동 설명과 3D 동작을 학습 데이터로 연결하려면 인물·시간 구간·모션이 함께 맞아야 합니다. 처음에는 행동 구간을 먼저 찾았지만, 짧은 행동의 누락과 인물 ID '
+                                      '단절을 확인하면서 사람별 연속 구간을 확보하는 방향으로 설계를 바꿨습니다.',
+                                'en': 'Aligning video descriptions with 3D motion requires consistent person identities, time spans, '
+                                      'and motion. I began with action localization, then shifted toward continuous person-specific '
+                                      'segments after finding missed short actions and identity breaks.'}],
+                'items': [({'ko': '팀 과제에서', 'en': 'Within the team project'},
+                           {'ko': '모델별 GPU 실행 환경·그라운딩 실행기·입출력 정리와 비교 실험, 설계·발표를 맡았습니다. 팀의 추적·메쉬 복원은 다른 팀원의 기여와 구분합니다.',
+                            'en': 'I worked on GPU environments, grounding runners, input/output normalization, comparisons, design, '
+                                  'and presentation. The team’s tracking and mesh-reconstruction work includes other members’ '
+                                  'contributions.'}),
+                          ({'ko': '후속 개인 실험', 'en': 'Follow-up individual experiments'},
+                           {'ko': 'PHALP 추적·인물 크롭·HMR 2.0 재추론의 대상과 조건을 정하고 결과를 검수했습니다. AI 코딩 도구를 활용해 실행·정리했으며 사전학습 모델을 개발하거나 재학습한 작업은 '
+                                  '아닙니다.',
+                            'en': 'I defined and reviewed PHALP tracking, person crops, and HMR 2.0 re-inference experiments, using '
+                                  'AI coding tools for implementation and execution. I used pretrained models rather than developing '
+                                  'or retraining them.'})]},
+               {'id': 'grounding',
+                'label': {'ko': '설계를 바꾼 근거', 'en': 'Why the design changed'},
+                'title': {'ko': 'FPS를 높여도, 놓치는 행동은 남았습니다.', 'en': 'Higher sampling rates still missed actions.'},
+                'paragraphs': [{'ko': '7개 모델 × 5개 FPS × 2개 영상 × 3개 쿼리로 얻은 210개 응답을 비교했습니다. 모델별 출력 시각을 공통 형식으로 정리하고, 지나치게 넓은 구간과 영상에 '
+                                      '없는 행동을 원본에 대조했습니다. 210은 영상 수가 아니라 응답 수입니다.',
+                                'en': 'I compared 210 responses: seven models × five FPS settings × two videos × three queries. After '
+                                      'normalizing timestamps, I checked overly broad intervals and nonexistent actions against the '
+                                      'footage. This is a response count, not a video count.'},
+                               {'ko': '짧은 구간의 행동 판별을 앞에 연결해도 오탐과 누락이 함께 나타났습니다. 따라서 그라운딩 결과를 곧바로 정답으로 쓰지 않고, 인물 추적과 원본 시간축을 먼저 보존한 뒤 '
+                                      '동작 설명을 연결하는 방향을 택했습니다.',
+                                'en': 'Adding short-clip action classification still produced both false positives and misses. Rather '
+                                      'than treating grounding outputs as labels, I prioritized person tracks and source timestamps '
+                                      'before attaching action descriptions.'}],
+                'steps': [({'ko': '인물·시간 보존', 'en': 'Preserve identity & time'},
+                           {'ko': '원본 시각, 인물 ID, 크롭 좌표 기록', 'en': 'Record source times, track IDs, and crop coordinates'}),
+                          ({'ko': '크롭·3D 복원', 'en': 'Crop & reconstruct'},
+                           {'ko': '선택한 사람의 구간에 HMR 2.0 재실행', 'en': 'Rerun HMR 2.0 on selected person segments'}),
+                          ({'ko': '오류 검수·선별', 'en': 'Review & select'},
+                           {'ko': '누락·새 ID·오연결·중복을 구분', 'en': 'Separate gaps, new IDs, wrong associations, and duplicates'})]},
+               {'id': 'experiments',
+                'label': {'ko': '완료한 실험', 'en': 'Completed experiments'},
+                'title': {'ko': '농구의 선수별 복원에서, 공연의 가림 검수까지.', 'en': 'From player-specific reconstruction to occlusion review.'},
+                'paragraphs': [{'ko': '농구에서는 5개 클립의 96초·4,240프레임을 처리하고, 직접 선택한 선수 5명·6구간에 각 변 10% 여백을 둔 크롭과 HMR 2.0 재추론을 적용했습니다. 원래 '
+                                      'FPS와 크롭의 픽셀 크기를 유지했습니다.',
+                                'en': 'For basketball, I processed 96 seconds and 4,240 frames across five clips, then applied crops '
+                                      'with 10% margins on each side and HMR 2.0 re-inference to six manually selected segments from '
+                                      'five players. Original FPS and crop pixel dimensions were preserved.'},
+                               {'ko': '후속 공연 실험은 약 30초씩 10개 구간입니다. 이동 범위를 포함하는 고정 그룹 ROI에서 검출·복원·ID 연결을 수행하고, 입력·메쉬 ID·비교 영상 총 30개와 '
+                                      '수동 검수 기록을 정리했습니다.',
+                                'en': 'The follow-up performance study used ten clips of about 30 seconds each. Detection, '
+                                      'reconstruction, and identity association ran within fixed group ROIs covering movement, '
+                                      'producing 30 input, mesh-ID, and comparison videos alongside manual review records.'}],
+                'table': {'caption': {'ko': '각 실험에서 확보한 것', 'en': 'What each experiment established'},
+                          'headers': [{'ko': '범위', 'en': 'Scope'},
+                                      {'ko': '산출물', 'en': 'Output'},
+                                      {'ko': '검증 수준', 'en': 'Validation scope'}],
+                          'rows': [[{'ko': '그라운딩 210개 응답', 'en': '210 grounding responses'},
+                                    {'ko': '공통 시간 형식·오탐/누락 비교', 'en': 'Normalized times and false-positive/miss review'},
+                                    {'ko': '원본 장면 대조', 'en': 'Review against footage'}],
+                                   [{'ko': '농구 선수별 6구간', 'en': '6 player-specific segments'},
+                                    {'ko': '크롭·메쉬·SMPL 데이터', 'en': 'Crops, meshes, and SMPL data'},
+                                    {'ko': '선택 구간의 수동 검수', 'en': 'Manual review of selected segments'}],
+                                   [{'ko': '공연 10구간', 'en': '10 performance clips'},
+                                    {'ko': 'ID 오류 유형·제외/보류 기준', 'en': 'Identity-error categories and selection criteria'},
+                                    {'ko': '표본 프레임+관측 로그', 'en': 'Sampled frames and observation logs'}]]},
+                'note': {'ko': '처리량과 산출물 수는 정확도가 아닙니다. IDF1·HOTA·3D 정답 기반 정확도는 산출하지 않았습니다.',
+                         'en': 'Processed frames and output counts are not accuracy measurements. IDF1, HOTA, and 3D ground-truth '
+                               'accuracy were not evaluated.'}},
+               {'id': 'review',
+                'label': {'ko': '핵심 난제와 판단', 'en': 'Challenge & decisions'},
+                'title': {'ko': '잠깐 사라진 사람과, 다른 사람에게 붙은 ID를 구분했습니다.',
+                          'en': 'A temporary gap is different from an ID assigned to someone else.'},
+                'paragraphs': [{'ko': '같은 공연 구간 M09에서 두 종류의 오류를 확인했습니다. ID5는 18프레임, 약 0.60초 누락된 뒤 같은 사람·같은 ID로 돌아왔습니다. 이 경우 사람 전체를 '
+                                      '버리는 대신 누락 시간만 제외할 수 있습니다.',
+                                'en': 'In performance clip M09, ID5 disappeared for 18 frames, about 0.60 seconds, then returned on '
+                                      'the same person with the same ID. This supports excluding the missing interval rather than '
+                                      'discarding the person’s entire track.'},
+                               {'ko': '다른 공연자는 프레임 819의 ID4에서 820의 ID28로 바뀌었습니다. 마지막 분리 표본인 프레임 899에서는 기존 ID4가 다른 공연자에게 붙었습니다. 새 ID가 '
+                                      '생긴 시점과 잘못된 연결을 확인한 시점을 따로 기록하고, 관련 두 사람의 경계를 보류해 앞뒤 구간을 나누는 기준을 세웠습니다.',
+                                'en': 'Another performer changed from ID4 at frame 819 to ID28 at frame 820. At the final separated '
+                                      'sample, frame 899, the old ID4 was attached to a different performer. I recorded the new-ID '
+                                      'event separately from the confirmed wrong association and defined a rule to withhold the '
+                                      'uncertain boundary and split the affected tracks.'}],
+                'note': {'ko': '가림 때문에 최초 오연결 프레임은 확정하지 않았습니다. 검수한 표본의 판단을 전 프레임 추적 정확도로 확대하지 않습니다.',
+                         'en': 'Occlusion prevented identifying the first incorrect-association frame. Sampled review findings are '
+                               'not a dense tracking-accuracy evaluation.'}},
+               {'id': 'learning',
+                'label': {'ko': '결과와 다음 단계', 'en': 'Outcome & next steps'},
+                'title': {'ko': '복원 결과를 만드는 것만큼, 쓸 수 있는 범위를 정하는 일이 중요했습니다.',
+                          'en': 'Defining usable segments matters as much as reconstruction.'},
+                'paragraphs': [{'ko': '결과는 추적 오류를 모두 해결한 모델이 아니라, 사람 × 문제 시간 단위로 데이터를 검수하고 선별하는 기준입니다. 정상 구간을 함께 보존할 수 있도록 누락·ID '
+                                      '변경·타인 오연결·중복을 분리했습니다.',
+                                'en': 'The result is a set of person-and-time-specific review criteria, not a model that resolves '
+                                      'every tracking failure. Separating gaps, ID changes, wrong associations, and duplicates makes '
+                                      'it possible to preserve usable segments.'},
+                               {'ko': '자동 동작 분할·캡셔닝·품질 승인과 로봇 학습 적용은 후속 과제입니다. 먼저 일관된 데이터 단위를 확보하고, 이후 설명과 라벨을 연결하는 순서로 발전시키고 있습니다.',
+                                'en': 'Automatic action segmentation, captioning, quality approval, and robot-learning applications '
+                                      'remain future work. The next step is to attach descriptions and labels to consistently '
+                                      'reviewed data units.'}],
+                'details': {'label': {'ko': '이전 농구 메쉬 시연의 범위', 'en': 'Scope of the earlier basketball mesh demo'},
+                            'paragraphs': [{'ko': '아래는 기존 공개 포트폴리오의 8초·100프레임 CoMotion 추론 시연입니다. 최신 PHALP·HMR 2.0 실험과 별개인 이전 단계이며, 실제 '
+                                                  '모델 출력을 사용했습니다.',
+                                            'en': 'The video below is the earlier portfolio demo: an eight-second, 100-frame CoMotion '
+                                                  'inference run using actual model outputs. It is separate from the newer PHALP/HMR '
+                                                  '2.0 experiments.'}]},
+                'video': 'basketball-mesh-preview.mp4',
+                'poster': 'basketball-mesh-preview.jpg',
+                'caption': {'ko': '이전 단계 · CoMotion 실제 추론 시연 (8초·100프레임)',
+                            'en': 'Earlier phase · Actual CoMotion inference demo (8 seconds, 100 frames)'}}],
+  'links': [({'ko': '팀 공개 파이프라인·모델 실행 안내', 'en': 'Team pipeline and model setup'}, 'https://github.com/DKU-AIM/video-motion-pipeline'),
+            ({'ko': '개인 그라운딩 실행기·파서', 'en': 'My grounding runners and parsers'}, 'https://github.com/jiwoo1105/video-grounding'),
+            ('PHALP', 'https://github.com/brjathu/PHALP'),
+            ('HMR 2.0', 'https://github.com/shubham-goel/4D-Humans')],
+  'visual': 'tracking',
+  'team': {'ko': 'AIV Lab · 영상 이해·3D 모션 연구', 'en': 'AIV Lab · Video understanding & 3D motion'},
+  'display_stack': 'Python / PyTorch / PHALP / HMR 2.0 / SMPL',
+  'facts': [({'ko': '비교 실험', 'en': 'Grounding study'}, {'ko': '210개 응답 · 7개 모델', 'en': '210 responses · 7 models'}, True),
+            ({'ko': '후속 검수', 'en': 'Follow-up review'},
+             {'ko': '공연 10구간 · 농구 선수별 6구간', 'en': '10 performance clips · 6 player-specific basketball segments'},
+             True),
+            ({'ko': '현재 단계', 'en': 'Status'},
+             {'ko': '데이터 선별 기준 정리 · 연구 진행 중', 'en': 'Data-selection criteria · Research in progress'},
+             False)]},
+ {'slug': 'conquer-health',
+  'title': 'Conquer Health',
+  'category': {'ko': 'LLM 시스템 · 해커톤', 'en': 'LLM systems · Hackathon'},
+  'subtitle': {'ko': 'MCP로 찾은 근거가 답변까지 이어지는지 확인하고, 실험의 작은 점수 차이도 다시 검증했습니다.',
+               'en': 'I checked whether retrieved evidence reached the final answer, and re-examined small differences in '
+                     'experimental scores.'},
+  'desc': {'ko': '루닛 L2-preview의 추론 흐름을 개선한 의료 대화 프로젝트입니다. MCP 문서 조회·본문 전달, 출력 예산 실험과 답변 검수를 맡았으며, 팀은 직접 생성과 선택적 조회를 결합해 벤치마크상을 '
+                 '받았습니다.',
+           'en': 'A medical dialogue project improving inference around Lunit L2-preview. I worked on MCP document lookup, passing '
+                 'retrieved text to generation, output-budget experiments, and response review. The team combined direct generation '
+                 'with selective retrieval and won the benchmark award.'},
+  'role': {'ko': 'MCP 문서 조회·본문 전달, 초기 안전 게이트, 출력 예산 실험',
+           'en': 'MCP lookup and evidence delivery, initial safety gate, output-budget experiments'},
+  'period': '2026.08.21–08.22',
+  'context': {'ko': '루닛 의료 AI 해커톤 / AIM 팀 5인', 'en': 'Lunit medical AI hackathon / Team AIM, five members'},
+  'stack': 'Python / FastAPI / MCP / L2-preview / HealthBench / Docker',
+  'repo': 'https://github.com/Hackathon-AIM/health-conquer-submission',
+  'visual': 'health',
+  'caption': {'ko': '개인 구현·검수 흐름 도식 · 46.51점은 팀 최종 평가',
+              'en': 'Diagram of my implementation and review flow · Score shown is the team’s final evaluation'},
+  'award': {'ko': '루닛 · 벤치마크 1위 · AIM 팀 수상', 'en': 'Lunit · 1st in benchmark · Team AIM award'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
+                'title': {'ko': '문서를 찾는 것에서, 답변의 근거로 쓰이게 하는 것까지.', 'en': 'Making retrieved documents useful to the answer.'},
+                'paragraphs': [{'ko': '제공된 L2-preview의 가중치를 바꾸지 않고 의료 질의응답을 개선하는 과제였습니다. 문서를 조회해도 필요한 본문이 생성 입력에 전달되지 않거나, 질문의 요구가 '
+                                      '답변에서 누락되면 도구 호출의 성공만으로는 충분하지 않았습니다.',
+                                'en': 'The task was to improve medical question answering without changing the provided L2-preview '
+                                      'weights. A successful lookup was insufficient if the relevant document text did not reach '
+                                      'generation or the answer missed part of the question.'},
+                               {'ko': '저는 초기 MCP 검색·생성 연결과 약물 안전 게이트를 구현하고, 검색 본문이 모델 입력에 포함되는지와 답변이 질문의 요구·근거를 반영하는지를 나누어 검수했습니다. 이후 '
+                                      '출력 예산 실험과 멀티턴 응답 지시 보강에도 참여했습니다. 팀의 최종 제출안과 개인 구현 범위는 커밋 단위로 구분했습니다.',
+                                'en': 'I implemented the initial MCP retrieval/generation connection and medication safety gate, '
+                                      'checking evidence delivery separately from whether the response addressed the question and '
+                                      'used that evidence. I also worked on output-budget experiments and multi-turn response '
+                                      'instructions. Individual contributions and the final team submission are distinguished by '
+                                      'commit.'}]},
+               {'id': 'implementation',
+                'label': {'ko': '직접 구현한 부분', 'en': 'My implementation'},
+                'title': {'ko': '검색 성공과, 근거를 사용하는 답변 사이의 빈틈을 확인했습니다.',
+                          'en': 'I checked the gap between successful retrieval and an evidence-informed answer.'},
+                'paragraphs': [{'ko': 'Python·FastAPI 기반 MCP 조회 흐름에서 문서를 찾는 단계와 본문을 생성 입력으로 넘기는 단계를 연결했습니다. 도구 반환만 확인하지 않고 검색 누락·중복, '
+                                      '실제 전달 본문, 근거 없는 인용과 질문 요구의 누락을 나누어 살폈습니다.',
+                                'en': 'I connected document lookup with delivery of the retrieved body text into generation through a '
+                                      'Python/FastAPI MCP flow. Beyond checking tool returns, I examined missing or duplicate '
+                                      'results, the text actually passed to the model, unsupported citations, and unanswered '
+                                      'requirements.'}],
+                'steps': [({'ko': '조회 연결', 'en': 'Connect retrieval'},
+                           {'ko': 'MCP 문서 조회·초기 안전 게이트 구현', 'en': 'Implement MCP lookup and an initial safety gate'}),
+                          ({'ko': '입력 확인', 'en': 'Inspect model input'},
+                           {'ko': '검색 본문이 생성 입력에 포함되는지 검수', 'en': 'Check that retrieved text reaches generation'}),
+                          ({'ko': '답변 확인', 'en': 'Review the response'},
+                           {'ko': '질문의 요구·근거·응답 완결성 확인', 'en': 'Check requirements, evidence use, and completeness'})]},
+               {'id': 'inference',
+                'label': {'ko': '개인 실험', 'en': 'My experiment'},
+                'title': {'ko': '출력 예산을 늘렸지만, 점수 개선이라고 단정하지 않았습니다.',
+                          'en': 'A larger output budget did not establish a score improvement.'},
+                'paragraphs': [{'ko': '출력 상한을 다시 확인하고, 제 후보 e6de327에서 서버 상한 설정을 2,048에서 32,768로 정정하면서 요청 출력 예산은 2,048에서 4,096토큰으로 '
+                                      '늘렸습니다. 추론 중 잘림으로 재생성 경로에 들어가는 일을 줄이려는 실험이었습니다. 서버 상한과 실제 요청 예산은 서로 다른 설정입니다.',
+                                'en': 'After rechecking the output limit, my candidate e6de327 corrected the configured server cap '
+                                      'from 2,048 to 32,768 and raised the requested output budget from 2,048 to 4,096 tokens. The '
+                                      'goal was to reduce truncation that triggered regeneration. The server cap and requested output '
+                                      'budget are distinct settings.'},
+                               {'ko': '장부상 이 후보는 49.59점으로, 기준선 반복 3회의 평균 49.18점과 0.41점 차이였습니다. 관측된 반복 변동 안에 있어 토큰 상향만의 개선 근거로 삼지 '
+                                      '않았습니다. 점수와 함께 잘림, 폴백 발생, 지연을 확인할 필요가 있었습니다.',
+                                'en': 'The ledger records 49.59 for this candidate, 0.41 points above the baseline’s three-run mean '
+                                      'of 49.18. The difference lies within the observed run-to-run variation, so it does not '
+                                      'establish a benefit from increasing the token budget alone. Truncation, fallback frequency, '
+                                      'and latency also needed inspection.'}]},
+               {'id': 'strategy',
+                'label': {'ko': '팀의 선택과 범위', 'en': 'Team decisions & scope'},
+                'title': {'ko': '도구를 항상 쓰기보다, 필요한 질문에 제한했습니다.', 'en': 'We reserved tools for questions that needed them.'},
+                'paragraphs': [{'ko': '팀은 직접 생성의 기준선을 먼저 확인한 뒤, 한국어 약가·허가·성분·질병 코드처럼 정확한 조회가 필요한 질문에 MCP를 제한하는 방향을 검토했습니다. 조회 실패나 모호한 '
+                                      '대상에는 직접 생성 경로를 유지하고, 긴 답변이 후처리에서 잘리지 않도록 개선했습니다.',
+                                'en': 'After establishing a direct-generation baseline, the team explored selective MCP use for '
+                                      'precise lookups such as Korean drug prices, approvals, ingredients, and disease codes. Direct '
+                                      'generation remained the fallback for failed lookups or ambiguous targets, and post-processing '
+                                      'was adjusted to preserve long answers.'},
+                               {'ko': '이는 팀의 최종 제출 계열에 대한 설명입니다. 제 기여인 초기 연결·본문 전달·안전 게이트와 출력 예산 실험은 커밋으로 구분했습니다. 선택적 MCP의 실행 빈도나 최종 '
+                                      '점수 기여도는 별도의 호출 로그 없이는 단정하지 않습니다.',
+                                'en': 'This describes the team’s final submission family. My initial integration, evidence delivery, '
+                                      'safety gate, and output-budget experiment are identified by their commits. Without separate '
+                                      'call logs, I do not attribute a specific share of the final score to selective MCP.'}]},
+               {'id': 'award',
+                'label': {'ko': '결과와 수상', 'en': 'Results & award'},
+                'title': {'ko': '벤치마크 1위. 팀 성과와 실험 점수는 구분합니다.',
+                          'en': 'First in the benchmark—with experimental and final scores kept separate.'},
+                'paragraphs': [{'ko': 'AIM 팀은 루닛 Conquer Health의 HealthBench 기반 최종 평가에서 14개 팀 중 1위로 벤치마크상을 받았습니다. 최종 3라운드 평균은 '
+                                      '46.51점입니다. 이는 팀 공동 성과이며 MCP나 출력 예산 하나의 효과로 해석하지 않습니다.',
+                                'en': 'Team AIM won the benchmark award, ranking first among 14 teams in the final HealthBench-based '
+                                      'evaluation at Lunit Conquer Health. The three-round mean was 46.51. This is a shared team '
+                                      'outcome, not an effect attributable solely to MCP or output budget.'}],
+                'table': {'caption': {'ko': '팀 공개 최종 평가 기록', 'en': 'Team-reported final evaluation'},
+                          'headers': [{'ko': '평가', 'en': 'Evaluation'}, {'ko': '점수', 'en': 'Score'}],
+                          'rows': [['Round 1', '46.17'],
+                                   ['Round 2', '45.55'],
+                                   ['Round 3', '47.82'],
+                                   [{'ko': '평균', 'en': 'Mean'}, '46.51']]},
+                'image': 'conquer-award.png',
+                'image_alt': {'ko': 'AIM 팀 Conquer Health 벤치마크 상장 · 2026.08.22',
+                              'en': 'Team AIM’s Conquer Health benchmark award · 22 August 2026'},
+                'image_class': 'award-figure',
+                'details': {'label': {'ko': '개발 대시보드 점수와 다른 이유', 'en': 'Why the development dashboard shows other scores'},
+                            'paragraphs': [{'ko': '개발 장부의 54.37점과 마감 대시보드의 53.53점은 최종 3라운드 평가와 별도 기록입니다. 모델 서버 상태와 누적 변경이 함께 달라진 실험도 '
+                                                  '있어, 서로 다른 기록을 단일 개선율로 계산하지 않았습니다. 상장은 수상 증빙이며 숫자 점수를 기재하지 않습니다.',
+                                            'en': 'The development ledger’s 54.37 and the closing dashboard’s 53.53 are separate from '
+                                                  'the three final rounds. Some development runs also differed in server state and '
+                                                  'accumulated changes, so these records are not combined into one improvement rate. '
+                                                  'The certificate documents the award, not numerical scores.'}]}},
+               {'id': 'learning',
+                'label': {'ko': '배운 점', 'en': 'What I learned'},
+                'title': {'ko': '좋아 보이는 점수보다, 다시 확인할 수 있는 변화.', 'en': 'A change I can verify matters more than a promising score.'},
+                'paragraphs': [{'ko': '같은 동작을 반복 평가해도 47.79–50.03으로 2.24점 차이가 났습니다. 제 출력 예산 후보의 기준선 평균 대비 +0.41점은 이 변동 안에 있어 개선이라고 '
+                                      '단정하지 않았습니다. 잘림·재생성·지연과 답변 완결성을 함께 확인해야 한다는 기준을 세웠습니다.',
+                                'en': 'Repeated evaluations of the same behavior ranged from 47.79 to 50.03—a 2.24-point spread. My '
+                                      'output-budget candidate’s 0.41-point difference from the baseline mean fell within that '
+                                      'variation, so I did not claim an improvement. I learned to examine truncation, retries, '
+                                      'latency, and completeness alongside the score.'},
+                               {'ko': '도구를 붙이는 것보다 중요한 것은 필요한 정보가 실제 답변까지 이어지는지, 그리고 변화가 반복해서 관측되는지였습니다. 이후 실험에서도 설정·관측·해석을 따로 남기고 '
+                                      '있습니다.',
+                                'en': 'What mattered was whether the information reached the answer and whether a change held up '
+                                      'across evaluations. I now keep configuration, observations, and interpretation separate in '
+                                      'experiment records.'}]}],
+  'links': [({'ko': '팀 저장소와 실행 구조', 'en': 'Team repository and architecture'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission'),
+            ({'ko': '개인 구현: MCP 연결·안전 게이트', 'en': 'My implementation: MCP integration and safety gate'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission/commit/75a96193672ebe55bfbbaa42a382c9681794bb41'),
+            ({'ko': '개인 실험: 출력 예산 조정', 'en': 'My experiment: output budget'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission/commit/e6de32700de51aeb320172b1dd87ad52721305f5'),
+            ({'ko': '실험 장부 대조와 점수 해석', 'en': 'Ledger review and score interpretation'},
+             'https://github.com/Hackathon-AIM/health-conquer-submission/blob/main/docs/experiment-retrospective.md'),
+            ({'ko': '팀의 최종 평가 기록', 'en': 'Team-reported final evaluation'},
+             'https://juhee0223.github.io/juhee-portfolio/projects/conquer-health.html')],
+  'team': {'ko': '5인 팀 · 루닛 의료 AI 해커톤', 'en': '5-person team · Lunit medical AI hackathon'},
+  'display_stack': 'Python / FastAPI / MCP / L2-preview / HealthBench',
+  'facts': [({'ko': '최종 평가', 'en': 'Final evaluation'}, {'ko': '14개 팀 중 1위 · 벤치마크상', 'en': '1st of 14 teams · Benchmark award'}, True),
+            ({'ko': '팀 평균', 'en': 'Team average'}, {'ko': '46.51점 · 최종 3라운드', 'en': '46.51 · Three final rounds'}, True),
+            ({'ko': '개선 범위', 'en': 'Scope'},
+             {'ko': '제공 모델의 응답 흐름 · 가중치 변경 없음', 'en': 'Response pipeline around the provided model · No weight changes'},
+             False)]},
+ {'slug': 'danzzan',
+  'title': {'ko': '단짠', 'en': 'Danzzan'},
+  'category': {'ko': 'Backend · 실제 서비스 운영', 'en': 'Backend · Live service'},
+  'subtitle': {'ko': '6,000명 이상이 사용한 축제 서비스에서, 예매와 인증이 실패하는 순간까지 설계했습니다.',
+               'en': 'For a festival service used by 6,000+ people, I designed ticketing and authentication with failure paths in '
+                     'mind.'},
+  'desc': {'ko': '총학생회·네이버와 협업한 대학 축제 서비스입니다. Redis·Lua로 예매 상태와 재고를 처리하고, 인증·번역·관리자 설정을 개선하며 봄·가을 축제 운영에 참여했습니다.',
+           'en': 'A university festival service built in collaboration with the student council and NAVER. I worked on Redis/Lua '
+                 'ticket allocation, authentication, translation, and admin settings, and participated in spring and autumn festival '
+                 'operations.'},
+  'role': {'ko': 'Redis·Lua 예매 처리, JWT 인증, 번역·실패 대응',
+           'en': 'Redis/Lua ticketing, JWT authentication, translation and failure handling'},
+  'period': '2025.12–2026.09',
+  'context': {'ko': '대학 축제 웹 서비스 / 팀 프로젝트', 'en': 'University festival web service / Team project'},
+  'stack': 'Spring Boot / Redis / Lua / MySQL / React / Docker',
+  'repo': 'https://github.com/DKU-Dan-Zzan/Danzzan-BE',
+  'images': ['danzzan-home.webp', 'danzzan-map.webp', 'danzzan-queue.webp'],
+  'caption': {'ko': '팀 서비스 실제 화면 · 축제 홈, 부스 지도, 티켓 예매', 'en': 'Actual team-service screens · Festival home, booth map, and ticketing'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
+                'title': {'ko': '몰리는 요청과 계속 바뀌는 운영 조건을 함께 다뤘습니다.', 'en': 'Handling traffic bursts and changing operational needs.'},
+                'paragraphs': [{'ko': '학생에게 흩어진 부스 정보, 공연 일정, 공지와 예매를 한곳에서 제공하고 운영진이 현장 상황을 반영할 수 있도록 만든 팀 서비스입니다. 한정된 티켓의 중복 발급을 막는 '
+                                      '일과 예매·입장 상태를 사용자에게 정확히 보여주는 일이 핵심 과제였습니다.',
+                                'en': 'The team brought booth information, performances, notices, and ticket reservations into one '
+                                      'service while allowing organizers to respond to on-site needs. Key challenges were preventing '
+                                      'duplicate ticket allocation and presenting reservation and entry states accurately.'},
+                               {'ko': '저는 Redis 대기열과 Lua 발급 처리, JWT 로그인·회원가입, 번역 기능과 실패 대응을 맡았습니다. 6,000명 이상의 실사용자와 두 차례 축제 운영은 팀 공동 '
+                                      '성과입니다. 봄에는 예매·입장 흐름을, 가을에는 다국어 사용성을 개선했습니다.',
+                                'en': 'I owned Redis queueing and Lua ticket issuance, JWT login/signup, and translation with failure '
+                                      'handling. More than 6,000 real users and two festival deployments are shared team outcomes. '
+                                      'Spring focused on ticketing and entry; autumn added multilingual usability.'}]},
+               {'id': 'ticketing',
+                'label': {'ko': '동시 요청 처리', 'en': 'Concurrent requests'},
+                'title': {'ko': '대기열을 상태 전이와 재고 정합성 문제로 풀었습니다.', 'en': 'Treating the queue as a state and inventory problem.'},
+                'paragraphs': [{'ko': '대기·입장 준비·예매 가능·완료·만료 상태를 구분하고, Lua Script로 입장 자격·중복 신청·남은 재고 확인과 차감을 한 번에 처리했습니다. 이 원자성은 Redis '
+                                      '내부의 작업에 해당하며 MySQL까지 포함하는 분산 트랜잭션을 뜻하지 않습니다.',
+                                'en': 'I separated waiting, entry preparation, eligibility, completion, and expiry states. A Lua '
+                                      'script checks entry eligibility, duplicate requests, and remaining inventory, then decrements '
+                                      'stock atomically within Redis. This does not imply a distributed transaction covering MySQL.'},
+                               {'ko': '단순히 성공 응답을 반환하는 것보다, 중간 단계에서 멈췄을 때 사용자가 어떤 상태인지 설명하는 데 집중했습니다. 빈 대기열, 비동기 예매 진행 중, 입장 만료와 예매 '
+                                      '오픈 전 오류를 구분하도록 개선했습니다. Kafka·DB 비동기 처리에는 다른 팀원의 기여가 포함됩니다.',
+                                'en': 'I focused on explaining the user’s state when processing stopped between steps, not just '
+                                      'returning a success response. Improvements distinguished empty queues, pending asynchronous '
+                                      'reservations, expired queue admission, and requests before opening time. Other teammates '
+                                      'contributed to Kafka/database asynchronous processing.'}],
+                'steps': [({'ko': '신청 자격 확인', 'en': 'Check eligibility'},
+                           {'ko': '대기열·예매 시간·입장 유효성', 'en': 'Queue status, opening time, and entry validity'}),
+                          ({'ko': 'Redis 원자 처리', 'en': 'Atomic Redis operation'},
+                           {'ko': '중복 확인·재고 검사·차감', 'en': 'Duplicate check, inventory check, and decrement'}),
+                          ({'ko': '상태·복구 안내', 'en': 'State & recovery'},
+                           {'ko': '진행 중·완료·만료·실패를 구분', 'en': 'Distinguish pending, complete, expired, and failed'})]},
+               {'id': 'recovery',
+                'label': {'ko': '운영 개선', 'en': 'Operational improvements'},
+                'title': {'ko': '실패한 뒤에도 다시 시도할 수 있는 서비스로.', 'en': 'Making failures recoverable.'},
+                'paragraphs': [{'ko': '만료된 토큰이 로그인 요청에 붙으면 인증 필터에서 401이 발생해 다시 로그인할 수 없는 문제가 있었습니다. 로그인·토큰 재발급 등 공개 경로를 JWT 인증 필터의 검사 '
+                                      '대상에서 제외해 인증 복구 흐름을 바로잡았습니다.',
+                                'en': 'An expired token attached to a login request could trigger a 401 in the authentication filter '
+                                      'and block the user from logging in again. I corrected the recovery path by bypassing the JWT '
+                                      'authentication filter’s checks for public login and token-refresh endpoints.'},
+                               {'ko': '번역 API 실패가 공지 등록 실패로 이어지지 않도록 예외를 처리했습니다. 콘텐츠 저장 시 번역을 보관하고, 영어가 없으면 한국어를 제공하며, 누락된 영문은 나중에 '
+                                      '보충하는 흐름을 구현했습니다. 이미 작성된 번역은 보존합니다.',
+                                'en': 'I handled translation API failures so they would not block notice creation. Translations are '
+                                      'stored with content; missing English text falls back to Korean and can be backfilled later '
+                                      'without overwriting existing translations.'},
+                               {'ko': '예매 시간·수량·공연일을 관리자와 사용자 화면에 연결하고, 시작된 회차의 수정 제한과 티켓팅 ON/OFF 정책을 정리했습니다. 운영자가 직접 바꿀 수 있는 범위를 늘리는 '
+                                      '방향으로 개선했습니다.',
+                                'en': 'I connected ticket times, quantities, and performance dates across admin and user screens, and '
+                                      'refined restrictions on editing open rounds and the ticketing on/off policy. The aim was to '
+                                      'give organizers more control over routine changes.'}]},
+               {'id': 'collaboration',
+                'label': {'ko': '협업', 'en': 'Collaboration'},
+                'title': {'ko': '총학생회·네이버와 이어지는 현장 입장 흐름.', 'en': 'An entry flow connected with the student council and NAVER.'},
+                'paragraphs': [{'ko': '총학생회와 협업한 축제 운영에 네이버 Face Sign 연계 입장 흐름을 적용했습니다. 단짠은 티켓 예매, 제3자 제공 동의와 사전 등록 안내를 담당하고, 얼굴 정보 '
+                                      '등록과 인증은 네이버가 처리합니다. 얼굴인식 모델 자체를 개발한 프로젝트는 아닙니다.',
+                                'en': 'The festival service, built with the student council, supported an entry flow linked to NAVER '
+                                      'Face Sign. Danzzan handled reservations, third-party data-sharing consent, and preregistration '
+                                      'guidance; NAVER handled face registration and authentication. The project did not develop the '
+                                      'face-recognition model.'},
+                               {'ko': '예매 완료와 얼굴 등록 완료가 다른 단계임을 안내하고, 사용자 요구를 후속 다국어 기능에 반영했습니다. 대외 협업·행사 운영·프론트엔드·Kafka/DB 비동기 처리에는 '
+                                      '팀원의 기여가 포함됩니다. 제 개인 기여는 예매·인증·번역의 백엔드 처리입니다.',
+                                'en': 'The service explains that reservation completion and face registration are separate steps, and '
+                                      'user needs informed later multilingual features. External coordination, event operations, '
+                                      'frontend work, and Kafka/DB asynchronous processing include teammates’ contributions. My own '
+                                      'contribution centers on ticketing, authentication, and translation in the backend.'}]},
+               {'id': 'delivery',
+                'label': {'ko': '일정과 협업', 'en': 'Delivery & teamwork'},
+                'title': {'ko': '마감일만 공유하던 방식을, 진행 상황을 함께 보는 방식으로 바꿨습니다.', 'en': 'I made progress visible before the deadline.'},
+                'paragraphs': [{'ko': '작업 지연이 반복될 때 Jira로 작업을 작게 나누고, 스프린트와 데일리 스크럼으로 진행 상황과 막힌 부분을 공유하도록 했습니다. 이후 티켓팅 일정이 앞당겨지자 남은 '
+                                      '작업과 우선순위를 다시 정리했고, 팀은 변경된 기한 안에 개발을 마쳤습니다.',
+                                'en': 'When work repeatedly slipped, I introduced smaller Jira tasks, sprints, and daily scrums to '
+                                      'share progress and blockers. When the ticketing launch was subsequently brought forward, we '
+                                      'revisited the remaining work and priorities, and the team completed development by the revised '
+                                      'deadline.'}]},
+               {'id': 'learning',
+                'label': {'ko': '배운 점', 'en': 'What I learned'},
+                'title': {'ko': '운영자가 쓰는 순간까지가 개발의 범위였습니다.', 'en': 'Development extends into day-to-day operations.'},
+                'paragraphs': [{'ko': '요청을 빠르게 받는 것뿐 아니라 중간 단계에서 실패했을 때 사용자가 어디로 돌아갈지, 운영자가 무엇을 바꿀 수 있는지까지 정해야 했습니다. 예매 상태·인증 복구·번역 '
+                                      '실패를 각각 다루면서 기능의 성공 경로와 복구 경로를 함께 설계하는 습관을 얻었습니다.',
+                                'en': 'Accepting requests was only part of the work: I also had to define where users go after a '
+                                      'failure and what operators can change. Working on ticket states, authentication recovery, and '
+                                      'translation failures taught me to design success and recovery paths together.'},
+                               {'ko': '프로젝트 활동 기간은 2025년 12월부터 2026년 9월까지입니다. 운영 당시 팀 성과와 개인 구현 범위를 구분해 기록했습니다.',
+                                'en': 'My project involvement ran from December 2025 through September 2026. This case study '
+                                      'distinguishes the service’s team outcomes from my implementation work.'}],
+                'note': {'ko': '후속 테마 작업을 기존 축제 운영 성과나 이미 배포된 기능으로 합산하지 않습니다.',
+                         'en': 'The follow-up theme work is not counted as a deployed feature or part of the earlier festival '
+                               'operating results.'}}],
+  'links': [({'ko': '백엔드 저장소', 'en': 'Backend repository'}, 'https://github.com/DKU-Dan-Zzan/Danzzan-BE'),
+            ({'ko': '프론트엔드 저장소', 'en': 'Frontend repository'}, 'https://github.com/DKU-Dan-Zzan/Danzzan-FE'),
+            ({'ko': '비동기 예매 상태 개선 커밋', 'en': 'Asynchronous reservation state fix'},
+             'https://github.com/DKU-Dan-Zzan/Danzzan-BE/commit/11395c73ad285a7fae8553b6d8c59405f881c474')],
+  'team': {'ko': '4인 팀 · 봄·가을축제 운영', 'en': '4-person team · Spring & autumn festivals'},
+  'display_stack': 'Spring Boot / Redis / Lua / MySQL / Docker',
+  'facts': [({'ko': '실사용자', 'en': 'Real users'}, {'ko': '6,000명 이상 · 팀 운영 성과', 'en': '6,000+ · Team operational outcome'}, True),
+            ({'ko': '운영', 'en': 'Operations'}, {'ko': '2026 봄·가을축제 2회', 'en': 'Spring and autumn festivals, 2026'}, True),
+            ({'ko': '협업', 'en': 'Collaboration'},
+             {'ko': '총학생회 · NAVER Face Sign 연계 입장', 'en': 'Student council · NAVER Face Sign entry integration'},
+             False)]},
+ {'slug': 'soccer-analysis',
+  'title': {'ko': '축구 드리블 동작 분석', 'en': 'Soccer dribbling analysis'},
+  'category': {'ko': 'Computer vision · 연구', 'en': 'Computer vision · Research'},
+  'subtitle': {'ko': '선수와 공의 움직임을 지표로 만들고, 계산에 쓰인 원본 장면까지 확인할 수 있게 했습니다.',
+               'en': 'I turned player and ball motion into metrics that can be checked against the original footage.'},
+  'desc': {'ko': '한 대의 카메라로 촬영한 드리블 영상에서 선수의 관절과 공을 추적합니다. 터치 주변의 헤드업·어깨 움직임과 전체 유효 프레임의 상체 각도를 계산하고, 원본 장면과 대조할 수 있는 연구용 보고서로 만듭니다.',
+           'en': 'I track body landmarks and the ball in single-camera dribbling videos, measure head-up movement and shoulder motion '
+                 'around touches and torso angle across all valid frames, and generate research reports that can be checked against '
+                 'the source footage.'},
+  'role': {'ko': '지표 설계, 터치 구간 실험, 분석 파이프라인 구현·검수', 'en': 'Metric design, touch-window experiments, pipeline development and review'},
+  'period': {'ko': '2025.11– · 연구 진행 중', 'en': 'Since Nov 2025 · Ongoing research'},
+  'context': 'AIV Lab',
+  'stack': 'Python / MediaPipe / YOLO / SAM2 / NumPy / SciPy',
+  'repo': 'https://github.com/jiwoo1105/soccer_motion_analysis',
+  'video': 'soccer-ball-tracking.mp4',
+  'poster': 'soccer-ball-poster.jpg',
+  'caption': {'ko': '선수 관절 + 실제 공 검출 좌표와 궤적', 'en': 'Body landmarks + detected ball positions and trail'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
+                'title': {'ko': '관찰한 자세를, 다시 확인할 수 있는 측정값으로.', 'en': 'From visual observations to inspectable measurements.'},
+                'paragraphs': [{'ko': '드리블 자세를 영상별로 비교하려면 무엇을, 어느 구간에서 측정했는지 설명할 수 있어야 합니다. 이 연구는 단안 영상의 관절과 공 궤적을 활용해 상체 움직임을 수치화하고, '
+                                      '계산에 사용한 실제 장면을 함께 보여주는 분석 도구를 만드는 작업입니다.',
+                                'en': 'Comparing dribbling technique requires a clear account of what was measured and over which '
+                                      'frames. This project uses body landmarks and ball trajectories from monocular video to '
+                                      'quantify upper-body movement and show the footage behind each measurement.'},
+                               {'ko': '평가 의도와 지표 정의, 비교 실험 방향을 정하고 원본 장면 검수를 진행했습니다. AI 코딩 도구와 협업해 영상 입력부터 지표 계산, HTML·JSON 보고서 생성까지 '
+                                      '분석 흐름을 구현하고 검증했습니다.',
+                                'en': 'I defined the evaluation goals and metrics, directed comparative experiments, and reviewed the '
+                                      'source footage. Working with AI coding tools, I developed and checked the pipeline from video '
+                                      'input to metric calculation and HTML/JSON reporting.'}]},
+               {'id': 'pipeline',
+                'label': {'ko': '난제와 해결', 'en': 'Challenge & approach'},
+                'title': {'ko': '배경 공을 따라가면, 자세를 평가할 시점도 달라집니다.',
+                          'en': 'Tracking the wrong ball also changes when technique is measured.'},
+                'paragraphs': [{'ko': '기본 경로는 MediaPipe Pose Heavy로 관절과 얼굴 지점을 포함한 신체 랜드마크 33개의 이미지 좌표와 추정 3D 좌표를 추출합니다. YOLOv8n으로 공의 '
+                                      '초기 위치를 찾고 SAM2.1로 마스크를 추적한 뒤, 공의 수평 궤적과 발목 근접 조건으로 터치 후보를 계산합니다.',
+                                'en': 'The default pipeline extracts 33 landmarks in image coordinates and estimated 3D coordinates '
+                                      'with MediaPipe Pose Heavy. YOLOv8n initializes the ball location, SAM2.1 tracks its mask, and '
+                                      'the horizontal trajectory and proximity to the ankles provide candidate touch events.'},
+                               {'ko': 'SAM2가 선수가 다루는 공 대신 배경 공을 따라가는 사례를 확인했습니다. 발목과의 거리로 초기 대상을 고르고, 당시 실험에서는 250px 초과 상태가 5프레임 이어지면 '
+                                      '재탐색하도록 했습니다. 이후 YOLO11s 발목 ROI 재검출과 같은 프레임을 대조해 실제 드리블 공을 가리키는지 검수했습니다.',
+                                'en': 'I found cases where SAM2 followed a background ball instead of the player’s ball. I selected '
+                                      'the initial target by ankle proximity and, in that experiment, triggered re-detection when the '
+                                      'ball-to-ankle distance exceeded 250 pixels for five consecutive frames. I then compared the '
+                                      'same frames with YOLO11s re-detection in an ankle-centered ROI to check that the target was '
+                                      'the actual dribbling ball.'},
+                               {'ko': '250px는 해당 입력 영상의 조건에 따른 기준입니다. 이 페이지의 영상은 별도 YOLO11 실험의 실제 검출값을 시각화한 것이며, 미검출 구간을 보간하거나 전체 추적 '
+                                      '정확도 개선율로 표현하지 않았습니다.',
+                                'en': 'The 250-pixel threshold depends on the input video conditions. This demo visualizes actual '
+                                      'detections from the separate YOLO11 experiment, without interpolating missed detections or '
+                                      'claiming a dataset-wide tracking improvement.'}]},
+               {'id': 'metrics',
+                'label': {'ko': '지표 설계', 'en': 'Metric design'},
+                'title': {'ko': '터치 전후 16프레임에서 어깨 움직임을 집계합니다.', 'en': 'Measuring shoulder motion within 16 frames of each touch.'},
+                'paragraphs': [{'ko': '어깨선의 3D 단위 방향을 평활화하고, 인접 프레임 사이 방향 변화에 FPS를 곱해 각속도를 구합니다. 현재는 공 터치 앞뒤 각각 16프레임에 포함된 유효한 인접 프레임 '
+                                      '쌍에서 계산한 각속도를 평균합니다. 터치 구간끼리 겹치는 쌍은 한 번만 반영합니다.',
+                                'en': 'I smooth the 3D unit vector along the shoulder line and multiply the angular change between '
+                                      'adjacent frames by FPS to obtain angular speed. The current method averages the angular speeds '
+                                      'computed from valid adjacent-frame pairs within 16 frames before and after each touch, '
+                                      'counting overlapping pairs only once.'},
+                               {'ko': '헤드업은 터치 주변의 어깨 중앙–눈 중앙 벡터가 수직축과 이루는 각도의 변화 범위를 측정합니다. 상체 지표는 무릎–엉덩이–어깨 각도를 전체 유효 프레임에서 평균합니다. '
+                                      '항목별로 측정 대상과 시간 범위를 명시해 서로 다른 움직임을 혼동하지 않도록 했습니다.',
+                                'en': 'The head-up metric measures the angular range of the shoulder-midpoint–eye-midpoint vector '
+                                      'relative to the vertical axis around touches. The torso metric averages knee–hip–shoulder '
+                                      'angles across all valid frames. Each metric states its measurement and time window '
+                                      'explicitly.'}]},
+               {'id': 'validation',
+                'label': {'ko': '결과와 검증', 'en': 'Results & validation'},
+                'title': {'ko': '계산이 맞는지와 평가가 타당한지를 나누어 봅니다.', 'en': 'Checking the calculation and the meaning of the score.'},
+                'paragraphs': [{'ko': '3개 영상, 771프레임의 기존 추론 결과로 터치 ±16프레임 보고서를 재생성했고, 어깨 집계와 총점이 별도 계산과 1e−10 이내로 일치하는지 확인했습니다. 필수 '
+                                      '항목을 계산할 수 없을 때는 총점을 N/A로 남깁니다.',
+                                'en': 'Using saved inference outputs from three videos totaling 771 frames, I regenerated the '
+                                      '±16-frame reports and checked that the shoulder aggregation and total score agreed with an '
+                                      'independent calculation within 1e−10. The total is marked N/A when a required metric cannot be '
+                                      'calculated.'},
+                               {'ko': '후속 검증에서는 3개 영상을 각각 5회, 총 15회 원본부터 새로 분석했습니다. 저장 좌표를 재사용하지 않고 같은 CLI 기본 CPU 설정에서 관절 배열·공 궤적·터치 '
+                                      '프레임·원시 지표·점수가 반복 간 정확히 일치하는지 확인했습니다. 기존 수동 검수 제외 구간은 적용하지 않았습니다.',
+                                'en': 'In a follow-up, I reran each of three videos five times from the original input, for 15 fresh '
+                                      'runs. Without reusing saved coordinates, body landmarks, ball tracks, touch frames, raw '
+                                      'metrics, and scores matched exactly between repeats under the same default CLI CPU settings. '
+                                      'Previous manually excluded intervals were not applied.'},
+                               {'ko': '이 검증은 구현한 계산의 일관성을 확인한 것입니다. 전문가 등급은 항목별 정답 점수가 아니며, 독립적인 숙련도 평가 검증은 남아 있습니다. 가려짐, 단안 깊이 오차, '
+                                      '터치 오검출이 측정에 미치는 영향을 계속 검토하고 있습니다.',
+                                'en': 'This verifies computational consistency. The available expert grades are not ground-truth '
+                                      'scores for each metric, and independent validation of skill assessment remains open. '
+                                      'Occlusion, monocular depth errors, and false touch detections can still affect the '
+                                      'measurements.'}],
+                'note': {'ko': '2026.11.03 검토 · 반복 일치는 측정 정확도나 자동 숙련도 평가의 타당성을 입증하지 않습니다.',
+                         'en': 'Reviewed 3 November 2026 · Repeatability does not establish measurement accuracy or the validity of '
+                               'automated skill assessment.'}},
+               {'id': 'learning',
+                'label': {'ko': '배운 점', 'en': 'What I learned'},
+                'title': {'ko': '공을 찾는 것과, 분석할 공을 고르는 것은 달랐습니다.',
+                          'en': 'Detecting a ball and selecting the right ball are different tasks.'},
+                'paragraphs': [{'ko': '대상을 잘못 고르면 터치 시점과 자세 지표까지 연쇄적으로 달라집니다. 그래서 최종 점수만 보기보다 공 선택 → 터치 후보 → 측정 구간을 원본 프레임에서 따로 확인하게 '
+                                      '됐습니다. 계산의 재현성과 평가 지표의 타당성도 각각 검증해야 한다는 기준을 세웠습니다.',
+                                'en': 'A wrong target propagates into touch timing and pose metrics. I learned to inspect target '
+                                      'selection, candidate touches, and measurement windows separately against the source frames, '
+                                      'rather than checking only the final score. Reproducible calculations and valid assessment '
+                                      'metrics also require separate evidence.'}]}],
+  'links': [({'ko': '분석 도구와 실행 안내', 'en': 'Analysis tool and usage'}, 'https://github.com/jiwoo1105/soccer_motion_analysis'),
+            ({'ko': '터치 ±16프레임 반영 기록', 'en': 'Touch-window implementation'},
+             'https://github.com/jiwoo1105/soccer_motion_analysis/commit/38e0ad5')],
+  'team': {'ko': 'AIV Lab · 스포츠 동작 분석 연구', 'en': 'AIV Lab · Sports motion research'},
+  'display_stack': 'Python / MediaPipe / YOLO / SAM2 / NumPy',
+  'facts': [({'ko': '재실행 검증', 'en': 'Repeated runs'}, {'ko': '3개 영상 × 5회 · 총 15회', 'en': '3 videos × 5 runs · 15 runs total'}, True),
+            ({'ko': '확인 범위', 'en': 'Verified scope'},
+             {'ko': '같은 CPU 조건에서 좌표·지표·점수 일치', 'en': 'Matching coordinates, metrics, and scores under the same CPU settings'},
+             False)]},
+ {'slug': 'fish-detection',
+  'title': {'ko': '넙치 증상 탐지 / Flatfish doctor', 'en': 'Flatfish doctor'},
+  'category': {'ko': 'Computer vision · 애플리케이션', 'en': 'Computer vision · Application'},
+  'subtitle': {'ko': '넙치 개체 탐지와 7종 외형 상태 분류를 앱으로 연결했습니다. 증상 분류의 최고 검증 Top-1은 87.68%입니다.',
+               'en': 'I connected fish detection and seven-category appearance classification to an app. The symptom classifier '
+                     'reached a peak validation Top-1 accuracy of 87.68%.'},
+  'desc': {'ko': '넙치를 탐지한 뒤 개체별 크롭을 정상을 포함한 7개 외형 상태로 분류합니다. 데이터 전처리와 모델 학습부터 FastAPI 추론, Flutter 결과 화면까지 연결했습니다.',
+           'en': 'A two-stage pipeline detects olive flounder and classifies individual crops into seven appearance categories, '
+                 'including normal. I connected data preparation and model training to FastAPI inference and a Flutter results '
+                 'interface.'},
+  'role': {'ko': '데이터 전처리, 탐지·분류 학습, 추론 API·앱', 'en': 'Data preparation, detection/classification training, inference API and app'},
+  'period': '2026.03–2026.06',
+  'context': {'ko': '넙치 외형 증상 모니터링', 'en': 'Visual symptom monitoring for olive flounder'},
+  'stack': 'YOLO / PyTorch / OpenCV / FastAPI / Flutter',
+  'repo': 'https://github.com/jiwoo1105/fish-disease-detection',
+  'images': ['fish-results.png'],
+  'caption': {'ko': '개체별 증상 분류 결과 화면', 'en': 'Per-fish symptom classification results'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
+                'title': {'ko': '수조 전체의 배경보다, 개체의 상태에 집중합니다.', 'en': 'Focusing on each fish, not the tank background.'},
+                'paragraphs': [{'ko': '수조 영상에는 물결과 조명 변화, 서로 겹치는 개체가 함께 들어옵니다. 전체 프레임에서 바로 증상을 판단하기보다 먼저 넙치의 위치를 찾고, 개체별 이미지를 잘라 증상을 '
+                                      '분류하는 2단계 구조를 사용했습니다.',
+                                'en': 'Tank footage includes ripples, lighting changes, and overlapping fish. Instead of classifying '
+                                      'symptoms from the whole frame, the pipeline first locates fish and then classifies cropped '
+                                      'images of each individual.'},
+                               {'ko': '데이터 전처리, 탐지·분류 모델 학습, 좌표 변환과 추론 API, 결과 화면을 구현했습니다. 사용자가 분류 결과를 원본 개체 위치와 함께 확인하도록 연결하는 '
+                                      '작업이었습니다.',
+                                'en': 'I implemented data preparation, detection and classification training, coordinate conversion, '
+                                      'the inference API, and the results interface, so users could relate a prediction back to the '
+                                      'fish’s location in the original image.'}]},
+               {'id': 'data',
+                'label': {'ko': '데이터와 모델', 'en': 'Data and models'},
+                'title': {'ko': '라벨을 크롭 데이터에 연결하고 클래스 편향을 줄였습니다.', 'en': 'Linking labels to crops and controlling class imbalance.'},
+                'paragraphs': [{'ko': 'AI Hub 넙치 질병 데이터의 개체·증상 라벨을 매핑해 분류용 크롭을 만들었습니다. 매핑되지 않는 라벨은 제외하고, 특정 증상에 학습 샘플이 치우치지 않도록 학습 '
+                                      '데이터에 클래스별 상한을 적용했습니다.',
+                                'en': 'I mapped individual-fish and symptom labels from AI Hub’s flounder disease dataset to create '
+                                      'classification crops. Unmapped labels were excluded, and per-class caps were applied to '
+                                      'training samples to reduce class imbalance.'},
+                               {'ko': '분류 대상은 정상·출혈·백점·반점/결절·체색변화·여윔·궤양의 7개 외형 상태입니다. 증상에서 질병·대응 안내로 이어지는 부분은 규칙 기반 매핑이며, 영상만으로 병원체를 '
+                                      '확정하는 진단 모델과는 구분됩니다.',
+                                'en': 'The seven visible states are normal, hemorrhage, white spots, spots/nodules, color change, '
+                                      'emaciation, and ulcers. Rule-based mappings link symptom labels to disease information and '
+                                      'suggested actions; the system does not identify the causative pathogen from video.'}]},
+               {'id': 'validation',
+                'label': {'ko': '검증', 'en': 'Validation'},
+                'title': {'ko': '탐지와 분류의 성능을 따로 읽습니다.', 'en': 'Reading detection and classification results separately.'},
+                'paragraphs': [{'ko': '저장된 검증 결과에서 증상 분류의 최고 Top-1 정확도는 87.68%, 개체 탐지 mAP50은 0.4455였습니다. 서로 다른 과제의 지표이므로 하나의 종합 정확도로 '
+                                      '합치지 않습니다.',
+                                'en': 'Saved validation results show a peak symptom-classification Top-1 accuracy of 87.68% and a '
+                                      'fish-detection mAP50 of 0.4455. These measure different tasks and are not combined into a '
+                                      'single system accuracy.'},
+                               {'ko': '겹침과 탁한 수조 환경에서 탐지가 병목으로 남아 있습니다. 분류기가 올바르게 학습돼도 앞 단계에서 개체를 놓치면 결과를 만들 수 없으므로, 오탐·누락 데이터와 실제 환경 '
+                                      '검증을 후속 과제로 보고 있습니다.',
+                                'en': 'Detection remains a bottleneck with overlap and turbid water. Even a well-performing '
+                                      'classifier cannot produce a result for a fish missed by the detector, so false detections, '
+                                      'missed fish, and field validation remain priorities.'}],
+                'image': 'fish-validation.jpg',
+                'image_alt': {'ko': '분류 모델의 저장된 검증 배치 예측', 'en': 'Saved validation-batch predictions from the symptom classifier'},
+                'stats': [('87.68%', {'ko': '분류 최고 검증 Top-1', 'en': 'Peak validation Top-1'}),
+                          ('0.4455', {'ko': '개체 탐지 mAP50', 'en': 'Fish-detection mAP50'})]},
+               {'id': 'application',
+                'label': {'ko': '서비스 연결', 'en': 'Application'},
+                'title': {'ko': '모델 결과를 사용자가 읽을 수 있는 화면으로.', 'en': 'Turning predictions into a readable interface.'},
+                'paragraphs': [{'ko': '추론 결과를 개체 위치, 증상명과 신뢰도로 정리해 Flutter 앱에 표시했습니다. 서버 추론과 앱 화면을 연결하면서 원본·크롭·화면 사이 좌표 변환을 맞췄고, 결과 '
+                                      '로그와 개체별 안내를 확인할 수 있도록 구성했습니다.',
+                                'en': 'I organized inference outputs into fish locations, symptom labels, and confidence values for '
+                                      'the Flutter app. Connecting inference to the interface required consistent coordinates across '
+                                      'the source image, crops, and display, as well as readable result logs and per-fish '
+                                      'information.'}],
+                'note': {'ko': '저장된 데이터의 모델 검증과 앱 시연 범위입니다. 실제 양식장에서 질병 조기 발견 효과를 입증한 결과는 아닙니다.',
+                         'en': 'The evidence covers dataset validation and an application demo, not demonstrated early-detection '
+                               'outcomes at working fish farms.'}},
+               {'id': 'learning',
+                'label': {'ko': '배운 점', 'en': 'What I learned'},
+                'title': {'ko': '데이터를 조정하는 단계와 성능을 확인하는 단계를 분리했습니다.',
+                          'en': 'Training-data changes and validation serve different purposes.'},
+                'paragraphs': [{'ko': '클래스별 샘플 수 조절은 학습 데이터에만 적용하고, 검증 데이터의 분포는 유지했습니다. 분류 정확도가 높아도 앞 단계의 탐지 누락을 해결하지는 못하므로 두 모델의 결과를 '
+                                      '따로 봤습니다. 앱까지 연결하면서 모델 점수뿐 아니라 원본 개체와 결과 좌표가 맞는지도 확인해야 했습니다.',
+                                'en': 'I capped class counts in the training set while leaving the validation distribution unchanged. '
+                                      'A strong classifier cannot recover fish missed by the detector, so I examined the two models '
+                                      'separately. Connecting inference to the app also required checking that result coordinates '
+                                      'matched the original fish, beyond the model scores.'}]}],
+  'links': [({'ko': '모델·앱 코드와 학습 결과', 'en': 'Model/app code and training results'},
+             'https://github.com/jiwoo1105/fish-disease-detection'),
+            ({'ko': '전체 시연 영상', 'en': 'Full demonstration'}, 'https://youtu.be/3LDmc6zdG0A')],
+  'facts': [({'ko': '분류 검증', 'en': 'Classification validation'},
+             {'ko': 'Top-1 87.68% · 7개 클래스', 'en': 'Top-1 87.68% · 7 classes'},
+             True),
+            ({'ko': '별도 탐지 지표', 'en': 'Separate detection metric'}, {'ko': 'mAP50 0.4455', 'en': 'mAP50 0.4455'}, False)]},
+ {'slug': 'medguard',
+  'title': 'MedGuard',
+  'category': {'ko': '의료영상 · AI 보안 실험', 'en': 'Medical imaging · AI security experiments'},
+  'subtitle': {'ko': '흉부 X-ray 분류기의 공격·방어를 비교했습니다. 기록된 DiffAttack 조건에서 Medical DiffPure는 Vanilla DiffPure보다 4.84%p 높은 정확도를 보였습니다.',
+               'en': 'I compared attacks and defenses for a chest X-ray classifier. Under the recorded DiffAttack conditions, Medical '
+                     'DiffPure exceeded Vanilla DiffPure accuracy by 4.84 percentage points.'},
+  'desc': {'ko': '흉부 X-ray 분류기에 대한 FGSM·PGD·잠재공간 공격을 비교하고, FFT 분석과 의료 도메인 VAE를 결합한 정화 흐름을 실험했습니다.',
+           'en': 'I compared FGSM, PGD, and latent-space attacks on a chest X-ray classifier and experimented with a purification '
+                 'pipeline combining FFT analysis and a medical-domain VAE.'},
+  'role': {'ko': '공격·방어 실험, 주파수 분석, 비교 시연', 'en': 'Attack/defense experiments, frequency analysis, comparison demo'},
+  'period': '2026.02–2026.06',
+  'context': {'ko': '의료영상 분류 강건성 실험', 'en': 'Robustness experiments for medical-image classification'},
+  'stack': 'PyTorch / ResNet-50 / RoentGen VAE / FFT / Gradio',
+  'repo': 'https://github.com/jiwoo1105/AISecurity',
+  'video': 'medguard-demo.mp4',
+  'poster': 'medguard-poster.jpg',
+  'caption': {'ko': '공격 전후와 방어 결과를 비교하는 실제 시연', 'en': 'Demo comparing original, attacked, and purified inputs'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
+                'title': {'ko': '작은 입력 변화가 분류 결과를 바꾸는 경우.', 'en': 'When input perturbations change a prediction.'},
+                'paragraphs': [{'ko': '흉부 X-ray의 폐렴 이진 분류기를 대상으로 입력에 대한 적대적 공격과 방어를 비교했습니다. 픽셀 공간 공격과 VAE 잠재공간 공격이 서로 다른 주파수 특성을 '
+                                      '보이는지, 정화 과정이 분류 성능과 이미지 구조에 어떤 영향을 주는지 살폈습니다.',
+                                'en': 'I compared adversarial attacks and defenses for a binary pneumonia classifier on chest X-rays. '
+                                      'The experiments examined frequency differences between pixel-space and VAE latent-space '
+                                      'attacks, and the effects of purification on classification and image structure.'},
+                               {'ko': 'ResNet-50 분류기, FGSM·PGD 및 DiffAttack 계열 구현, FFT 시각화와 Gradio 비교 데모를 연결했습니다. AI 코딩 도구를 활용해 구현과 '
+                                      '디버깅을 진행하며 실험 조건과 비교 결과를 정리했습니다.',
+                                'en': 'I connected a ResNet-50 classifier, FGSM/PGD and a DiffAttack-style implementation, FFT '
+                                      'visualizations, and a Gradio comparison demo. I used AI coding tools for implementation and '
+                                      'debugging and organized the experimental conditions and results.'}]},
+               {'id': 'approach',
+                'label': {'ko': '접근', 'en': 'Approach'},
+                'title': {'ko': '공격 특성과 정화 강도를 함께 비교했습니다.', 'en': 'Comparing perturbation patterns and purification strength.'},
+                'paragraphs': [{'ko': 'FFT 분석으로 고주파 성분의 변화를 확인하고, RoentGen VAE를 이용한 정화와 정화 전 입력 이미지의 블렌딩을 실험했습니다. 공개 구현의 Medical '
+                                      'DiffPure는 공격 유형에 따른 처리 강도와 폐 영역의 구조 일치도를 함께 고려하는 실험적 파이프라인입니다.',
+                                'en': 'I used FFT analysis to inspect changes in high-frequency components and experimented with '
+                                      'purification using the RoentGen VAE and blending the purified output with the input image. The '
+                                      'repository’s Medical DiffPure is an experimental pipeline that considers attack-specific '
+                                      'purification strength and structural consistency in lung regions.'},
+                               {'ko': '주파수 변화가 작다는 사실만으로 정상 이미지와 특정 공격을 완벽히 구별할 수는 없습니다. 따라서 데모의 공격 분류 규칙을 일반적인 공격 탐지 보장으로 표현하지 않고, '
+                                      '정해진 실험 조건의 비교로 다룹니다.',
+                                'en': 'A small frequency change cannot reliably distinguish a clean image from every attack. I '
+                                      'therefore treat the demo’s attack-classification rules as part of a controlled experiment, not '
+                                      'as a general attack-detection guarantee.'}]},
+               {'id': 'results',
+                'label': {'ko': '실험 기록', 'en': 'Reported experiments'},
+                'title': {'ko': '같은 설정에서 방어 방법을 비교합니다.', 'en': 'Comparing defenses within the reported setup.'},
+                'paragraphs': [{'ko': '공개 저장소에는 Medical DiffPure의 공격하 정확도가 FGSM 58.31%, PGD 61.47%, DiffAttack 78.56%로 기록돼 있습니다. '
+                                      'DiffAttack 조건의 Vanilla DiffPure 73.72%와 비교하면 4.84%p 차이입니다.',
+                                'en': 'The public repository reports robust accuracy of 58.31% under FGSM, 61.47% under PGD, and '
+                                      '78.56% under DiffAttack for Medical DiffPure. The DiffAttack result is 4.84 percentage points '
+                                      'higher than the reported 73.72% for Vanilla DiffPure.'},
+                               {'ko': '이 수치는 저장소에 기록된 설정의 비교 결과입니다. 모든 의료영상 모델이나 새로운 공격에 대한 우위를 뜻하지 않습니다. 적응형 공격, 다른 데이터 분포, 정화 후 병변 '
+                                      '정보 보존은 추가 검증이 필요합니다.',
+                                'en': 'These are results recorded for the repository’s experimental setup. They do not establish '
+                                      'superiority across medical-image models or unseen attacks. Adaptive attacks, other data '
+                                      'distributions, and preservation of diagnostic features after purification require further '
+                                      'evaluation.'}],
+                'stats': [('78.56%', {'ko': '기록된 DiffAttack 조건 정확도', 'en': 'Reported accuracy under DiffAttack'}),
+                          ('+4.84 pp', {'ko': '같은 조건의 Vanilla DiffPure 대비', 'en': 'Over Vanilla DiffPure in that setup'})]},
+               {'id': 'learning',
+                'label': {'ko': '배운 점', 'en': 'What I learned'},
+                'title': {'ko': '정화 후 정확도와 보존된 이미지 정보를 함께 봐야 했습니다.',
+                          'en': 'Accuracy after purification is only part of the evidence.'},
+                'paragraphs': [{'ko': '공격에 맞춘 정화가 분류 정확도를 높여도 원래 필요한 영상 정보까지 바꿀 수 있습니다. 그래서 공격 조건, 정화 강도, 이미지 구조를 함께 비교하는 관점을 배웠습니다. '
+                                      '다음 검증에서는 같은 조건의 정확도뿐 아니라 병변 정보 보존과 새로운 공격에 대한 동작을 별도로 확인해야 합니다.',
+                                'en': 'Purification tailored to an attack can improve classification while also changing useful image '
+                                      'information. I learned to compare attack conditions, purification strength, and image '
+                                      'structure together. Further validation must examine lesion preservation and behavior under new '
+                                      'attacks alongside accuracy under matched conditions.'}]}],
+  'links': [({'ko': '공격·방어 코드와 실험 기록', 'en': 'Attack/defense code and experiment records'},
+             'https://github.com/jiwoo1105/AISecurity')],
+  'facts': [({'ko': 'DiffAttack 비교', 'en': 'Under DiffAttack'},
+             {'ko': 'Medical DiffPure 78.56% / 기본 DiffPure 73.72%', 'en': 'Medical DiffPure 78.56% / vanilla DiffPure 73.72%'},
+             True),
+            ({'ko': '검증 범위', 'en': 'Scope'}, {'ko': '실험 조건 내 방어 비교', 'en': 'Defense comparison under the tested conditions'}, False)]},
+ {'slug': 'medai-agent',
+  'title': 'MedAI Agent',
+  'category': {'ko': 'LLM 워크플로우 · 프로토타입', 'en': 'LLM workflows · Prototype'},
+  'subtitle': {'ko': '텍스트·음성·이미지 입력에서 약물 정보 조회와 8단계 LLM 처리를 거쳐 보고서를 보여주는 프로토타입을 구현했습니다.',
+               'en': 'I built a prototype that takes text, voice, or image input through drug-information lookup and eight LLM stages '
+                     'to a report.'},
+  'desc': {'ko': '텍스트·음성·이미지 입력을 약물 정보 조회와 8단계 LLM 워크플로우에 연결한 프로토타입입니다. FastAPI와 React로 처리 단계와 분석 결과를 보여줍니다.',
+           'en': 'A prototype connecting text, voice, and image inputs to medication-information retrieval and an eight-stage LLM '
+                 'workflow. FastAPI and React expose the processing stages and resulting report.'},
+  'role': {'ko': '입력·약물 조회·에이전트 흐름·결과 화면 연결', 'en': 'Input, medication lookup, agent orchestration, and results interface'},
+  'period': {'ko': '2025 · 딥러닝 프로젝트', 'en': '2025 · Deep learning project'},
+  'context': {'ko': '약물 정보 분석 프로토타입', 'en': 'Medication-information analysis prototype'},
+  'stack': 'Python / FastAPI / GPT-4o / React / Vite',
+  'repo': 'https://github.com/jiwoo1105/MedAI_Agent',
+  'video': 'medai-demo.mp4',
+  'poster': 'medai-poster.jpg',
+  'caption': {'ko': '입력과 단계별 분석 결과의 실제 시연', 'en': 'Demo of input and staged analysis results'},
+  'sections': [{'id': 'problem',
+                'label': {'ko': '배경과 역할', 'en': 'Context & my role'},
+                'title': {'ko': '입력 방식이 달라도 같은 분석 흐름으로.', 'en': 'One workflow for different input methods.'},
+                'paragraphs': [{'ko': '사용자가 약물 정보를 텍스트로 적거나 음성·이미지로 제공했을 때, 약물명과 질문의 맥락을 정리하고 결과를 읽기 쉬운 보고서로 보여주는 프로토타입입니다. 입력 화면, 외부 '
+                                      '약물 API, LLM 처리와 결과 UI를 하나의 흐름으로 연결했습니다.',
+                                'en': 'This prototype organizes medication names and question context from text, voice, or image '
+                                      'inputs and presents the output as a readable report. It connects the input interface, an '
+                                      'external medication-information API, LLM processing, and the results UI.'}]},
+               {'id': 'workflow',
+                'label': {'ko': '워크플로우', 'en': 'Workflow'},
+                'title': {'ko': '서로 다른 역할의 8단계를 연결했습니다.', 'en': 'Connecting eight stages with distinct roles.'},
+                'paragraphs': [{'ko': '입력 이해 → 약물 인식 → 기본 지식 → 심화 분석 → 부작용 검토 → 근거 설명 → 개인화된 정보 정리 → 보고서 생성의 순서로 구성했습니다. 각 단계의 출력을 다음 '
+                                      '단계로 넘기고 최종 요약, 주요 내용과 주의사항을 화면에 모읍니다.',
+                                'en': 'The sequence covers input understanding, medication recognition, background knowledge, '
+                                      'detailed analysis, side-effect review, evidence explanation, context-specific information, and '
+                                      'report generation. Outputs pass between stages and are collected into a summary, key findings, '
+                                      'and cautions.'},
+                               {'ko': '여기서 8개 에이전트는 역할을 나눈 LLM 처리 단계입니다. 서로 독립적인 의료 전문가 8명이 검증했다는 의미가 아닙니다. 식약처 e약은요 API의 조회 정보와 LLM이 '
+                                      '생성한 설명도 구분해 이해해야 합니다.',
+                                'en': 'The eight agents are LLM processing stages assigned different roles; they are not eight '
+                                      'independent medical experts. Information retrieved from the MFDS medication API must also be '
+                                      'distinguished from explanations generated by the LLM.'}]},
+               {'id': 'interface',
+                'label': {'ko': '사용자 화면', 'en': 'Interface'},
+                'title': {'ko': '기다리는 동안의 진행 상태와 결과를 함께 설계했습니다.', 'en': 'Designing both progress feedback and the final report.'},
+                'paragraphs': [{'ko': 'React에서 텍스트·음성·이미지 입력을 제공하고, 처리 중에는 단계별 진행 상태를 보여줍니다. FastAPI 응답을 요약, 위험도 표시와 상세 설명으로 나눠 읽을 수 '
+                                      '있게 구성했습니다. 여러 모델 호출이 이어지는 작업을 사용자에게 어떻게 전달할지 실험한 프로젝트입니다.',
+                                'en': 'The React interface supports text, voice, and image input and displays progress through the '
+                                      'processing stages. FastAPI responses are organized into a summary, a risk indicator, and '
+                                      'detailed explanations. The project explores how to present a workflow that involves multiple '
+                                      'model calls.'}]},
+               {'id': 'limits',
+                'label': {'ko': '검증 범위', 'en': 'Scope of validation'},
+                'title': {'ko': '동작하는 프로토타입과 의료적 정확성은 별개의 과제입니다.', 'en': 'A working prototype is not clinical validation.'},
+                'paragraphs': [{'ko': '공개 시연은 입력부터 결과 화면까지의 연결을 보여줍니다. 위험도 점수와 권장사항은 모델이 생성하는 참고 정보이며, 임상적으로 검증된 확률이나 처방 판단으로 해석할 수 '
+                                      '없습니다.',
+                                'en': 'The public demo shows the path from input to the results screen. Risk scores and '
+                                      'recommendations are model-generated reference information, not clinically validated '
+                                      'probabilities or prescribing decisions.'},
+                               {'ko': '후속 과제는 약물명 인식 오류, 조회 근거 누락, 근거 없는 설명, 단계 간 오류 전파를 평가하는 것입니다. 에이전트 수를 늘리는 것보다 각 단계가 결과 품질에 '
+                                      '기여하는지 측정할 필요가 있습니다.',
+                                'en': 'Further evaluation should cover medication-name recognition errors, missing source '
+                                      'information, unsupported explanations, and error propagation between stages. Each stage’s '
+                                      'contribution to output quality needs to be measured.'}]},
+               {'id': 'learning',
+                'label': {'ko': '배운 점', 'en': 'What I learned'},
+                'title': {'ko': '단계를 연결한 뒤에는, 각 단계의 필요성을 검증해야 합니다.',
+                          'en': 'After connecting the stages, each stage needs to justify its role.'},
+                'paragraphs': [{'ko': '입력·조회·생성·화면을 연결하는 과정에서 약물명 하나의 오류가 이후 설명과 보고서까지 전파될 수 있다는 점에 주목했습니다. 다음 단계는 처리 단계를 더 늘리는 것이 '
+                                      '아니라, 조회한 사실과 생성한 설명을 추적하고 각 단계를 제외했을 때 품질이 어떻게 달라지는지 평가하는 것입니다.',
+                                'en': 'Connecting input, lookup, generation, and display highlighted how a single drug-name error '
+                                      'could propagate into later explanations and the report. The next step is to trace retrieved '
+                                      'facts separately from generated explanations and evaluate how quality changes when each stage '
+                                      'is removed, rather than simply adding more stages.'}]}],
+  'links': [({'ko': '8단계 워크플로우와 시연 자료', 'en': 'Eight-stage workflow and demo'}, 'https://github.com/jiwoo1105/MedAI_Agent')],
+  'facts': [({'ko': '구성', 'en': 'Workflow'}, {'ko': '8단계 LLM 워크플로우', 'en': 'Eight-stage LLM workflow'}, True),
+            ({'ko': '현재 단계', 'en': 'Status'}, {'ko': '약물 정보 분석 프로토타입', 'en': 'Medication-information analysis prototype'}, False)]}]
